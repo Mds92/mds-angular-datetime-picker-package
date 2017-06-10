@@ -1,0 +1,20 @@
+﻿<mds-datetime-picker-core *ngIf="inLine"
+                          [initialValue]="initialValue" [rangeSelector]="rangeSelector"
+                          [persianChar]="persianChar" [isPersian]="isPersian"
+                          [timePicker]="timePicker" [format]="format" [enableAnimation]="enableAnimation"
+                          (dateChanged)="dateChangedHandler($event)"
+                          (rangeDateChanged)="rangeDateChangedHandler($event)">
+</mds-datetime-picker-core>
+<md-input-container *ngIf="!inLine">
+  <input type="text" mdInput [placeholder]="placeHolder" [(ngModel)]="selectedDateString" (focus)="dateTimeTextBoxOnFocus($event)" (blur)="dateTimeTextBoxOnBlur($event)">
+  <button type="button" mdSuffix md-button (click)="showDatePickerButtonClicked()"><span class="material-icons">date_range</span></button>
+</md-input-container>
+<div *ngIf="!inLine" class="datepicker" [ngClass]="{hidden: !showDatePicker}" [ngStyle]="{top: getTopOffset, left: getLeftOffset}">
+  <mds-datetime-picker-core #mdsDateTimePickerCore
+                            [initialValue]="initialValue" [rangeSelector]="rangeSelector"
+                            [persianChar]="persianChar" [isPersian]="isPersian"
+                            [timePicker]="timePicker" [format]="format" [enableAnimation]="enableAnimation"
+                            (dateChanged)="dateChangedHandler($event)"
+                            (rangeDateChanged)="rangeDateChangedHandler($event)">
+  </mds-datetime-picker-core>
+</div>
