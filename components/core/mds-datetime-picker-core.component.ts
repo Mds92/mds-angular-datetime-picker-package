@@ -2,7 +2,7 @@
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { MdsDatetimePickerResourcesService } from '../../services/mds-datetime-picker-resources.service';
 import { MdsDatetimePickerUtility } from '../../assests/mds-datetime-picker.utility'
-import { Mds } from 'mds.persian.calendar';
+import { Mds } from 'mds.persian.datetime';
 import { IDate } from '../../assests/date.interface';
 import { IRangeDate } from '../../assests/rangeDate.interface';
 import { IDay } from '../../assests/day.interface';
