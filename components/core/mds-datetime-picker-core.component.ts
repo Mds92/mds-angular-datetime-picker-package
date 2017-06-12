@@ -541,6 +541,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   }
   setDateTimeByString(dateTimeString: string) {
     try {
+      if(dateTimeString == '') return;
       if (this.isPersian) {
         if (this.rangeSelector) {
           const startAndEndDateArray = this.getStartEndDate(dateTimeString);
