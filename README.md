@@ -6,5 +6,5 @@ Installing package via npm:
 npm install mds.angular.datetimepicker --save
 ```
 
-[Demo](https://mds92.github.io/mds-angular-datetime-picker/)
+[Demo](https://mds92.github.io/MdsDateTimePickerSample/dist/)
 
