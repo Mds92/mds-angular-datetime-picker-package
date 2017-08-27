@@ -6,6 +6,7 @@ import { Mds } from 'mds.persian.datetime';
 import { IDate } from '../../assests/date.interface';
 import { IRangeDate } from '../../assests/rangeDate.interface';
 import { IDay } from '../../assests/day.interface';
+import { TemplateTypeEnum } from "../../assests/TemplateTypeEnum";
 import PersianDateTime = Mds.PersianDateTime;
 import PersianDayOfWeek = Mds.PersianDayOfWeek;
 import GregorianDayOfWeek = Mds.GregorianDayOfWeek;
@@ -92,6 +93,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     }
   }
 
+  @Input() templateType: TemplateTypeEnum = TemplateTypeEnum.bootstrap;
   @Input() initialValue = '';
   @Input() persianChar = true;
   @Input() isPersian = true;

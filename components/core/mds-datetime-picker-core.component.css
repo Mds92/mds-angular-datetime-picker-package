@@ -19,7 +19,6 @@
 }
 
 .selected-day {
-  width: 30%;
   display: block;
   margin: 0 auto;
   background: #c9e1ff;
@@ -62,4 +61,16 @@ hr {
 
 button{
   width: 100%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.table{
+  margin-bottom: 0;
+}
+
+td.cursor-pointer:hover{
+  background-color: #e0e0e0;
 }

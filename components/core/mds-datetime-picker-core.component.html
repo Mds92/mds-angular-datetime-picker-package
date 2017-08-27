@@ -1,70 +1,172 @@
-﻿<!-- نمایش تمامی ماه های برای انتخاب -->
-<div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="monthSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="monthsBlockVisibilityAnimationDone($event)">
-  <md-grid-list cols="3" rowHeight="2:1">
-    <md-grid-tile *ngFor="let monthName of monthNames">
-      <button type="button" md-button (click)="monthOnClick(monthName)">{{monthName}}</button>
-    </md-grid-tile>
+﻿<ng-container *ngIf="templateType == 1">
+  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="monthSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="monthsBlockVisibilityAnimationDone($event)">
+    <table class="table table-condensed text-center">
+      <tbody>
+        <tr *ngFor="let row of [1, 2, 3, 4]">
+          <td *ngFor="let col of [1, 2, 3]" (click)="monthOnClick(monthNames[(row - 1) * 3 + col - 1])" class="cursor-pointer">
+            <div>{{monthNames[(row - 1) * 3 + col - 1]}}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="yearSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="yearsBlockVisibilityAnimationDone($event)">
+    <table class="table table-condensed text-center">
+      <tbody>
+        <tr *ngFor="let row of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]">
+          <ng-container *ngFor="let col of [1, 2, 3, 4, 5]">
+            <td *ngIf="yearsToSelect[(row - 1) * 5 + col - 1] as year" (click)="yearOnClick(year)" [ngClass]="{'warning': year == selectedYearString}"
+              class="cursor-pointer">
+              {{year}}
+            </td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="table table-condensed text-center">
+      <thead>
+        <tr class="gray1" *ngIf="isPersian">
+          <td title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="cursor-pointer">&lt;&lt;</td>
+          <td title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="cursor-pointer">&lt;</td>
+          <td (click)="selectYearButtonOnClick()" class="cursor-pointer">{{selectedYearString}}</td>
+          <td colspan="2" (click)="selectMonthButtonOnClick()" class="cursor-pointer">{{selectedMonthName}}</td>
+          <td title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="cursor-pointer">&gt;</td>
+          <td title="{{resources.previousYear}}" (click)="previousYearButtonOnClick()" class="cursor-pointer">&gt;&gt;</td>
+        </tr>
+        <tr class="gray1" *ngIf="!isPersian">
+          <td title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()" class="cursor-pointer">&lt;&lt;</td>
+          <td title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="cursor-pointer">&lt;</td>
+          <td colspan="2" (click)="selectMonthButtonOnClick()" class="cursor-pointer">{{selectedMonthName}}</td>
+          <td (click)="selectYearButtonOnClick()" class="cursor-pointer">{{selectedYearString}}</td>
+          <td title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="cursor-pointer">&gt;</td>
+          <td title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="cursor-pointer">&gt;&gt;</td>
+        </tr>
+        <tr *ngIf="rangeSelector">
+          <td colspan="2"></td>
+          <td [ngClass]="{'text-muted': isRejectButtonDisable}" title="{{resources.Reject}}" (click)="rejectButtonOnClick()" class="cursor-pointer"><span class="glyphicon glyphicon-remove"></span></td>
+          <td></td>
+          <td [ngClass]="{'text-muted': isConfirmButtonDisable}" title="{{resources.Confirm}}" (click)="confirmButtonOnClick()" class="cursor-pointer"><span class="glyphicon glyphicon-ok"></span></td>
+          <td colspan="2"></td>
+        </tr>
+        <tr class="gray2">
+          <td *ngFor="let dayName of weekdayNames; let i = index;" [ngClass]="{'text-danger': i == 0}">{{dayName}}</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of [1, 2, 3, 4, 5, 6]">
+          <ng-container *ngFor="let col of [1, 2, 3, 4, 5, 6, 7]">
+            <td *ngIf="daysInMonth[(row - 1) * 7 + col - 1] as dayObject" data-mdspersiancalendar [@daysStateName]="daysAnimationStateName"
+              class="cursor-pointer" [ngClass]="{'text-danger': dayObject.holiday,
+                        'today': dayObject.today,
+                        'warning': dayObject.day == selectedDay,
+                        'selected-range': dayObject.isWithinRange,
+                        'text-muted': dayObject.disable}" (click)="dayButtonOnClick(dayObject)" (mouseenter)="dayButtonOnHover(dayObject)">
+              <span [ngClass]="{'selected-day': dayObject.isStartOrEndOfRange}" data-mdspersiancalendar>{{dayObject.dayString}}</span>
+            </td>
+          </ng-container>
+        </tr>
+        <tr *ngIf="timePicker">
+          <td colspan="2"></td>
+          <td class="cursor-pointer" (click)="hourUpButtonOnClick()"><span class="glyphicon glyphicon-chevron-up"></span></td>
+          <td class="cursor-pointer" (click)="minuteUpButtonOnClick()"><span class="glyphicon glyphicon-chevron-up"></span></td>
+          <td class="cursor-pointer" (click)="secondUpButtonOnClick()"><span class="glyphicon glyphicon-chevron-up"></span></td>
+          <td colspan="2"></td>
+        </tr>
+        <tr *ngIf="timePicker">
+          <td colspan="2"></td>
+          <td>{{hour}}</td>
+          <td>{{minute}}</td>
+          <td>{{second}}</td>
+          <td colspan="2"></td>
+        </tr>
+        <tr *ngIf="timePicker">
+          <td colspan="2"></td>
+          <td class="cursor-pointer" (click)="hourDownButtonOnClick()"><span class="glyphicon glyphicon-chevron-down"></span></td>
+          <td class="cursor-pointer" (click)="minuteDownButtonOnClick()"><span class="glyphicon glyphicon-chevron-down"></span></td>
+          <td class="cursor-pointer" (click)="secondDownButtonOnClick()"><span class="glyphicon glyphicon-chevron-down"></span></td>
+          <td colspan="2"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="cursor-pointer" colspan="100" (click)="todayButtonOnClick()"> {{resources.Today}} </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="templateType == 2">
+  <!-- نمایش تمامی ماه های برای انتخاب -->
+  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="monthSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="monthsBlockVisibilityAnimationDone($event)">
+    <md-grid-list cols="3" rowHeight="2:1">
+      <md-grid-tile *ngFor="let monthName of monthNames">
+        <button type="button" md-button (click)="monthOnClick(monthName)">{{monthName}}</button>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
+  <!-- نمایش تمامی سال ها برای انتخاب -->
+  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="yearSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="yearsBlockVisibilityAnimationDone($event)">
+    <md-grid-list cols="5" rowHeight="2:1">
+      <md-grid-tile *ngFor="let year of yearsToSelect">
+        <button type="button" md-button (click)="yearOnClick(year)" [ngClass]="{'warning': year == selectedYearString}">{{year}}</button>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
+  <md-grid-list cols="7" rowHeight="2:1" class="gray1" *ngIf="isPersian">
+    <md-grid-tile><button md-button i18n-title="Next Year" title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()">&lt;&lt;</button></md-grid-tile>
+    <md-grid-tile><button md-button type="button" i18n-title="Next Month" title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()">&lt;</button></md-grid-tile>
+    <md-grid-tile><button md-button type="button" (click)="selectYearButtonOnClick()">{{selectedYearString}}</button></md-grid-tile>
+    <md-grid-tile [colspan]="2"><button md-button type="button" (click)="selectMonthButtonOnClick()">{{selectedMonthName}}</button></md-grid-tile>
+    <md-grid-tile><button md-button type="button" i18n-title="Previous Month" title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()">&gt;</button></md-grid-tile>
+    <md-grid-tile><button md-button type="button" i18n-title="Previous Year" title="{{resources.previousYear}}" (click)="previousYearButtonOnClick()">&gt;&gt;</button></md-grid-tile>
   </md-grid-list>
-</div>
-<!-- نمایش تمامی سال ها برای انتخاب -->
-<div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="yearSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="yearsBlockVisibilityAnimationDone($event)">
-  <md-grid-list cols="5" rowHeight="2:1">
-    <md-grid-tile *ngFor="let year of yearsToSelect">
-      <button type="button" md-button (click)="yearOnClick(year)" [ngClass]="{'warning': year == selectedYearString}">{{year}}</button>
-    </md-grid-tile>
+  <md-grid-list cols="7" rowHeight="2:1" class="gray1" *ngIf="!isPersian">
+    <md-grid-tile><button type="button" md-button i18n-title="Previous Year" title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()">&lt;&lt;</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button i18n-title="Previous Month" title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()">&lt;</button></md-grid-tile>
+    <md-grid-tile [colspan]="2"><button md-button type="button" (click)="selectMonthButtonOnClick()">{{selectedMonthName}}</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button (click)="selectYearButtonOnClick()">{{selectedYearString}}</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button i18n-title="Next Month" title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()">&gt;</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button i18n-title="Next Year" title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()">&gt;&gt;</button></md-grid-tile>
   </md-grid-list>
-</div>
-<md-grid-list cols="7" rowHeight="2:1" class="gray1" *ngIf="isPersian">
-  <md-grid-tile><button md-button i18n-title="Next Year" title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()">&lt;&lt;</button></md-grid-tile>
-  <md-grid-tile><button md-button type="button" i18n-title="Next Month" title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()">&lt;</button></md-grid-tile>
-  <md-grid-tile><button md-button type="button" (click)="selectYearButtonOnClick()">{{selectedYearString}}</button></md-grid-tile>
-  <md-grid-tile [colspan]="2"><button md-button type="button" (click)="selectMonthButtonOnClick()">{{selectedMonthName}}</button></md-grid-tile>
-  <md-grid-tile><button md-button type="button" i18n-title="Previous Month" title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()">&gt;</button></md-grid-tile>
-  <md-grid-tile><button md-button type="button" i18n-title="Previous Year" title="{{resources.previousYear}}" (click)="previousYearButtonOnClick()">&gt;&gt;</button></md-grid-tile>
-</md-grid-list>
-<md-grid-list cols="7" rowHeight="2:1" class="gray1" *ngIf="!isPersian">
-  <md-grid-tile><button type="button" md-button i18n-title="Previous Year" title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()">&lt;&lt;</button></md-grid-tile>
-  <md-grid-tile><button type="button" md-button i18n-title="Previous Month" title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()">&lt;</button></md-grid-tile>
-  <md-grid-tile [colspan]="2"><button md-button type="button" (click)="selectMonthButtonOnClick()">{{selectedMonthName}}</button></md-grid-tile>
-  <md-grid-tile><button type="button" md-button (click)="selectYearButtonOnClick()">{{selectedYearString}}</button></md-grid-tile>
-  <md-grid-tile><button type="button" md-button i18n-title="Next Month" title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()">&gt;</button></md-grid-tile>
-  <md-grid-tile><button type="button" md-button i18n-title="Next Year" title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()">&gt;&gt;</button></md-grid-tile>
-</md-grid-list>
-<md-grid-list cols="4" rowHeight="3:1" *ngIf="rangeSelector">
-  <md-grid-tile></md-grid-tile>
-  <md-grid-tile><button type="button" md-button [disabled]="isRejectButtonDisable" title="{{resources.Reject}}" (click)="rejectButtonOnClick()"><span class="material-icons">clear</span></button></md-grid-tile>
-  <md-grid-tile><button type="button" md-button [disabled]="isConfirmButtonDisable" title="{{resources.Confirm}}" (click)="confirmButtonOnClick()"><span class="material-icons">done</span></button></md-grid-tile>
-  <md-grid-tile></md-grid-tile>
-</md-grid-list>
-<md-grid-list cols="7" rowHeight="1.6:1" class="gray2">
-  <ng-container *ngFor="let dayName of weekdayNames; let i = index;">
-    <md-grid-tile [ngClass]="{'text-danger': i == 0}">{{dayName}}</md-grid-tile>
-  </ng-container>
-</md-grid-list>
-<md-grid-list cols="7" rowHeight="2:1">
-  <md-grid-tile *ngFor="let dayObject of daysInMonth; let i = index;">
-    <button type="button" md-button data-mdspersiancalendar [@daysStateName]="daysAnimationStateName" [ngClass]="{'text-danger': dayObject.holiday,
+  <md-grid-list cols="4" rowHeight="3:1" *ngIf="rangeSelector">
+    <md-grid-tile></md-grid-tile>
+    <md-grid-tile><button type="button" md-button [disabled]="isRejectButtonDisable" title="{{resources.Reject}}" (click)="rejectButtonOnClick()"><span class="material-icons">clear</span></button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button [disabled]="isConfirmButtonDisable" title="{{resources.Confirm}}" (click)="confirmButtonOnClick()"><span class="material-icons">done</span></button></md-grid-tile>
+    <md-grid-tile></md-grid-tile>
+  </md-grid-list>
+  <md-grid-list cols="7" rowHeight="1.6:1" class="gray2">
+    <ng-container *ngFor="let dayName of weekdayNames; let i = index;">
+      <md-grid-tile [ngClass]="{'text-danger': i == 0}">{{dayName}}</md-grid-tile>
+    </ng-container>
+  </md-grid-list>
+  <md-grid-list cols="7" rowHeight="2:1">
+    <md-grid-tile *ngFor="let dayObject of daysInMonth; let i = index;">
+      <button type="button" md-button data-mdspersiancalendar [@daysStateName]="daysAnimationStateName" [ngClass]="{'text-danger': dayObject.holiday,
                         'today': dayObject.today,
                         'warning': dayObject.day == selectedDay,
                         'selected-range': dayObject.isWithinRange,
                         'text-muted': dayObject.disable}" (click)="dayButtonOnClick(dayObject)" (mouseenter)="dayButtonOnHover(dayObject)">
       <span [ngClass]="{'selected-day': dayObject.isStartOrEndOfRange}" data-mdspersiancalendar >{{dayObject.dayString}}</span>
     </button>
-  </md-grid-tile>
-</md-grid-list>
-<hr *ngIf="timePicker" />
-<md-grid-list cols="3" rowHeight="6:1" *ngIf="timePicker">
-  <md-grid-tile><button type="button" md-button (click)="hourUpButtonOnClick()"><span class="material-icons">keyboard_arrow_up</span></button></md-grid-tile>
-  <md-grid-tile><button type="button" md-button (click)="minuteUpButtonOnClick()"><span class="material-icons">keyboard_arrow_up</span></button></md-grid-tile>
-  <md-grid-tile><button type="button" md-button (click)="secondUpButtonOnClick()"><span class="material-icons">keyboard_arrow_up</span></button></md-grid-tile>
-  <md-grid-tile>{{hour}}</md-grid-tile>
-  <md-grid-tile>{{minute}}</md-grid-tile>
-  <md-grid-tile>{{second}}</md-grid-tile>
-  <md-grid-tile><button type="button" md-button (click)="hourDownButtonOnClick()"><span class="material-icons">keyboard_arrow_down</span></button></md-grid-tile>
-  <md-grid-tile><button type="button" md-button (click)="minuteDownButtonOnClick()"><span class="material-icons">keyboard_arrow_down</span></button></md-grid-tile>
-  <md-grid-tile><button type="button" md-button (click)="secondDownButtonOnClick()"><span class="material-icons">keyboard_arrow_down</span></button></md-grid-tile>
-</md-grid-list>
-<hr />
-<md-grid-list cols="1" rowHeight="12:1">
-  <md-grid-tile><button type="button" md-button (click)="todayButtonOnClick()">{{resources.Today}}</button></md-grid-tile>
-</md-grid-list>
+    </md-grid-tile>
+  </md-grid-list>
+  <hr *ngIf="timePicker" />
+  <md-grid-list cols="3" rowHeight="6:1" *ngIf="timePicker">
+    <md-grid-tile><button type="button" md-button (click)="hourUpButtonOnClick()"><span class="material-icons">keyboard_arrow_up</span></button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button (click)="minuteUpButtonOnClick()"><span class="material-icons">keyboard_arrow_up</span></button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button (click)="secondUpButtonOnClick()"><span class="material-icons">keyboard_arrow_up</span></button></md-grid-tile>
+    <md-grid-tile>{{hour}}</md-grid-tile>
+    <md-grid-tile>{{minute}}</md-grid-tile>
+    <md-grid-tile>{{second}}</md-grid-tile>
+    <md-grid-tile><button type="button" md-button (click)="hourDownButtonOnClick()"><span class="material-icons">keyboard_arrow_down</span></button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button (click)="minuteDownButtonOnClick()"><span class="material-icons">keyboard_arrow_down</span></button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button (click)="secondDownButtonOnClick()"><span class="material-icons">keyboard_arrow_down</span></button></md-grid-tile>
+  </md-grid-list>
+  <hr />
+  <md-grid-list cols="1" rowHeight="12:1">
+    <md-grid-tile><button type="button" md-button (click)="todayButtonOnClick()">{{resources.Today}}</button></md-grid-tile>
+  </md-grid-list>
+</ng-container>

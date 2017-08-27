@@ -12,10 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var mds_datetime_picker_utility_1 = require("../assests/mds-datetime-picker.utility");
 var mds_datetime_picker_core_component_1 = require("./core/mds-datetime-picker-core.component");
+var TemplateTypeEnum_1 = require("../assests/TemplateTypeEnum");
 var MdsDatetimePickerComponent = (function () {
     function MdsDatetimePickerComponent(element) {
         var _this = this;
         this.element = element;
+        this.templateType = TemplateTypeEnum_1.TemplateTypeEnum.bootstrap;
         this.initialValue = '';
         this.inLine = true;
         this.persianChar = true;
@@ -127,6 +129,10 @@ var MdsDatetimePickerComponent = (function () {
         core_1.ViewChild('mdsDateTimePickerCore'),
         __metadata("design:type", mds_datetime_picker_core_component_1.MdsDatetimePickerCoreComponent)
     ], MdsDatetimePickerComponent.prototype, "mdsDateTimePickerCore", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number)
+    ], MdsDatetimePickerComponent.prototype, "templateType", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Object)

@@ -3,6 +3,7 @@ import { MdsDatetimePickerUtility } from '../assests/mds-datetime-picker.utility
 import { MdsDatetimePickerCoreComponent } from './core/mds-datetime-picker-core.component';
 import { IDate } from '../assests/date.interface';
 import { IRangeDate } from '../assests/rangeDate.interface';
+import { TemplateTypeEnum } from "../assests/TemplateTypeEnum";
 
 
 @Component({
@@ -45,6 +46,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
 
   @ViewChild('mdsDateTimePickerCore') mdsDateTimePickerCore: MdsDatetimePickerCoreComponent;
 
+  @Input() templateType: TemplateTypeEnum = TemplateTypeEnum.bootstrap;
   @Input() initialValue = '';
   @Input() inLine = true;
   @Input() persianChar = true;

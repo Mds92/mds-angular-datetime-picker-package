@@ -4,11 +4,13 @@ import { Mds } from 'mds.persian.datetime';
 import { IDate } from '../../assests/date.interface';
 import { IRangeDate } from '../../assests/rangeDate.interface';
 import { IDay } from '../../assests/day.interface';
+import { TemplateTypeEnum } from "../../assests/TemplateTypeEnum";
 import PersianDateTime = Mds.PersianDateTime;
 export declare class MdsDatetimePickerCoreComponent implements OnInit {
     private resourcesService;
     constructor(resourcesService: MdsDatetimePickerResourcesService);
     ngOnInit(): void;
+    templateType: TemplateTypeEnum;
     initialValue: string;
     persianChar: boolean;
     isPersian: boolean;
