@@ -30,3 +30,8 @@ import { MdsDatetimePickerModule } from 'mds.angular.datetimepicker';
 })
 export class AppModule { }
 ```
+
+3. Add to view:
+```html
+<mds-datetime-picker></mds-datetime-picker>
+```
