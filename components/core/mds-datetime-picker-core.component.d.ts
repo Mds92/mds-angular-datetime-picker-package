@@ -1,11 +1,9 @@
 import { OnInit, EventEmitter } from '@angular/core';
 import { MdsDatetimePickerResourcesService } from '../../services/mds-datetime-picker-resources.service';
 import { Mds } from 'mds.persian.datetime';
-import { IDate } from '../../assests/date.interface';
-import { IRangeDate } from '../../assests/rangeDate.interface';
-import { IDay } from '../../assests/day.interface';
-import { TemplateTypeEnum } from "../../assests/TemplateTypeEnum";
 import PersianDateTime = Mds.PersianDateTime;
+import { TemplateTypeEnum } from "../../assests/Enums";
+import { IDate, IRangeDate, IDay } from "../../assests/interfaces";
 export declare class MdsDatetimePickerCoreComponent implements OnInit {
     private resourcesService;
     constructor(resourcesService: MdsDatetimePickerResourcesService);

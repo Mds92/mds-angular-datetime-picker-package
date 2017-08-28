@@ -1,6 +1,6 @@
 ﻿<ng-container *ngIf="templateType == 1">
   <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="monthSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="monthsBlockVisibilityAnimationDone($event)">
-    <table class="table table-condensed text-center">
+    <table class="table table-striped text-center">
       <tbody>
         <tr *ngFor="let row of [1, 2, 3, 4]">
           <td *ngFor="let col of [1, 2, 3]" (click)="monthOnClick(monthNames[(row - 1) * 3 + col - 1])" class="cursor-pointer">
@@ -11,11 +11,11 @@
     </table>
   </div>
   <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="yearSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="yearsBlockVisibilityAnimationDone($event)">
-    <table class="table table-condensed text-center">
+    <table class="table table-striped text-center">
       <tbody>
         <tr *ngFor="let row of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]">
           <ng-container *ngFor="let col of [1, 2, 3, 4, 5]">
-            <td *ngIf="yearsToSelect[(row - 1) * 5 + col - 1] as year" (click)="yearOnClick(year)" [ngClass]="{'warning': year == selectedYearString}"
+            <td *ngIf="yearsToSelect[(row - 1) * 5 + col - 1] as year" (click)="yearOnClick(year)" [ngClass]="{'warning1': year == selectedYearString}"
               class="cursor-pointer">
               {{year}}
             </td>
@@ -60,7 +60,7 @@
             <td *ngIf="daysInMonth[(row - 1) * 7 + col - 1] as dayObject" data-mdspersiancalendar [@daysStateName]="daysAnimationStateName"
               class="cursor-pointer" [ngClass]="{'text-danger': dayObject.holiday,
                         'today': dayObject.today,
-                        'warning': dayObject.day == selectedDay,
+                        'warning1': dayObject.day == selectedDay,
                         'selected-range': dayObject.isWithinRange,
                         'text-muted': dayObject.disable}" (click)="dayButtonOnClick(dayObject)" (mouseenter)="dayButtonOnHover(dayObject)">
               <span [ngClass]="{'selected-day': dayObject.isStartOrEndOfRange}" data-mdspersiancalendar>{{dayObject.dayString}}</span>
@@ -111,7 +111,7 @@
   <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="yearSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="yearsBlockVisibilityAnimationDone($event)">
     <md-grid-list cols="5" rowHeight="2:1">
       <md-grid-tile *ngFor="let year of yearsToSelect">
-        <button type="button" md-button (click)="yearOnClick(year)" [ngClass]="{'warning': year == selectedYearString}">{{year}}</button>
+        <button type="button" md-button (click)="yearOnClick(year)" [ngClass]="{'warning1': year == selectedYearString}">{{year}}</button>
       </md-grid-tile>
     </md-grid-list>
   </div>
@@ -146,7 +146,7 @@
     <md-grid-tile *ngFor="let dayObject of daysInMonth; let i = index;">
       <button type="button" md-button data-mdspersiancalendar [@daysStateName]="daysAnimationStateName" [ngClass]="{'text-danger': dayObject.holiday,
                         'today': dayObject.today,
-                        'warning': dayObject.day == selectedDay,
+                        'warning1': dayObject.day == selectedDay,
                         'selected-range': dayObject.isWithinRange,
                         'text-muted': dayObject.disable}" (click)="dayButtonOnClick(dayObject)" (mouseenter)="dayButtonOnHover(dayObject)">
       <span [ngClass]="{'selected-day': dayObject.isStartOrEndOfRange}" data-mdspersiancalendar >{{dayObject.dayString}}</span>

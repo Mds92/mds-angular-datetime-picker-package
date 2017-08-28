@@ -4,6 +4,7 @@ import { MdsDatetimePickerCoreComponent } from './core/mds-datetime-picker-core.
 import { IDate } from '../assests/date.interface';
 import { IRangeDate } from '../assests/rangeDate.interface';
 import { TemplateTypeEnum } from "../assests/TemplateTypeEnum";
+import { TextBoxTypeEnum } from "../assests/Enums";
 
 
 @Component({
@@ -47,6 +48,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   @ViewChild('mdsDateTimePickerCore') mdsDateTimePickerCore: MdsDatetimePickerCoreComponent;
 
   @Input() templateType: TemplateTypeEnum = TemplateTypeEnum.bootstrap;
+  @Input() textBoxType: TextBoxTypeEnum = TextBoxTypeEnum.withButton;
   @Input() initialValue = '';
   @Input() inLine = true;
   @Input() persianChar = true;
@@ -126,12 +128,15 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   }
   dateTimeTextBoxOnFocus(event) {
     this.oldDateValue = event.target.value.trim();
+    if(this.textBoxType == TextBoxTypeEnum.withoutButton)
+      this.showDatePickerButtonClicked();
   }
   dateTimeTextBoxOnBlur(event) {
-    if (this.alreadyShowDatePickerClicked) {
+    if (this.alreadyShowDatePickerClicked && this.textBoxType == TextBoxTypeEnum.withButton) {
       this.alreadyShowDatePickerClicked = false;
       return;
     }
+    this.alreadyShowDatePickerClicked = false;
     try {
       this.mdsDateTimePickerCore.setDateTimeByString(this.selectedDateString);
       if (this.isPersian && this.persianChar)

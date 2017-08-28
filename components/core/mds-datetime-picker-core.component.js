@@ -14,14 +14,14 @@ var animations_1 = require("@angular/animations");
 var mds_datetime_picker_resources_service_1 = require("../../services/mds-datetime-picker-resources.service");
 var mds_datetime_picker_utility_1 = require("../../assests/mds-datetime-picker.utility");
 var mds_persian_datetime_1 = require("mds.persian.datetime");
-var TemplateTypeEnum_1 = require("../../assests/TemplateTypeEnum");
 var PersianDateTime = mds_persian_datetime_1.Mds.PersianDateTime;
 var PersianDayOfWeek = mds_persian_datetime_1.Mds.PersianDayOfWeek;
 var GregorianDayOfWeek = mds_persian_datetime_1.Mds.GregorianDayOfWeek;
+var Enums_1 = require("../../assests/Enums");
 var MdsDatetimePickerCoreComponent = (function () {
     function MdsDatetimePickerCoreComponent(resourcesService) {
         this.resourcesService = resourcesService;
-        this.templateType = TemplateTypeEnum_1.TemplateTypeEnum.bootstrap;
+        this.templateType = Enums_1.TemplateTypeEnum.bootstrap;
         this.initialValue = '';
         this.persianChar = true;
         this.isPersian = true;

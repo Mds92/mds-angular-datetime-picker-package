@@ -3,6 +3,7 @@ import { MdsDatetimePickerCoreComponent } from './core/mds-datetime-picker-core.
 import { IDate } from '../assests/date.interface';
 import { IRangeDate } from '../assests/rangeDate.interface';
 import { TemplateTypeEnum } from "../assests/TemplateTypeEnum";
+import { TextBoxTypeEnum } from "../assests/Enums";
 export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     private element;
     constructor(element: ElementRef);
@@ -10,6 +11,7 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     ngAfterViewInit(): void;
     mdsDateTimePickerCore: MdsDatetimePickerCoreComponent;
     templateType: TemplateTypeEnum;
+    textBoxType: TextBoxTypeEnum;
     initialValue: string;
     inLine: boolean;
     persianChar: boolean;

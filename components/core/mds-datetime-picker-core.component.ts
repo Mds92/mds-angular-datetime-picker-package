@@ -3,13 +3,11 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { MdsDatetimePickerResourcesService } from '../../services/mds-datetime-picker-resources.service';
 import { MdsDatetimePickerUtility } from '../../assests/mds-datetime-picker.utility'
 import { Mds } from 'mds.persian.datetime';
-import { IDate } from '../../assests/date.interface';
-import { IRangeDate } from '../../assests/rangeDate.interface';
-import { IDay } from '../../assests/day.interface';
-import { TemplateTypeEnum } from "../../assests/TemplateTypeEnum";
 import PersianDateTime = Mds.PersianDateTime;
 import PersianDayOfWeek = Mds.PersianDayOfWeek;
 import GregorianDayOfWeek = Mds.GregorianDayOfWeek;
+import { TemplateTypeEnum } from "../../assests/Enums";
+import { IDate, IRangeDate, IDay } from "../../assests/interfaces";
 
 @Component({
   selector: 'mds-datetime-picker-core',
@@ -99,7 +97,6 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   @Input() isPersian = true;
   @Input() rangeSelector = false;
   @Input() timePicker = false;
-  @Input() enableAnimation = true;
   /**
     * فرمت پیش فرض 1393/09/14   13:49:40 
     * yyyy: سال چهار رقمی 
