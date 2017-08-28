@@ -1,4 +1,4 @@
-﻿# Mds Angular Datetimepicker
+﻿# Mds Angular Persian and Gregorian DateTimePicker
 Persian and gregorian DateTimePicker with angular 4 and angular materials
 
 Installing package via npm:
