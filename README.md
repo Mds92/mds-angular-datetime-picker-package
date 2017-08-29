@@ -35,3 +35,10 @@ export class AppModule { }
 ```html
 <mds-datetime-picker></mds-datetime-picker>
 ```
+
+------------------------------------------
+
+## Parameter
+
+| Name        | Type           | Description  |
+
