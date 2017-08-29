@@ -55,7 +55,6 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   @Input() rangeSelector = false;
   @Input() isPersian = true;
   @Input() timePicker = true;
-  @Input() enableAnimation = true;
   @Input() placeHolder = '';
   /**
     * فرمت پیش فرض 1393/09/14   13:49:40 
