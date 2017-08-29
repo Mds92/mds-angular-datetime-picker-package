@@ -22,7 +22,7 @@
 <div *ngIf="!inLine && templateType == 1" class="datepicker-container">
   <div class="input-group" *ngIf="textBoxType == 1">
     <div class="input-group-addon cursor-pointer" (click)="showDatePickerButtonClicked()"><span class="glyphicon glyphicon-calendar"></span></div>
-    <input type="text" class="form-control" [(ngModel)]="selectedDateString" (focus)="dateTimeTextBoxOnFocus($event)" (blur)="dateTimeTextBoxOnBlur($event)">
+    <input type="text" class="form-control" [placeholder]="placeHolder" [(ngModel)]="selectedDateString" (focus)="dateTimeTextBoxOnFocus($event)" (blur)="dateTimeTextBoxOnBlur($event)">
   </div>
   <input *ngIf="textBoxType == 2" type="text" class="form-control" [(ngModel)]="selectedDateString" (focus)="dateTimeTextBoxOnFocus($event)" (blur)="dateTimeTextBoxOnBlur($event)">
   <div class="datepicker datepicker-bootstrap" [ngClass]="{hidden: !showDatePicker}">
