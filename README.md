@@ -44,6 +44,6 @@ export class AppModule { }
 --------------|----------------|-------------------|--------------|
 **templateType** | Enumeration | 1, [2] | You can choose how your date time picker generate, if you choose **1(bootstrap)**, it generates with bootstrap classes, if you choose **2(material)**, it generates with materials, in materials you have animations
 **inLine** | boolean | false, [true] | Show date time picker as in line in page
-**textBoxType** | Enumeration | 1, [2] | If you choose `[inLine]="false"` it shows a textbox as picker, you can choose how should it shows -- 1 = withButton -- 2 = withoutButton
+**textBoxType** | Enumeration | 1, [2] | If you choose `[inLine]="false"` it shows a textbox as picker, you can choose how should it shows  **1 = withButton** <br> 2 = withoutButton
 
 
