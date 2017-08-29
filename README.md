@@ -40,5 +40,6 @@ export class AppModule { }
 
 ## Parameter
 
-| Name        | Type           | Description  |
-
+| Name        | Type           | Values       | Description  |
+--------------|----------------|--------------|--------------|
+templateType | Enumeration | bootstrap = 1, material = 2 | You can choose how your datepicker generate, if you choose 1, it generates with bootstrap classes, if you choose 2, it generates with materials, in materials you have animations
