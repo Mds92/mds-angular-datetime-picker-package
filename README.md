@@ -41,6 +41,7 @@ export class AppModule { }
 
 | Name        | Type           | Values            | Description  |
 --------------|----------------|-------------------|--------------|
+**initialValue** | string | initial value of date | Excample:<br> `1396/06/06` or `1396/05/06  10:20:00` for persian<br> `2017/06/06` or `2017-06-06  10:20` for gregorian 
 **templateType** | Enumeration | 1, [2] | You can choose how your date time picker generate<br>In materials you have animations<br> 1 = bootstrap <br> 2 = material
 **inLine** | boolean | false, [true] | Show date time picker as in line in page
 **textBoxType** | Enumeration | 1, [2] | If you choose `[inLine]="false"` it shows a textbox as picker<br>You can choose how should it shows <br> 1 = withButton <br> 2 = withoutButton
