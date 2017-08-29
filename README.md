@@ -62,7 +62,7 @@ export class AppModule { }
 
 #### Samples
 
-```javascript
+```html
 <mds-datetime-picker (dateChanged)="mdsDatePicker2OnDateChange($event)" (rangeDateChanged)="mdsDatePicker1OnDateRangeChange($event)"  [isPersian]="false" [templateType]="1" [rangeSelector]="true">
 </mds-datetime-picker>
 ```
