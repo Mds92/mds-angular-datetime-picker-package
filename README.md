@@ -59,3 +59,10 @@ export class AppModule { }
 --------------|--------------|
 **dateChangedHandler(date: IDate)** | Occurs whenever selected date change
 **rangeDateChangedHandler(rangeDate: IRangeDate)** | Occurs whenever selected range date change
+
+#### Samples
+
+```javascript
+<mds-datetime-picker (dateChanged)="mdsDatePicker2OnDateChange($event)" (rangeDateChanged)="mdsDatePicker1OnDateRangeChange($event)"  [isPersian]="false" [templateType]="1" [rangeSelector]="true">
+</mds-datetime-picker>
+```
