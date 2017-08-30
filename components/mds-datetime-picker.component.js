@@ -26,7 +26,6 @@ var MdsDatetimePickerComponent = (function () {
         this.rangeSelector = false;
         this.isPersian = true;
         this.timePicker = true;
-        this.enableAnimation = true;
         this.placeHolder = '';
         this.format = '';
         this.selectedDateString = '';
@@ -113,10 +112,11 @@ var MdsDatetimePickerComponent = (function () {
             this.showDatePickerButtonClicked();
     };
     MdsDatetimePickerComponent.prototype.dateTimeTextBoxOnBlur = function (event) {
-        if (this.alreadyShowDatePickerClicked) {
+        if (this.alreadyShowDatePickerClicked && this.textBoxType == Enums_1.TextBoxTypeEnum.withButton) {
             this.alreadyShowDatePickerClicked = false;
             return;
         }
+        this.alreadyShowDatePickerClicked = false;
         try {
             this.mdsDateTimePickerCore.setDateTimeByString(this.selectedDateString);
             if (this.isPersian && this.persianChar)
@@ -165,10 +165,6 @@ var MdsDatetimePickerComponent = (function () {
         core_1.Input(),
         __metadata("design:type", Object)
     ], MdsDatetimePickerComponent.prototype, "timePicker", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Object)
-    ], MdsDatetimePickerComponent.prototype, "enableAnimation", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Object)

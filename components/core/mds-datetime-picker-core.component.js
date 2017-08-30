@@ -27,7 +27,6 @@ var MdsDatetimePickerCoreComponent = (function () {
         this.isPersian = true;
         this.rangeSelector = false;
         this.timePicker = false;
-        this.enableAnimation = true;
         this.format = '';
         this.dateChanged = new core_1.EventEmitter();
         this.rangeDateChanged = new core_1.EventEmitter();
@@ -810,10 +809,6 @@ var MdsDatetimePickerCoreComponent = (function () {
         core_1.Input(),
         __metadata("design:type", Object)
     ], MdsDatetimePickerCoreComponent.prototype, "timePicker", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Object)
-    ], MdsDatetimePickerCoreComponent.prototype, "enableAnimation", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Object)

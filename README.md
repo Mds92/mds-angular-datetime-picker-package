@@ -3,7 +3,9 @@ Persian and gregorian DateTimePicker with angular 4 and angular materials
 
 Installing package via npm:
 ```
-npm install mds.angular.datetimepicker --save
+npm install mds.persian.datetime@latest --save
+
+npm install mds.angular.datetimepicker@latest --save
 ```
 
 [Demo](https://mds92.github.io/MdsDateTimePickerSample/dist/)

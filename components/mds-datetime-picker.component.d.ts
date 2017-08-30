@@ -18,7 +18,6 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     rangeSelector: boolean;
     isPersian: boolean;
     timePicker: boolean;
-    enableAnimation: boolean;
     placeHolder: string;
     format: string;
     selectedDateString: string;

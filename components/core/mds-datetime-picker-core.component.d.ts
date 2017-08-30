@@ -14,7 +14,6 @@ export declare class MdsDatetimePickerCoreComponent implements OnInit {
     isPersian: boolean;
     rangeSelector: boolean;
     timePicker: boolean;
-    enableAnimation: boolean;
     format: string;
     dateChanged: EventEmitter<IDate>;
     rangeDateChanged: EventEmitter<IRangeDate>;
