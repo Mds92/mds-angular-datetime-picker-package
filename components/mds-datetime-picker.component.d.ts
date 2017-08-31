@@ -1,9 +1,7 @@
 import { OnInit, EventEmitter, AfterViewInit, ElementRef } from '@angular/core';
 import { MdsDatetimePickerCoreComponent } from './core/mds-datetime-picker-core.component';
-import { IDate } from '../assests/date.interface';
-import { IRangeDate } from '../assests/rangeDate.interface';
-import { TemplateTypeEnum } from "../assests/TemplateTypeEnum";
-import { TextBoxTypeEnum } from "../assests/Enums";
+import { TextBoxTypeEnum, TemplateTypeEnum } from "../assests/Enums";
+import { IDate, IRangeDate } from "../assests/interfaces";
 export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     private element;
     constructor(element: ElementRef);

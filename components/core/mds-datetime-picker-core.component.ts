@@ -2,12 +2,12 @@
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { MdsDatetimePickerResourcesService } from '../../services/mds-datetime-picker-resources.service';
 import { MdsDatetimePickerUtility } from '../../assests/mds-datetime-picker.utility'
+import { TemplateTypeEnum } from "../../assests/Enums";
+import { IDate, IRangeDate, IDay } from "../../assests/interfaces";
 import { Mds } from 'mds.persian.datetime';
 import PersianDateTime = Mds.PersianDateTime;
 import PersianDayOfWeek = Mds.PersianDayOfWeek;
 import GregorianDayOfWeek = Mds.GregorianDayOfWeek;
-import { TemplateTypeEnum } from "../../assests/Enums";
-import { IDate, IRangeDate, IDay } from "../../assests/interfaces";
 
 @Component({
   selector: 'mds-datetime-picker-core',

@@ -1,10 +1,8 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { MdsDatetimePickerUtility } from '../assests/mds-datetime-picker.utility';
 import { MdsDatetimePickerCoreComponent } from './core/mds-datetime-picker-core.component';
-import { IDate } from '../assests/date.interface';
-import { IRangeDate } from '../assests/rangeDate.interface';
-import { TemplateTypeEnum } from "../assests/TemplateTypeEnum";
-import { TextBoxTypeEnum } from "../assests/Enums";
+import { TextBoxTypeEnum, TemplateTypeEnum } from "../assests/Enums";
+import { IDate, IRangeDate } from "../assests/interfaces";
 
 
 @Component({
