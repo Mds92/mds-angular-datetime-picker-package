@@ -311,7 +311,8 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
         minute: this.mdsPersianDateTime.minute,
         second: this.mdsPersianDateTime.second,
         millisecond: this.mdsPersianDateTime.millisecond,
-        formatString: this.mdsPersianDateTime.toString(this.format)
+        formatString: this.mdsPersianDateTime.toString(this.format),
+        utcDateTime: this.mdsPersianDateTime.toDate()
       };
     else {
       iDate = {
@@ -322,7 +323,8 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
         minute: this.dateTime.getMinutes(),
         second: this.dateTime.getSeconds(),
         millisecond: this.dateTime.getMilliseconds(),
-        formatString: MdsDatetimePickerUtility.dateTimeToString(this.dateTime)
+        formatString: MdsDatetimePickerUtility.dateTimeToString(this.dateTime),
+        utcDateTime: this.mdsPersianDateTime.toDate()
       };
     }
     if (this.persianChar)
@@ -442,7 +444,8 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
         minute: 0,
         second: 0,
         millisecond: 0,
-        formatString: this.startMdsPersianDateTime == null ? '' : this.startMdsPersianDateTime.toString(this.format)
+        formatString: this.startMdsPersianDateTime == null ? '' : this.startMdsPersianDateTime.toString(this.format),
+        utcDateTime: this.startMdsPersianDateTime == null ? null : this.startMdsPersianDateTime.toDate(),
       };
       endDate = {
         year: this.endMdsPersianDateTime == null ? 0 : this.endMdsPersianDateTime.year,
@@ -452,7 +455,8 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
         minute: 0,
         second: 0,
         millisecond: 0,
-        formatString: this.endMdsPersianDateTime == null ? '' : this.endMdsPersianDateTime.toString(this.format)
+        formatString: this.endMdsPersianDateTime == null ? '' : this.endMdsPersianDateTime.toString(this.format),
+        utcDateTime: this.endMdsPersianDateTime == null ? null : this.endMdsPersianDateTime.toDate(),
       }
     } else {
       startDate = {
@@ -463,7 +467,8 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
         minute: 0,
         second: 0,
         millisecond: 0,
-        formatString: this.startDateTime == null ? '' : MdsDatetimePickerUtility.dateTimeToString(this.startDateTime, this.format)
+        formatString: this.startDateTime == null ? '' : MdsDatetimePickerUtility.dateTimeToString(this.startDateTime, this.format),
+        utcDateTime: this.startDateTime == null ? null : this.startDateTime,
       };
       endDate = {
         year: this.endDateTime == null ? 0 : this.endDateTime.getFullYear(),
@@ -473,7 +478,8 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
         minute: 0,
         second: 0,
         millisecond: 0,
-        formatString: this.endDateTime == null ? '' : MdsDatetimePickerUtility.dateTimeToString(this.endDateTime, this.format)
+        formatString: this.endDateTime == null ? '' : MdsDatetimePickerUtility.dateTimeToString(this.endDateTime, this.format),
+        utcDateTime: this.endDateTime == null ? null : this.endDateTime,
       }
     }
     this.rangeDateChanged.emit({

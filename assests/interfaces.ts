@@ -21,6 +21,7 @@ export interface IDate {
   second: number;
   millisecond: number;
   formatString: string;
+  utcDateTime: Date;
 }
 
 export interface IRangeDate {
