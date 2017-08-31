@@ -69,9 +69,9 @@
         </tr>
         <tr *ngIf="timePicker">
           <td colspan="2"></td>
-          <td class="cursor-pointer" (click)="hourUpButtonOnClick()"><span class="rotate90">&#8249;</span></td>
-          <td class="cursor-pointer" (click)="minuteUpButtonOnClick()"><span class="rotate90">&#8249;</span></td>
-          <td class="cursor-pointer" (click)="secondUpButtonOnClick()"><span class="rotate90">&#8249;</span></td>
+          <td class="cursor-pointer" (click)="hourUpButtonOnClick()">▲</td>
+          <td class="cursor-pointer" (click)="minuteUpButtonOnClick()">▲</td>
+          <td class="cursor-pointer" (click)="secondUpButtonOnClick()">▲</td>
           <td colspan="2"></td>
         </tr>
         <tr *ngIf="timePicker">
@@ -83,9 +83,9 @@
         </tr>
         <tr *ngIf="timePicker">
           <td colspan="2"></td>
-          <td class="cursor-pointer" (click)="hourDownButtonOnClick()"><span class="rotate-90">&#8249;</span></td>
-          <td class="cursor-pointer" (click)="minuteDownButtonOnClick()"><span class="rotate-90">&#8249;</span></td>
-          <td class="cursor-pointer" (click)="secondDownButtonOnClick()"><span class="rotate-90">&#8249;</span></td>
+          <td class="cursor-pointer" (click)="hourDownButtonOnClick()">▼</td>
+          <td class="cursor-pointer" (click)="minuteDownButtonOnClick()">▼</td>
+          <td class="cursor-pointer" (click)="secondDownButtonOnClick()">▼</td>
           <td colspan="2"></td>
         </tr>
       </tbody>
@@ -155,15 +155,15 @@
   </md-grid-list>
   <hr *ngIf="timePicker" />
   <md-grid-list cols="3" rowHeight="6:1" *ngIf="timePicker">
-    <md-grid-tile><button type="button" md-button (click)="hourUpButtonOnClick()"><span class="material-icons">keyboard_arrow_up</span></button></md-grid-tile>
-    <md-grid-tile><button type="button" md-button (click)="minuteUpButtonOnClick()"><span class="material-icons">keyboard_arrow_up</span></button></md-grid-tile>
-    <md-grid-tile><button type="button" md-button (click)="secondUpButtonOnClick()"><span class="material-icons">keyboard_arrow_up</span></button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button (click)="hourUpButtonOnClick()">▲</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button (click)="minuteUpButtonOnClick()">▲</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button (click)="secondUpButtonOnClick()">▲</button></md-grid-tile>
     <md-grid-tile>{{hour}}</md-grid-tile>
     <md-grid-tile>{{minute}}</md-grid-tile>
     <md-grid-tile>{{second}}</md-grid-tile>
-    <md-grid-tile><button type="button" md-button (click)="hourDownButtonOnClick()"><span class="material-icons">keyboard_arrow_down</span></button></md-grid-tile>
-    <md-grid-tile><button type="button" md-button (click)="minuteDownButtonOnClick()"><span class="material-icons">keyboard_arrow_down</span></button></md-grid-tile>
-    <md-grid-tile><button type="button" md-button (click)="secondDownButtonOnClick()"><span class="material-icons">keyboard_arrow_down</span></button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button (click)="hourDownButtonOnClick()">▼</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button (click)="minuteDownButtonOnClick()">▼</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button (click)="secondDownButtonOnClick()">▼</button></md-grid-tile>
   </md-grid-list>
   <hr />
   <md-grid-list cols="1" rowHeight="12:1">
