@@ -10,7 +10,7 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     mdsDateTimePickerCore: MdsDatetimePickerCoreComponent;
     templateType: TemplateTypeEnum;
     textBoxType: TextBoxTypeEnum;
-    initialValue: string;
+    value: string;
     inLine: boolean;
     persianChar: boolean;
     rangeSelector: boolean;
@@ -32,6 +32,7 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     keyDown: EventEmitter<any>;
     blur: EventEmitter<any>;
     focus: EventEmitter<any>;
+    private setDateTime(dateTimeString);
     dateChangedHandler(date: IDate): void;
     rangeDateChangedHandler(rangeDate: IRangeDate): void;
     showDatePickerButtonClicked(): void;

@@ -28,16 +28,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.initialValue = !this.persianChar ? MdsDatetimePickerUtility.toEnglishString(this.initialValue) : MdsDatetimePickerUtility.toPersianNumber(this.initialValue);
-    if (this.initialValue != '' && this.rangeSelector) {
-      if (this.isPersian)
-        MdsDatetimePickerUtility.getPersianDateRanges(this.initialValue);
-      else
-        MdsDatetimePickerUtility.getDateRanges(this.initialValue);
-      this.selectedDateString = this.initialValue;
-    }
-    else
-      this.selectedDateString = this.initialValue;
+    this.setDateTime(this.value);
   }
   ngAfterViewInit() {
     this.afterViewInit = true;
@@ -47,7 +38,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
 
   @Input() templateType: TemplateTypeEnum = TemplateTypeEnum.bootstrap;
   @Input() textBoxType: TextBoxTypeEnum = TextBoxTypeEnum.withButton;
-  @Input() initialValue = '';
+  @Input() value = '';
   @Input() inLine = true;
   @Input() persianChar = true;
   @Input() rangeSelector = false;
@@ -101,24 +92,42 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   @Output() blur = new EventEmitter<any>();
   @Output() focus = new EventEmitter<any>();
 
+  private setDateTime(dateTimeString: string): void {
+    dateTimeString = !this.persianChar ? MdsDatetimePickerUtility.toEnglishString(dateTimeString) : MdsDatetimePickerUtility.toPersianNumber(dateTimeString);
+    if (dateTimeString != '' && this.rangeSelector) {
+      // validation
+      if (this.isPersian)
+        MdsDatetimePickerUtility.getPersianDateRanges(dateTimeString);
+      else
+        MdsDatetimePickerUtility.getDateRanges(dateTimeString);
+      this.selectedDateString = dateTimeString;
+    }
+    else
+      this.selectedDateString = dateTimeString;
+    this.value = this.selectedDateString;
+  }
+
   dateChangedHandler(date: IDate) {
     if (!this.afterViewInit) return;
     this.selectedDateString = date.formatString;
+    this.value = this.selectedDateString;
     this.dateChanged.emit(date);
     this.showDatePicker = false;
   }
   rangeDateChangedHandler(rangeDate: IRangeDate) {
     if (!this.afterViewInit) return;
     this.selectedDateString = '';
+    this.value = '';
     if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
       this.selectedDateString = `${rangeDate.startDate.formatString} - ${rangeDate.endDate.formatString}`;
     this.rangeDateChanged.emit(rangeDate);
     if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
       this.showDatePicker = false;
+    this.value = this.selectedDateString;
   }
   showDatePickerButtonClicked() {
     this.showDatePicker = !this.showDatePicker;
-    this.initialValue = this.selectedDateString;
+    this.value = this.selectedDateString;
     this.alreadyShowDatePickerClicked = true;
     if (this.showDatePicker) {
       const rectObject = this.element.nativeElement.getBoundingClientRect();
@@ -128,7 +137,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   }
   dateTimeTextBoxOnFocus(event) {
     this.oldDateValue = event.target.value.trim();
-    if(this.textBoxType == TextBoxTypeEnum.withoutButton)
+    if (this.textBoxType == TextBoxTypeEnum.withoutButton)
       this.showDatePickerButtonClicked();
     this.focus.emit(event);
   }
@@ -148,9 +157,13 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
       this.selectedDateString = this.oldDateValue;
       console.log(e);
     }
+    this.value = this.selectedDateString;
     this.blur.emit(event);
   }
-  dateTimeTextBoxOnKeyDown(event: any):void {
+  dateTimeTextBoxOnKeyDown(event: any): void {
     this.keyDown.emit(event);
+    if (event.keyCode != 13) return;
+    this.value = event.target.value.trim();
   }
+
 }
