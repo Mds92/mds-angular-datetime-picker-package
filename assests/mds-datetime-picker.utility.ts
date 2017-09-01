@@ -1,4 +1,5 @@
 ﻿import { Mds } from 'mds.persian.datetime';
+import { IDate } from "./interfaces";
 import PersianDateTime = Mds.PersianDateTime;
 
 export class MdsDatetimePickerUtility {

@@ -109,8 +109,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
 
   dateChangedHandler(date: IDate) {
     if (!this.afterViewInit) return;
-    this.selectedDateString = date.formatString;
-    this.value = this.selectedDateString;
+    this.value = this.selectedDateString = date.formatString;
     this.dateChanged.emit(date);
     this.showDatePicker = false;
   }
@@ -162,8 +161,25 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   }
   dateTimeTextBoxOnKeyDown(event: any): void {
     this.keyDown.emit(event);
+    
     if (event.keyCode != 13) return;
-    this.value = event.target.value.trim();
+
+    this.value = this.selectedDateString = event.target.value.trim();
+    
+    this.mdsDateTimePickerCore.setDateTimeByString(this.selectedDateString);
+    
+    if (this.isPersian && this.persianChar)
+      this.value = this.selectedDateString = MdsDatetimePickerUtility.toPersianNumber(this.selectedDateString);
+    else
+      this.value = this.selectedDateString = MdsDatetimePickerUtility.toEnglishString(this.selectedDateString);
+
+    if (this.rangeSelector) {
+      this.rangeDateChanged.emit(this.mdsDateTimePickerCore.getRangeDates);
+    }
+    else
+      this.dateChanged.emit(this.mdsDateTimePickerCore.getDate);
+
+    this.showDatePicker = false;
   }
 
 }

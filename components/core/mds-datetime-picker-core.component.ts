@@ -41,39 +41,39 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
       if (this.timePicker && !this.rangeSelector)
         this.format += '   hh:mm:ss';
     }
-    if (this.initialValue != '') {
+    if (this.value != '') {
       if (this.rangeSelector) {
         try {
           if (this.isPersian)
-            [this.startMdsPersianDateTime, this.endMdsPersianDateTime] = MdsDatetimePickerUtility.getPersianDateRanges(this.initialValue);
+            [this.startMdsPersianDateTime, this.endMdsPersianDateTime] = MdsDatetimePickerUtility.getPersianDateRanges(this.value);
           else
-            [this.startDateTime, this.endDateTime] = MdsDatetimePickerUtility.getDateRanges(this.initialValue);
+            [this.startDateTime, this.endDateTime] = MdsDatetimePickerUtility.getDateRanges(this.value);
           this.mdsPersianDateTime = this.startMdsPersianDateTime;
           this.dateTime = this.startDateTime;
         } catch (e) {
-          console.error('initialValue is in wrong format, when rangeSelector is true you should write initialValue like "1396/03/01 - 1396/03/15"', e);
+          console.error('value is in wrong format, when rangeSelector is true you should write value like "1396/03/01 - 1396/03/15"', e);
           this.startMdsPersianDateTime = null;
           this.endMdsPersianDateTime = null;
           this.startDateTime = null;
           this.endDateTime = null;
           this.mdsPersianDateTime = PersianDateTime.now;
           this.dateTime = new Date();
-          this.initialValue = '';
+          this.value = '';
         }
       }
       else {
         try {
-          this.mdsPersianDateTime = PersianDateTime.parse(this.initialValue);
-          this.dateTime = new Date(Date.parse(this.initialValue));
+          this.mdsPersianDateTime = PersianDateTime.parse(this.value);
+          this.dateTime = new Date(Date.parse(this.value));
         } catch (e) {
-          console.error('initialValue is in wrong format, you should write initialValue like "1396/03/01  11:30:27", you can remove time', e);
+          console.error('value is in wrong format, you should write value like "1396/03/01  11:30:27", you can remove time', e);
           this.startMdsPersianDateTime = null;
           this.endMdsPersianDateTime = null;
           this.startDateTime = null;
           this.endDateTime = null;
           this.mdsPersianDateTime = PersianDateTime.now;
           this.dateTime = new Date();
-          this.initialValue = '';
+          this.value = '';
         }
       }
     } else {
@@ -83,7 +83,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     this.updateYearsListForToSelect();
     this.updateMonthDays();
     this.resources = this.isPersian ? this.resourcesService.persianResources : this.resourcesService.englishResources;
-    if (this.initialValue != '') {
+    if (this.value != '') {
       if (this.rangeSelector)
         this.fireRangeChangeEvent();
       else
@@ -92,7 +92,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   }
 
   @Input() templateType: TemplateTypeEnum = TemplateTypeEnum.bootstrap;
-  @Input() initialValue = '';
+  @Input() value = '';
   @Input() persianChar = true;
   @Input() isPersian = true;
   @Input() rangeSelector = false;
@@ -300,7 +300,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     if (!this.isPersian && this.startDateTime != null && this.endDateTime != null) return false; // رنج تاریخ انتخاب شده بود
     return true;
   }
-  private getDate(): IDate {
+  get getDate(): IDate {
     let iDate: IDate;
     if (this.isPersian)
       iDate = {
@@ -332,6 +332,61 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     else
       iDate.formatString = MdsDatetimePickerUtility.toEnglishString(iDate.formatString);
     return iDate;
+  }
+  get getRangeDates(): IRangeDate {
+    let startDate: IDate;
+    let endDate: IDate;
+    if (this.isPersian) {
+      startDate = {
+        year: this.startMdsPersianDateTime == null ? 0 : this.startMdsPersianDateTime.year,
+        month: this.startMdsPersianDateTime == null ? 0 : this.startMdsPersianDateTime.month,
+        day: this.startMdsPersianDateTime == null ? 0 : this.startMdsPersianDateTime.day,
+        hour: 0,
+        minute: 0,
+        second: 0,
+        millisecond: 0,
+        formatString: this.startMdsPersianDateTime == null ? '' : this.startMdsPersianDateTime.toString(this.format),
+        utcDateTime: this.startMdsPersianDateTime == null ? null : this.startMdsPersianDateTime.toDate(),
+      };
+      endDate = {
+        year: this.endMdsPersianDateTime == null ? 0 : this.endMdsPersianDateTime.year,
+        month: this.endMdsPersianDateTime == null ? 0 : this.endMdsPersianDateTime.month,
+        day: this.endMdsPersianDateTime == null ? 0 : this.endMdsPersianDateTime.day,
+        hour: 0,
+        minute: 0,
+        second: 0,
+        millisecond: 0,
+        formatString: this.endMdsPersianDateTime == null ? '' : this.endMdsPersianDateTime.toString(this.format),
+        utcDateTime: this.endMdsPersianDateTime == null ? null : this.endMdsPersianDateTime.toDate(),
+      }
+    } else {
+      startDate = {
+        year: this.startDateTime == null ? 0 : this.startDateTime.getFullYear(),
+        month: this.startDateTime == null ? 0 : this.startDateTime.getMonth(),
+        day: this.startDateTime == null ? 0 : this.startDateTime.getDate(),
+        hour: 0,
+        minute: 0,
+        second: 0,
+        millisecond: 0,
+        formatString: this.startDateTime == null ? '' : MdsDatetimePickerUtility.dateTimeToString(this.startDateTime, this.format),
+        utcDateTime: this.startDateTime == null ? null : this.startDateTime,
+      };
+      endDate = {
+        year: this.endDateTime == null ? 0 : this.endDateTime.getFullYear(),
+        month: this.endDateTime == null ? 0 : this.endDateTime.getMonth(),
+        day: this.endDateTime == null ? 0 : this.endDateTime.getDate(),
+        hour: 0,
+        minute: 0,
+        second: 0,
+        millisecond: 0,
+        formatString: this.endDateTime == null ? '' : MdsDatetimePickerUtility.dateTimeToString(this.endDateTime, this.format),
+        utcDateTime: this.endDateTime == null ? null : this.endDateTime,
+      }
+    }
+    return {
+      startDate: startDate,
+      endDate: endDate
+    };
   }
   private updateMonthDays(): void {
     const days = new Array();
@@ -430,62 +485,10 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     this.daysInMonth = days;
   }
   private fireChangeEvent(): void {
-    this.dateChanged.emit(this.getDate());
+    this.dateChanged.emit(this.getDate);
   }
   private fireRangeChangeEvent(): void {
-    let startDate: IDate;
-    let endDate: IDate;
-    if (this.isPersian) {
-      startDate = {
-        year: this.startMdsPersianDateTime == null ? 0 : this.startMdsPersianDateTime.year,
-        month: this.startMdsPersianDateTime == null ? 0 : this.startMdsPersianDateTime.month,
-        day: this.startMdsPersianDateTime == null ? 0 : this.startMdsPersianDateTime.day,
-        hour: 0,
-        minute: 0,
-        second: 0,
-        millisecond: 0,
-        formatString: this.startMdsPersianDateTime == null ? '' : this.startMdsPersianDateTime.toString(this.format),
-        utcDateTime: this.startMdsPersianDateTime == null ? null : this.startMdsPersianDateTime.toDate(),
-      };
-      endDate = {
-        year: this.endMdsPersianDateTime == null ? 0 : this.endMdsPersianDateTime.year,
-        month: this.endMdsPersianDateTime == null ? 0 : this.endMdsPersianDateTime.month,
-        day: this.endMdsPersianDateTime == null ? 0 : this.endMdsPersianDateTime.day,
-        hour: 0,
-        minute: 0,
-        second: 0,
-        millisecond: 0,
-        formatString: this.endMdsPersianDateTime == null ? '' : this.endMdsPersianDateTime.toString(this.format),
-        utcDateTime: this.endMdsPersianDateTime == null ? null : this.endMdsPersianDateTime.toDate(),
-      }
-    } else {
-      startDate = {
-        year: this.startDateTime == null ? 0 : this.startDateTime.getFullYear(),
-        month: this.startDateTime == null ? 0 : this.startDateTime.getMonth(),
-        day: this.startDateTime == null ? 0 : this.startDateTime.getDate(),
-        hour: 0,
-        minute: 0,
-        second: 0,
-        millisecond: 0,
-        formatString: this.startDateTime == null ? '' : MdsDatetimePickerUtility.dateTimeToString(this.startDateTime, this.format),
-        utcDateTime: this.startDateTime == null ? null : this.startDateTime,
-      };
-      endDate = {
-        year: this.endDateTime == null ? 0 : this.endDateTime.getFullYear(),
-        month: this.endDateTime == null ? 0 : this.endDateTime.getMonth(),
-        day: this.endDateTime == null ? 0 : this.endDateTime.getDate(),
-        hour: 0,
-        minute: 0,
-        second: 0,
-        millisecond: 0,
-        formatString: this.endDateTime == null ? '' : MdsDatetimePickerUtility.dateTimeToString(this.endDateTime, this.format),
-        utcDateTime: this.endDateTime == null ? null : this.endDateTime,
-      }
-    }
-    this.rangeDateChanged.emit({
-      startDate: startDate,
-      endDate: endDate
-    });
+    this.rangeDateChanged.emit(this.getRangeDates);
   }
   private getStartEndDate(dateString: string): string[] {
     return dateString.split(' - ');
