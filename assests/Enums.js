@@ -10,4 +10,4 @@ var TextBoxTypeEnum;
     TextBoxTypeEnum[TextBoxTypeEnum["withButton"] = 1] = "withButton";
     TextBoxTypeEnum[TextBoxTypeEnum["withoutButton"] = 2] = "withoutButton";
 })(TextBoxTypeEnum = exports.TextBoxTypeEnum || (exports.TextBoxTypeEnum = {}));
-//# sourceMappingURL=Enums.js.map
+//# sourceMappingURL=enums.js.map

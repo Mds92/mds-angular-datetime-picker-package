@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { MdsDatetimePickerUtility } from '../assests/mds-datetime-picker.utility';
 import { MdsDatetimePickerCoreComponent } from './core/mds-datetime-picker-core.component';
-import { TextBoxTypeEnum, TemplateTypeEnum } from "../assests/Enums";
+import { TextBoxTypeEnum, TemplateTypeEnum } from "../assests/enums";
 import { IDate, IRangeDate } from "../assests/interfaces";
 
 
@@ -97,6 +97,9 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
 
   @Output() dateChanged = new EventEmitter<IDate>();
   @Output() rangeDateChanged = new EventEmitter<IRangeDate>();
+  @Output() keyDown = new EventEmitter<any>();
+  @Output() blur = new EventEmitter<any>();
+  @Output() focus = new EventEmitter<any>();
 
   dateChangedHandler(date: IDate) {
     if (!this.afterViewInit) return;
@@ -127,8 +130,9 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     this.oldDateValue = event.target.value.trim();
     if(this.textBoxType == TextBoxTypeEnum.withoutButton)
       this.showDatePickerButtonClicked();
+    this.focus.emit(event);
   }
-  dateTimeTextBoxOnBlur(event) {
+  dateTimeTextBoxOnBlur(event: any): void {
     if (this.alreadyShowDatePickerClicked && this.textBoxType == TextBoxTypeEnum.withButton) {
       this.alreadyShowDatePickerClicked = false;
       return;
@@ -143,6 +147,10 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     } catch (e) {
       this.selectedDateString = this.oldDateValue;
       console.log(e);
-    } 
+    }
+    this.blur.emit(event);
+  }
+  dateTimeTextBoxOnKeyDown(event: any):void {
+    this.keyDown.emit(event);
   }
 }
