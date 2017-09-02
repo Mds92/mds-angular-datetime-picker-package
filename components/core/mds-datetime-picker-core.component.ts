@@ -302,7 +302,8 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   }
   get getDate(): IDate {
     let iDate: IDate;
-    if (this.isPersian)
+    if (this.isPersian) {
+      if (this.mdsPersianDateTime == null) return null;
       iDate = {
         year: this.mdsPersianDateTime.year,
         month: this.mdsPersianDateTime.month,
@@ -314,7 +315,9 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
         formatString: this.mdsPersianDateTime.toString(this.format),
         utcDateTime: this.mdsPersianDateTime.toDate()
       };
+    }
     else {
+      if (this.dateTime == null) return null;
       iDate = {
         year: this.dateTime.getFullYear(),
         month: this.dateTime.getMonth(),
@@ -337,6 +340,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     let startDate: IDate;
     let endDate: IDate;
     if (this.isPersian) {
+      if (this.startMdsPersianDateTime == null && this.endMdsPersianDateTime == null) return null;
       startDate = {
         year: this.startMdsPersianDateTime == null ? 0 : this.startMdsPersianDateTime.year,
         month: this.startMdsPersianDateTime == null ? 0 : this.startMdsPersianDateTime.month,
@@ -360,6 +364,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
         utcDateTime: this.endMdsPersianDateTime == null ? null : this.endMdsPersianDateTime.toDate(),
       }
     } else {
+      if (this.startDateTime == null && this.endDateTime == null) return null;
       startDate = {
         year: this.startDateTime == null ? 0 : this.startDateTime.getFullYear(),
         month: this.startDateTime == null ? 0 : this.startDateTime.getMonth(),
@@ -549,7 +554,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   }
   setDateTimeByString(dateTimeString: string) {
     try {
-      if(dateTimeString == '') return;
+      if (dateTimeString == '') return;
       if (this.isPersian) {
         if (this.rangeSelector) {
           const startAndEndDateArray = this.getStartEndDate(dateTimeString);

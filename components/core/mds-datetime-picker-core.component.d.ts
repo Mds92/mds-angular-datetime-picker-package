@@ -9,7 +9,7 @@ export declare class MdsDatetimePickerCoreComponent implements OnInit {
     constructor(resourcesService: MdsDatetimePickerResourcesService);
     ngOnInit(): void;
     templateType: TemplateTypeEnum;
-    initialValue: string;
+    value: string;
     persianChar: boolean;
     isPersian: boolean;
     rangeSelector: boolean;
@@ -52,7 +52,8 @@ export declare class MdsDatetimePickerCoreComponent implements OnInit {
     private updateYearsListForToSelect();
     private getDayObject(year, month, day, disabled, holiday, isToday);
     private isRangeSelectorReady();
-    private getDate();
+    readonly getDate: IDate;
+    readonly getRangeDates: IRangeDate;
     private updateMonthDays();
     private fireChangeEvent();
     private fireRangeChangeEvent();

@@ -88,8 +88,7 @@ var MdsDatetimePickerComponent = (function () {
     MdsDatetimePickerComponent.prototype.dateChangedHandler = function (date) {
         if (!this.afterViewInit)
             return;
-        this.selectedDateString = date.formatString;
-        this.value = this.selectedDateString;
+        this.value = this.selectedDateString = date.formatString;
         this.dateChanged.emit(date);
         this.showDatePicker = false;
     };
@@ -145,7 +144,27 @@ var MdsDatetimePickerComponent = (function () {
         this.keyDown.emit(event);
         if (event.keyCode != 13)
             return;
-        this.value = event.target.value.trim();
+        this.value = this.selectedDateString = event.target.value.trim();
+        if (this.value == '') {
+            this.mdsDateTimePickerCore.mdsPersianDateTime = null;
+            this.mdsDateTimePickerCore.startMdsPersianDateTime = null;
+            this.mdsDateTimePickerCore.endMdsPersianDateTime = null;
+            this.mdsDateTimePickerCore.dateTime = null;
+            this.mdsDateTimePickerCore.startDateTime = null;
+            this.mdsDateTimePickerCore.endDateTime = null;
+        }
+        else {
+            this.mdsDateTimePickerCore.setDateTimeByString(this.selectedDateString);
+            if (this.isPersian && this.persianChar)
+                this.value = this.selectedDateString = mds_datetime_picker_utility_1.MdsDatetimePickerUtility.toPersianNumber(this.selectedDateString);
+            else
+                this.value = this.selectedDateString = mds_datetime_picker_utility_1.MdsDatetimePickerUtility.toEnglishString(this.selectedDateString);
+        }
+        if (this.rangeSelector)
+            this.rangeDateChanged.emit(this.mdsDateTimePickerCore.getRangeDates);
+        else
+            this.dateChanged.emit(this.mdsDateTimePickerCore.getDate);
+        this.showDatePicker = false;
     };
     __decorate([
         core_1.ViewChild('mdsDateTimePickerCore'),

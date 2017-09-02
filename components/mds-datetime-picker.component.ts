@@ -161,24 +161,27 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   }
   dateTimeTextBoxOnKeyDown(event: any): void {
     this.keyDown.emit(event);
-    
     if (event.keyCode != 13) return;
-
     this.value = this.selectedDateString = event.target.value.trim();
-    
-    this.mdsDateTimePickerCore.setDateTimeByString(this.selectedDateString);
-    
-    if (this.isPersian && this.persianChar)
-      this.value = this.selectedDateString = MdsDatetimePickerUtility.toPersianNumber(this.selectedDateString);
-    else
-      this.value = this.selectedDateString = MdsDatetimePickerUtility.toEnglishString(this.selectedDateString);
-
-    if (this.rangeSelector) {
-      this.rangeDateChanged.emit(this.mdsDateTimePickerCore.getRangeDates);
+    if (this.value == '') {
+      this.mdsDateTimePickerCore.mdsPersianDateTime = null;
+      this.mdsDateTimePickerCore.startMdsPersianDateTime = null;
+      this.mdsDateTimePickerCore.endMdsPersianDateTime = null;
+      this.mdsDateTimePickerCore.dateTime = null;
+      this.mdsDateTimePickerCore.startDateTime = null;
+      this.mdsDateTimePickerCore.endDateTime = null;
     }
+    else {
+      this.mdsDateTimePickerCore.setDateTimeByString(this.selectedDateString);
+      if (this.isPersian && this.persianChar)
+        this.value = this.selectedDateString = MdsDatetimePickerUtility.toPersianNumber(this.selectedDateString);
+      else
+        this.value = this.selectedDateString = MdsDatetimePickerUtility.toEnglishString(this.selectedDateString);
+    }    
+    if (this.rangeSelector)
+      this.rangeDateChanged.emit(this.mdsDateTimePickerCore.getRangeDates);
     else
       this.dateChanged.emit(this.mdsDateTimePickerCore.getDate);
-
     this.showDatePicker = false;
   }
 
