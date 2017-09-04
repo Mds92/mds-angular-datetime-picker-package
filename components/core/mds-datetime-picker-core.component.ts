@@ -222,8 +222,9 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   private set dateTime(dateTime: Date) {
     this._persianDateTime = null;
     this._year = this._month = this._day = 0;
-    this._yearString = this._monthName ='';
-    this._hour = this._minute = this._second = '';
+    this._yearString = this._monthName = '';
+    this._hour = this._minute = this._second = 0;
+    this._hourString = this._minuteString = this._secondString = '';
     this._dateTime = dateTime;
   }
 
@@ -341,6 +342,51 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     return this._day;
   }
 
+  private _hour: number = 0;
+  get hour(): number {
+    if (this._hour > 0) return this._hour;
+    this._hour = this.dateTime.getHours();
+    return this._hour;
+  }
+
+  private _hourString: string = '';
+  get hourString(): string {
+    if (this._hourString != '') return this._hourString;
+    this._hourString = this.hour.toString();
+    if (this.persianChar) this._hourString = MdsDatetimePickerUtility.toPersianNumber(this._hourString)
+    return this._hourString;
+  }
+
+  private _minute: number = 0;
+  get minute(): number {
+    if (this._minute > 0) return this._minute;
+    this._minute = this.dateTime.getMinutes();
+    return this._minute;
+  }
+
+  private _minuteString: string = '';
+  get minuteString(): string {
+    if (this._minuteString != '') return this._minuteString;
+    this._minuteString = this.minute.toString();
+    if (this.persianChar) this._minuteString = MdsDatetimePickerUtility.toPersianNumber(this._minuteString)
+    return this._minuteString;
+  }
+
+  private _second: number = 0;
+  get second(): number {
+    if (this._second > 0) return this._second;
+    this._second = this.dateTime.getSeconds();
+    return this._second;
+  }
+
+  private _secondString: string = '';
+  get secondString(): string {
+    if (this._secondString != '') return this._secondString;
+    this._secondString = this.second.toString();
+    if (this.persianChar) this._secondString = MdsDatetimePickerUtility.toPersianNumber(this._secondString)
+    return this._secondString;
+  }
+
   private _monthNames: string[] = []
   get monthNames(): string[] {
     if (this._monthNames.length > 0) return this._monthNames;
@@ -384,33 +430,9 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     return this._weekdayNames;
   }
 
-  private _hour: string = '';
-  get hour(): string {
-    if (this._hour != '') return this._hour;
-    this._hour = this.dateTime.getHours().toString();
-    if (this.persianChar) this._hour = MdsDatetimePickerUtility.toPersianNumber(this._hour);
-    return this._hour;
-  }
-
-  private _minute: string = '';
-  get minute(): string {
-    if (this._minute != '') return this._minute;
-    this._minute = this.dateTime.getMinutes().toString();
-    if (this.persianChar) this._minute = MdsDatetimePickerUtility.toPersianNumber(this._minute);
-    return this._minute;
-  }
-
-  private _second: string = '';
-  get second(): string {
-    if (this._second != '') return this._second;
-    this._second = this.dateTime.getSeconds().toString();
-    if (this.persianChar) this._second = MdsDatetimePickerUtility.toPersianNumber(this._second);
-    return this._second;
-  }
-
   private _iDate: IDate = null;
   get getSelectedDateObject(): IDate {
-    if(this.selectedDateTime == null) return null;
+    if (this.selectedDateTime == null) return null;
     if (this._iDate != null) return this._iDate;
     if (this.isPersian) {
       this._iDate = {
@@ -448,7 +470,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   private _selectedRangeDatesObject: IRangeDate = null;
   get getSelectedRangeDatesObject(): IRangeDate {
     if (this.selectedStartDateTime == null && this.selectedEndDateTime == null) return null;
-    if(this._selectedRangeDatesObject != null) return this._selectedRangeDatesObject;
+    if (this._selectedRangeDatesObject != null) return this._selectedRangeDatesObject;
     let startDate: IDate;
     let endDate: IDate;
     if (this.isPersian) {
@@ -811,8 +833,8 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
 
     // روز انتخاب شده
     this.selectedDateTime = this.isPersian
-      ? PersianDateTime.fromPersianDate(dayObject.year, dayObject.month, dayObject.day).toDate()
-      : new Date(dayObject.year, dayObject.month, dayObject.day);
+      ? PersianDateTime.fromPersianDateTime(dayObject.year, dayObject.month, dayObject.day, this.hour, this.minute, this.second, 0).toDate()
+      : new Date(dayObject.year, dayObject.month, dayObject.day, this.hour, this.minute, this.second);
     if (this.rangeSelector) {
       if (this.selectedStartDateTime == null || this.selectedStartDateTime >= this.dateTime) {
         this.selectedDateTime = this.selectedStartDateTime = new Date(this.selectedDateTime.getTime());

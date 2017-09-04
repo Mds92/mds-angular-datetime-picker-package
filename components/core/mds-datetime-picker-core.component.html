@@ -31,14 +31,14 @@
           <td title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="cursor-pointer">&#171;</td>
           <td title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="cursor-pointer">&#8249;</td>
           <td (click)="selectYearButtonOnClick()" class="cursor-pointer">{{yearString}}</td>
-          <td colspan="2" (click)="monthButtonOnClick()" class="cursor-pointer">{{monthName}}</td>
+          <td colspan="2" (click)="monthButtonOnClick()" class="cursor-pointer" style="min-width: 100px;">{{monthName}}</td>
           <td title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="cursor-pointer">&#8250;</td>
           <td title="{{resources.previousYear}}" (click)="previousYearButtonOnClick()" class="cursor-pointer">&#187;</td>
         </tr>
         <tr class="gray1" *ngIf="!isPersian">
           <td title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()" class="cursor-pointer">&#171;</td>
           <td title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="cursor-pointer">&#8249;</td>
-          <td colspan="2" (click)="monthButtonOnClick()" class="cursor-pointer">{{monthName}}</td>
+          <td colspan="2" (click)="monthButtonOnClick()" class="cursor-pointer" style="min-width: 100px;">{{monthName}}</td>
           <td (click)="selectYearButtonOnClick()" class="cursor-pointer">{{yearString}}</td>
           <td title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="cursor-pointer">&#8250;</td>
           <td title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="cursor-pointer">&#187;</td>
@@ -76,9 +76,9 @@
         </tr>
         <tr *ngIf="timePicker">
           <td colspan="2"></td>
-          <td>{{hour}}</td>
-          <td>{{minute}}</td>
-          <td>{{second}}</td>
+          <td>{{hourString}}</td>
+          <td>{{minuteString}}</td>
+          <td>{{secondString}}</td>
           <td colspan="2"></td>
         </tr>
         <tr *ngIf="timePicker">

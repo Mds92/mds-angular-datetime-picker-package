@@ -69,30 +69,22 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     * tt: ب.ظ یا ق.ظ 
     * t: حرف اول از ب.ظ یا ق.ظ 
     **/
-  @Input() format = ''; // فرمت نوشتن تاریخ در تارگت
-
-  textboxValue = '';
-  /*
-  get getTopOffset(): string {
-    return (this.topOffset + 23) + 'px';
-  }
-  get getLeftOffset(): string {
-    return this.leftOffset + 'px';
-  }
-  */
-
-  private topOffset = 0;
-  private leftOffset = 0;
-  private showDatePicker = false;
-  private afterViewInit = false;
-  private alreadyShowDatePickerClicked = false;
-  private oldDateValue = '';
+  @Input() format = ''; 
 
   @Output() dateChanged = new EventEmitter<IDate>();
   @Output() rangeDateChanged = new EventEmitter<IRangeDate>();
   @Output() keyDown = new EventEmitter<any>();
   @Output() blur = new EventEmitter<any>();
   @Output() focus = new EventEmitter<any>();
+
+  textboxValue = '';
+
+  private topOffset = 0;
+  private leftOffset = 0;
+  private showDatePicker = false;
+  private afterViewInit = false;
+  private alreadyShowDatePickerClicked = false;
+  private oldDateValue = '';  
 
   private setDateTime(dateTimeString: string): void {
     this.mdsDateTimePickerCore.setDateTimeByString(dateTimeString);
@@ -130,6 +122,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     }
   }
   dateTimeTextBoxOnFocus(event) {
+    document.getElementsByTagName('html')[0].click();
     this.oldDateValue = event.target.value.trim();
     if(this.oldDateValue != '')
       this.mdsDateTimePickerCore.setDateTimeByString(this.oldDateValue);
@@ -164,5 +157,4 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
       this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
     this.showDatePicker = false;
   }
-
 }
