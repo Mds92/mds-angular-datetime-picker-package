@@ -10,7 +10,7 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     mdsDateTimePickerCore: MdsDatetimePickerCoreComponent;
     templateType: TemplateTypeEnum;
     textBoxType: TextBoxTypeEnum;
-    value: string;
+    initialValue: string;
     inLine: boolean;
     persianChar: boolean;
     rangeSelector: boolean;
@@ -18,9 +18,7 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     timePicker: boolean;
     placeHolder: string;
     format: string;
-    selectedDateString: string;
-    readonly getTopOffset: string;
-    readonly getLeftOffset: string;
+    textboxValue: string;
     private topOffset;
     private leftOffset;
     private showDatePicker;
