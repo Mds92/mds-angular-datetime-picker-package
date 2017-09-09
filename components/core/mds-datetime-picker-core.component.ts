@@ -199,6 +199,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
         this.fireChangeEvent()
       this.updateMonthDays();
     } catch (e) {
+      this.clearDateTimePicker();
       throw new Error(e);
     }
   }
@@ -221,7 +222,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   }
   private set dateTime(dateTime: Date) {
     this._persianDateTime = null;
-    this._year = this._month = this._day = 0;
+    this._year = this._month = 0;
     this._yearString = this._monthName = '';
     this._hour = this._minute = this._second = 0;
     this._hourString = this._minuteString = this._secondString = '';
@@ -316,7 +317,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   }
 
   private _month: number = 0;
-  get month(): number {
+  private get month(): number {
     if (this._month > 0) return this._month;
     this._month = this.isPersian
       ? PersianDateTime.getPersianMonthIndex(this.persianDateTime.monthName)
@@ -331,15 +332,6 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
       ? this.persianDateTime.monthName
       : PersianDateTime.getGregorianMonthNames[this.month];
     return this._monthName;
-  }
-
-  private _day: number = 0;
-  get day(): number {
-    if (this._day > 0) return this._day;
-    this._day = this.isPersian
-      ? this.persianDateTime.day
-      : this.dateTime.getDate();
-    return this._day;
   }
 
   private _hour: number = 0;
@@ -466,6 +458,11 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
       this._iDate.formatString = MdsDatetimePickerUtility.toEnglishString(this._iDate.formatString);
     return this._iDate;
   }
+  get getSelectedDay(): number {
+    if (this.getSelectedDateObject == null || this.rangeSelector) return 0;
+    return this.getSelectedDateObject.day;
+  }
+
 
   private _selectedRangeDatesObject: IRangeDate = null;
   get getSelectedRangeDatesObject(): IRangeDate {
@@ -548,7 +545,9 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     let isWithinDateRange = false;
     let isStartOrEndOfRange = false;
     if (this.rangeSelector && this.selectedStartDateTime != null) {
-      const dateTime = this.isPersian ? PersianDateTime.fromPersianDate(year, month, day).toDate() : new Date(year, month, day);
+      const dateTime = this.isPersian
+        ? PersianDateTime.fromPersianDate(year, month, day).toDate()
+        : new Date(year, month, day);
       isWithinDateRange = dateTime >= this.selectedStartDateTime;
       if (this.selectedEndDateTime != null)
         isWithinDateRange = isWithinDateRange && dateTime <= this.selectedEndDateTime;
@@ -630,13 +629,13 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
       // روزهای ماه قبل
       if (this.gregorianStartDayOfMonth != GregorianDayOfWeek.Saturday) {
         const dateTimeClone = new Date(this.dateTime.getTime());
-        dateTimeClone.setMonth(this.dateTime.getMonth() - 1);
+        dateTimeClone.setMonth(this.dateTime.getMonth());
         year = dateTimeClone.getFullYear();
         month = dateTimeClone.getMonth();
         const previousMonthDays = new Date(dateTimeClone.getFullYear(), dateTimeClone.getMonth(), 0).getDate();
         for (let i = previousMonthDays - this.gregorianStartDayOfMonth + 1; i <= previousMonthDays; i++) {
           counter++;
-          days.push(this.getDayObject(year, month, i, true, false, false));
+          days.push(this.getDayObject(year, month - 1, i, true, false, false));
         }
       }
       // روزهای ماه جاری
@@ -648,9 +647,9 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
         days.push(this.getDayObject(year, month, i, false, false, isYearAndMonthInCurrentMonth && i == today));
       }
       // روزهای ماه بعد
-      const nectMonthDateTime = new Date(year, month + 1, 1);
-      year = nectMonthDateTime.getFullYear();
-      month = nectMonthDateTime.getMonth();
+      const nextMonthDateTime = new Date(year, month + 1, 1);
+      year = nextMonthDateTime.getFullYear();
+      month = nextMonthDateTime.getMonth();
       for (let i = 1; counter <= (6 * 7) - 1; i++) {
         counter++;
         days.push(this.getDayObject(year, month, i, true, false, false));
@@ -673,12 +672,11 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     this.rangeDateChanged.emit(this.getSelectedRangeDatesObject);
   }
 
-  private resetToFalseRangeParametersInMonthDays(): Observable<{}> {
+  private resetToFalseRangeParametersInMonthDays() {
     for (let iday of this.daysInMonth) {
       iday.isWithinRange = false;
       iday.isStartOrEndOfRange = false;
     }
-    return new EmptyObservable();
   }
 
   /**
@@ -690,13 +688,11 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     this.yearSelectorVisibilityStateName = 'hidden';
   }
   resetIncompleteRanges(): void {
-    setTimeout(() => {
-      if (this.selectedStartDateTime == null || this.selectedEndDateTime == null) {
-        this.selectedStartDateTime = this.selectedEndDateTime = null;
-        this._selectedPersianStartDateTime = this._selectedPersianEndDateTime = null;
-        this.resetToFalseRangeParametersInMonthDays().subscribe();;
-      }
-    }, 1);
+    if (this.selectedStartDateTime == null || this.selectedEndDateTime == null) {
+      this.selectedStartDateTime = this.selectedEndDateTime = null;
+      this._selectedPersianStartDateTime = this._selectedPersianEndDateTime = null;
+      this.resetToFalseRangeParametersInMonthDays();
+    }
   }
 
   /**
@@ -797,13 +793,13 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     this.hideSelecMonthAndYearBlock();
   }
   todayButtonOnClick(): void {
-    const persianDateTimeNow = PersianDateTime.now;
     const dateTimeNow = new Date();
     if (this.dateTime.getFullYear() != dateTimeNow.getFullYear() || this.dateTime.getMonth() != dateTimeNow.getMonth()) {
       this.dateTime = dateTimeNow;
       this.updateMonthDays();
     } else
       this.dateTime = dateTimeNow;
+    this.selectedDateTime = dateTimeNow;
     if (!this.rangeSelector) this.fireChangeEvent();
   }
   dayButtonOnClick(dayObject: IDay): void {
@@ -824,10 +820,10 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
 
     // نال کردن تاریخ های شروع و پایان برای انتخاب مجدد رنج تاریخ 
     // در صورتی که رنج گرفته شده بود
-    if (this.selectedStartDateTime != null && this.selectedEndDateTime != null) {
+    if (this.rangeSelector && this.selectedStartDateTime != null && this.selectedEndDateTime != null) {
       this.selectedStartDateTime = null;
       this.selectedEndDateTime = null;
-      this.resetToFalseRangeParametersInMonthDays().subscribe();
+      this.resetToFalseRangeParametersInMonthDays();
     }
     // \\
 
@@ -836,13 +832,15 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
       ? PersianDateTime.fromPersianDateTime(dayObject.year, dayObject.month, dayObject.day, this.hour, this.minute, this.second, 0).toDate()
       : new Date(dayObject.year, dayObject.month, dayObject.day, this.hour, this.minute, this.second);
     if (this.rangeSelector) {
-      if (this.selectedStartDateTime == null || this.selectedStartDateTime >= this.dateTime) {
-        this.selectedDateTime = this.selectedStartDateTime = new Date(this.selectedDateTime.getTime());
-        this.resetToFalseRangeParametersInMonthDays().subscribe(
-          () => {
-            dayObject.isStartOrEndOfRange = true;
-          }
-        );
+      // صفر کردن زمان
+      this.selectedDateTime.setHours(0);
+      this.selectedDateTime.setMinutes(0);
+      this.selectedDateTime.setSeconds(0);
+      this.selectedDateTime.setMilliseconds(0);
+      if (this.selectedStartDateTime == null || this.selectedStartDateTime >= this.selectedDateTime) {
+        this.resetToFalseRangeParametersInMonthDays();
+        this.selectedStartDateTime = new Date(this.selectedDateTime.getTime());
+        dayObject.isStartOrEndOfRange = true;
       } else {
         this.selectedEndDateTime = new Date(this.selectedDateTime.getTime());
         dayObject.isStartOrEndOfRange = true;
@@ -850,7 +848,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     }
     if (this.rangeSelector && this.selectedStartDateTime != null && this.selectedEndDateTime != null)
       this.fireRangeChangeEvent();
-    else
+    else if (!this.rangeSelector)
       this.fireChangeEvent();
   }
   dayButtonOnHover(dayObject: IDay): void {
@@ -869,7 +867,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   rejectButtonOnClick(): void {
     this.selectedDateTime = null;
     this.selectedStartDateTime = this.selectedEndDateTime = null;
-    this.resetToFalseRangeParametersInMonthDays().subscribe();
+    this.resetToFalseRangeParametersInMonthDays();
     this.fireRangeChangeEvent();
   }
   confirmButtonOnClick(): void {

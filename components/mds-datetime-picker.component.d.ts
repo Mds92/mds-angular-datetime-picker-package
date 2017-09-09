@@ -17,7 +17,13 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     isPersian: boolean;
     timePicker: boolean;
     placeHolder: string;
+    buttonIcon: string;
     format: string;
+    dateChanged: EventEmitter<IDate>;
+    rangeDateChanged: EventEmitter<IRangeDate>;
+    keyDown: EventEmitter<any>;
+    blur: EventEmitter<any>;
+    focus: EventEmitter<any>;
     textboxValue: string;
     private topOffset;
     private leftOffset;
@@ -25,11 +31,6 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     private afterViewInit;
     private alreadyShowDatePickerClicked;
     private oldDateValue;
-    dateChanged: EventEmitter<IDate>;
-    rangeDateChanged: EventEmitter<IRangeDate>;
-    keyDown: EventEmitter<any>;
-    blur: EventEmitter<any>;
-    focus: EventEmitter<any>;
     private setDateTime(dateTimeString);
     dateChangedHandler(date: IDate): void;
     rangeDateChangedHandler(rangeDate: IRangeDate): void;

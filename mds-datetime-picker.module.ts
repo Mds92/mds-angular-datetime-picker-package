@@ -9,7 +9,7 @@ import { MdsDatetimePickerCoreComponent } from './components/core/mds-datetime-p
 import { MdsDatetimePickerResourcesService } from './services/mds-datetime-picker-resources.service';
 
 @NgModule({
-  imports: [CommonModule, BrowserAnimationsModule, MaterialModule, FormsModule, MdMenuModule],
+  imports: [CommonModule, BrowserAnimationsModule, MaterialModule, FormsModule],
   exports: [MdsDatetimePickerComponent, MdsDatetimePickerCoreComponent],
   declarations: [MdsDatetimePickerComponent, MdsDatetimePickerCoreComponent],
   providers: [MdsDatetimePickerResourcesService]

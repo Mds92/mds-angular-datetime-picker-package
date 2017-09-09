@@ -59,8 +59,8 @@ export class MdsDatetimePickerUtility {
     dateTimeString = dateTimeString.replace(/yyyy/mg, this.zeroPad(date.getFullYear(), '0000'));
     dateTimeString = dateTimeString.replace(/yy/mg, this.zeroPad(date.getFullYear(), '00'));
     dateTimeString = dateTimeString.replace(/MMMM/mg, this.getGregorianMonthName(date.getMonth()));
-    dateTimeString = dateTimeString.replace(/MM/mg, this.zeroPad(date.getMonth(), '00'));
-    dateTimeString = dateTimeString.replace(/M/mg, date.getMonth().toString());
+    dateTimeString = dateTimeString.replace(/MM/mg, this.zeroPad(date.getMonth() + 1, '00'));
+    dateTimeString = dateTimeString.replace(/M/mg, (date.getMonth() + 1).toString());
     dateTimeString = dateTimeString.replace(/dddd/mg, this.getGregorianWeekDayName(date.getDay()));
     dateTimeString = dateTimeString.replace(/dd/mg, this.zeroPad(date.getDate(), '00'));
     dateTimeString = dateTimeString.replace(/d/mg, date.getDate().toString());

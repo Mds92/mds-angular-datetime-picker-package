@@ -1,6 +1,6 @@
 ﻿<ng-container *ngIf="templateType == 1">
   <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="monthSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="monthsBlockVisibilityAnimationDone($event)">
-    <table class="table table-striped text-center">
+    <table class="table table-sm table-striped text-center">
       <tbody>
         <tr *ngFor="let row of [1, 2, 3, 4]">
           <td *ngFor="let col of [1, 2, 3]" (click)="monthOnClick(monthNames[(row - 1) * 3 + col - 1])" class="cursor-pointer">
@@ -11,7 +11,7 @@
     </table>
   </div>
   <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="yearSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="yearsBlockVisibilityAnimationDone($event)">
-    <table class="table table-striped text-center">
+    <table class="table table-sm table-striped text-center">
       <tbody>
         <tr *ngFor="let row of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]">
           <ng-container *ngFor="let col of [1, 2, 3, 4, 5]">
@@ -25,18 +25,18 @@
     </table>
   </div>
   <div>
-    <table class="table table-condensed text-center">
+    <table class="table table-sm table-condensed text-center">
       <thead>
         <tr class="gray1" *ngIf="isPersian">
           <td colspan="100">
             <table class="width100">
               <tr>
-                <td title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="cursor-pointer">&#171;</td>
-                <td title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="cursor-pointer">&#8249;</td>
+                <td title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="cursor-pointer font18 minWidth30px">&#171;</td>
+                <td title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="cursor-pointer font18 minWidth30px">&#8249;</td>
                 <td (click)="selectYearButtonOnClick()" class="cursor-pointer">{{yearString}}</td>
-                <td colspan="2" (click)="monthButtonOnClick()" class="cursor-pointer" style="min-width: 100px;">{{monthName}}</td>
-                <td title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="cursor-pointer">&#8250;</td>
-                <td title="{{resources.previousYear}}" (click)="previousYearButtonOnClick()" class="cursor-pointer">&#187;</td>
+                <td colspan="2" (click)="monthButtonOnClick()" class="cursor-pointer">{{monthName}}</td>
+                <td title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="cursor-pointer font18 minWidth30px">&#8250;</td>
+                <td title="{{resources.previousYear}}" (click)="previousYearButtonOnClick()" class="cursor-pointer font18 minWidth30px">&#187;</td>
               </tr>
             </table>
           </td>
@@ -45,21 +45,21 @@
           <td colspan="100">
             <table class="width100">
               <tr>
-                <td title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()" class="cursor-pointer">&#171;</td>
-                <td title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="cursor-pointer">&#8249;</td>
-                <td colspan="2" (click)="monthButtonOnClick()" class="cursor-pointer" style="min-width: 100px;">{{monthName}}</td>
+                <td title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()" class="cursor-pointer font18 minWidth30px">&#171;</td>
+                <td title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="cursor-pointer font18 minWidth30px">&#8249;</td>
+                <td colspan="2" (click)="monthButtonOnClick()" class="cursor-pointer">{{monthName}}</td>
                 <td (click)="selectYearButtonOnClick()" class="cursor-pointer">{{yearString}}</td>
-                <td title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="cursor-pointer">&#8250;</td>
-                <td title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="cursor-pointer">&#187;</td>
+                <td title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="cursor-pointer font18 minWidth30px">&#8250;</td>
+                <td title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="cursor-pointer font18 minWidth30px">&#187;</td>
               </tr>
             </table>
           </td>
         </tr>
         <tr *ngIf="rangeSelector">
           <td colspan="2"></td>
-          <td [ngClass]="{'text-muted': isRejectButtonDisable}" title="{{resources.Reject}}" (click)="rejectButtonOnClick()" class="cursor-pointer">&#10003;</td>
+          <td [ngClass]="{'text-muted': isRejectButtonDisable}" title="{{resources.Reject}}" (click)="rejectButtonOnClick()" class="cursor-pointer font18">&#215;</td>
           <td></td>
-          <td [ngClass]="{'text-muted': isConfirmButtonDisable}" title="{{resources.Confirm}}" (click)="confirmButtonOnClick()" class="cursor-pointer">&#215;</td>
+          <td [ngClass]="{'text-muted': isConfirmButtonDisable}" title="{{resources.Confirm}}" (click)="confirmButtonOnClick()" class="cursor-pointer font18">&#10003;</td>
           <td colspan="2"></td>
         </tr>
         <tr class="gray2">
@@ -72,7 +72,7 @@
             <td *ngIf="daysInMonth[(row - 1) * 7 + col - 1] as dayObject" data-mdspersiancalendar [@daysStateName]="daysAnimationStateName"
               class="cursor-pointer" [ngClass]="{'text-danger': dayObject.holiday,
                         'today': dayObject.today,
-                        'warning1': dayObject.day == day,
+                        'warning1': dayObject.day == getSelectedDay,
                         'selected-range': dayObject.isWithinRange,
                         'text-muted': dayObject.disable}" (click)="dayButtonOnClick(dayObject)" (mouseenter)="dayButtonOnHover(dayObject)">
               <span [ngClass]="{'selected-day': dayObject.isStartOrEndOfRange}" data-mdspersiancalendar>{{dayObject.dayString}}</span>
@@ -128,25 +128,25 @@
     </md-grid-list>
   </div>
   <md-grid-list cols="7" rowHeight="2:1" class="gray1" *ngIf="isPersian">
-    <md-grid-tile><button md-button i18n-title="Next Year" title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()">&#171;</button></md-grid-tile>
-    <md-grid-tile><button md-button type="button" i18n-title="Next Month" title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()">&#8249;</button></md-grid-tile>
+    <md-grid-tile><button md-button i18n-title="Next Year" title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="font18">&#171;</button></md-grid-tile>
+    <md-grid-tile><button md-button type="button" i18n-title="Next Month" title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="font18">&#8249;</button></md-grid-tile>
     <md-grid-tile><button md-button type="button" (click)="selectYearButtonOnClick()">{{yearString}}</button></md-grid-tile>
-    <md-grid-tile [colspan]="2"><button md-button type="button" (click)="monthButtonOnClick()" style="min-width: 100px;">{{monthName}}</button></md-grid-tile>
-    <md-grid-tile><button md-button type="button" i18n-title="Previous Month" title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()">&#8250;</button></md-grid-tile>
-    <md-grid-tile><button md-button type="button" i18n-title="Previous Year" title="{{resources.previousYear}}" (click)="previousYearButtonOnClick()">&#187;</button></md-grid-tile>
+    <md-grid-tile [colspan]="2"><button md-button type="button" (click)="monthButtonOnClick()">{{monthName}}</button></md-grid-tile>
+    <md-grid-tile><button md-button type="button" i18n-title="Previous Month" title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="font18">&#8250;</button></md-grid-tile>
+    <md-grid-tile><button md-button type="button" i18n-title="Previous Year" title="{{resources.previousYear}}" (click)="previousYearButtonOnClick()" class="font18">&#187;</button></md-grid-tile>
   </md-grid-list>
   <md-grid-list cols="7" rowHeight="2:1" class="gray1" *ngIf="!isPersian">
-    <md-grid-tile><button type="button" md-button i18n-title="Previous Year" title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()">&#171;</button></md-grid-tile>
-    <md-grid-tile><button type="button" md-button i18n-title="Previous Month" title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()">&#8249;</button></md-grid-tile>
-    <md-grid-tile [colspan]="2"><button md-button type="button" (click)="monthButtonOnClick()" style="min-width: 100px;">{{monthName}}</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button i18n-title="Previous Year" title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()" class="font18">&#171;</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button i18n-title="Previous Month" title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="font18">&#8249;</button></md-grid-tile>
+    <md-grid-tile [colspan]="2"><button md-button type="button" (click)="monthButtonOnClick()">{{monthName}}</button></md-grid-tile>
     <md-grid-tile><button type="button" md-button (click)="selectYearButtonOnClick()">{{yearString}}</button></md-grid-tile>
-    <md-grid-tile><button type="button" md-button i18n-title="Next Month" title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()">&#8250;</button></md-grid-tile>
-    <md-grid-tile><button type="button" md-button i18n-title="Next Year" title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()">&#187;</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button i18n-title="Next Month" title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="font18">&#8250;</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button i18n-title="Next Year" title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="font18">&#187;</button></md-grid-tile>
   </md-grid-list>
   <md-grid-list cols="4" rowHeight="3:1" *ngIf="rangeSelector">
     <md-grid-tile></md-grid-tile>
-    <md-grid-tile><button type="button" md-button [disabled]="isRejectButtonDisable" title="{{resources.Reject}}" (click)="rejectButtonOnClick()"><span class="material-icons">clear</span></button></md-grid-tile>
-    <md-grid-tile><button type="button" md-button [disabled]="isConfirmButtonDisable" title="{{resources.Confirm}}" (click)="confirmButtonOnClick()"><span class="material-icons">done</span></button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button [disabled]="isRejectButtonDisable" title="{{resources.Reject}}" (click)="rejectButtonOnClick()" class="font18">&#215;</button></md-grid-tile>
+    <md-grid-tile><button type="button" md-button [disabled]="isConfirmButtonDisable" title="{{resources.Confirm}}" (click)="confirmButtonOnClick()" class="font18">&#10003;</button></md-grid-tile>
     <md-grid-tile></md-grid-tile>
   </md-grid-list>
   <md-grid-list cols="7" rowHeight="1.6:1" class="gray2">
@@ -158,7 +158,7 @@
     <md-grid-tile *ngFor="let dayObject of daysInMonth; let i = index;">
       <button type="button" md-button data-mdspersiancalendar [@daysStateName]="daysAnimationStateName" [ngClass]="{'text-danger': dayObject.holiday,
                         'today': dayObject.today,
-                        'warning1': dayObject.day == day,
+                        'warning1': dayObject.day == getSelectedDay,
                         'selected-range': dayObject.isWithinRange,
                         'text-muted': dayObject.disable}" (click)="dayButtonOnClick(dayObject)" (mouseenter)="dayButtonOnHover(dayObject)">
       <span [ngClass]="{'selected-day': dayObject.isStartOrEndOfRange}" data-mdspersiancalendar >{{dayObject.dayString}}</span>
@@ -170,9 +170,9 @@
     <md-grid-tile><button type="button" md-button (click)="hourUpButtonOnClick()">▲</button></md-grid-tile>
     <md-grid-tile><button type="button" md-button (click)="minuteUpButtonOnClick()">▲</button></md-grid-tile>
     <md-grid-tile><button type="button" md-button (click)="secondUpButtonOnClick()">▲</button></md-grid-tile>
-    <md-grid-tile>{{hour}}</md-grid-tile>
-    <md-grid-tile>{{minute}}</md-grid-tile>
-    <md-grid-tile>{{second}}</md-grid-tile>
+    <md-grid-tile>{{hourString}}</md-grid-tile>
+    <md-grid-tile>{{minuteString}}</md-grid-tile>
+    <md-grid-tile>{{secondString}}</md-grid-tile>
     <md-grid-tile><button type="button" md-button (click)="hourDownButtonOnClick()">▼</button></md-grid-tile>
     <md-grid-tile><button type="button" md-button (click)="minuteDownButtonOnClick()">▼</button></md-grid-tile>
     <md-grid-tile><button type="button" md-button (click)="secondDownButtonOnClick()">▼</button></md-grid-tile>

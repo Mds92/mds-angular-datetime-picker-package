@@ -26,7 +26,13 @@ var MdsDatetimePickerComponent = (function () {
         this.isPersian = true;
         this.timePicker = true;
         this.placeHolder = '';
+        this.buttonIcon = '📅';
         this.format = '';
+        this.dateChanged = new core_1.EventEmitter();
+        this.rangeDateChanged = new core_1.EventEmitter();
+        this.keyDown = new core_1.EventEmitter();
+        this.blur = new core_1.EventEmitter();
+        this.focus = new core_1.EventEmitter();
         this.textboxValue = '';
         this.topOffset = 0;
         this.leftOffset = 0;
@@ -34,11 +40,6 @@ var MdsDatetimePickerComponent = (function () {
         this.afterViewInit = false;
         this.alreadyShowDatePickerClicked = false;
         this.oldDateValue = '';
-        this.dateChanged = new core_1.EventEmitter();
-        this.rangeDateChanged = new core_1.EventEmitter();
-        this.keyDown = new core_1.EventEmitter();
-        this.blur = new core_1.EventEmitter();
-        this.focus = new core_1.EventEmitter();
         var doc = document.getElementsByTagName('html')[0];
         doc.addEventListener('click', function (event) {
             var targetElement = event.target;
@@ -53,9 +54,18 @@ var MdsDatetimePickerComponent = (function () {
         }, false);
     }
     MdsDatetimePickerComponent.prototype.ngOnInit = function () {
+        this.initialValue = !this.persianChar ? mds_datetime_picker_utility_1.MdsDatetimePickerUtility.toEnglishString(this.initialValue) : mds_datetime_picker_utility_1.MdsDatetimePickerUtility.toPersianNumber(this.initialValue);
+        if (this.initialValue != '' && this.rangeSelector) {
+            if (this.isPersian)
+                mds_datetime_picker_utility_1.MdsDatetimePickerUtility.getPersianDateRanges(this.initialValue);
+            else
+                mds_datetime_picker_utility_1.MdsDatetimePickerUtility.getDateRanges(this.initialValue);
+            this.textboxValue = this.initialValue;
+        }
+        else
+            this.textboxValue = this.initialValue;
     };
     MdsDatetimePickerComponent.prototype.ngAfterViewInit = function () {
-        this.setDateTime(this.initialValue);
         this.afterViewInit = true;
     };
     MdsDatetimePickerComponent.prototype.setDateTime = function (dateTimeString) {
@@ -95,10 +105,16 @@ var MdsDatetimePickerComponent = (function () {
         }
     };
     MdsDatetimePickerComponent.prototype.dateTimeTextBoxOnFocus = function (event) {
+        if (this.alreadyShowDatePickerClicked) {
+            this.alreadyShowDatePickerClicked = false;
+            return;
+        }
+        this.alreadyShowDatePickerClicked = false;
+        document.getElementsByTagName('html')[0].click();
         this.oldDateValue = event.target.value.trim();
-        this.mdsDateTimePickerCore.setDateTimeByString(this.oldDateValue);
-        if (this.textBoxType == enums_1.TextBoxTypeEnum.withoutButton)
-            this.showDatePickerButtonClicked();
+        if (this.oldDateValue != '')
+            this.mdsDateTimePickerCore.setDateTimeByString(this.oldDateValue);
+        this.showDatePickerButtonClicked();
         this.focus.emit(event);
     };
     MdsDatetimePickerComponent.prototype.dateTimeTextBoxOnBlur = function (event) {
@@ -112,10 +128,11 @@ var MdsDatetimePickerComponent = (function () {
                 this.textboxValue = mds_datetime_picker_utility_1.MdsDatetimePickerUtility.toPersianNumber(this.textboxValue);
             else
                 this.textboxValue = mds_datetime_picker_utility_1.MdsDatetimePickerUtility.toEnglishString(this.textboxValue);
+            this.textboxValue = this.textboxValue.trim();
         }
         catch (e) {
             this.textboxValue = this.oldDateValue;
-            console.log(e);
+            console.error(e);
         }
         this.blur.emit(event);
     };
@@ -170,6 +187,10 @@ var MdsDatetimePickerComponent = (function () {
         core_1.Input(),
         __metadata("design:type", Object)
     ], MdsDatetimePickerComponent.prototype, "placeHolder", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], MdsDatetimePickerComponent.prototype, "buttonIcon", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Object)

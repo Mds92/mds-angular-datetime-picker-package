@@ -28,9 +28,18 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.initialValue = !this.persianChar ? MdsDatetimePickerUtility.toEnglishString(this.initialValue) : MdsDatetimePickerUtility.toPersianNumber(this.initialValue);
+    if (this.initialValue != '' && this.rangeSelector) {
+      if (this.isPersian)
+        MdsDatetimePickerUtility.getPersianDateRanges(this.initialValue);
+      else
+        MdsDatetimePickerUtility.getDateRanges(this.initialValue);
+      this.textboxValue = this.initialValue;
+    }
+    else
+      this.textboxValue = this.initialValue;
   }
   ngAfterViewInit() {
-    this.setDateTime(this.initialValue);
     this.afterViewInit = true;
   }
 
@@ -45,6 +54,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   @Input() isPersian = true;
   @Input() timePicker = true;
   @Input() placeHolder = '';
+  @Input() buttonIcon = '📅';
   /**
     * فرمت پیش فرض 1393/09/14   13:49:40 
     * yyyy: سال چهار رقمی 
@@ -69,7 +79,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     * tt: ب.ظ یا ق.ظ 
     * t: حرف اول از ب.ظ یا ق.ظ 
     **/
-  @Input() format = ''; 
+  @Input() format = '';
 
   @Output() dateChanged = new EventEmitter<IDate>();
   @Output() rangeDateChanged = new EventEmitter<IRangeDate>();
@@ -84,7 +94,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   private showDatePicker = false;
   private afterViewInit = false;
   private alreadyShowDatePickerClicked = false;
-  private oldDateValue = '';  
+  private oldDateValue = '';
 
   private setDateTime(dateTimeString: string): void {
     this.mdsDateTimePickerCore.setDateTimeByString(dateTimeString);
@@ -122,12 +132,16 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     }
   }
   dateTimeTextBoxOnFocus(event) {
+    if (this.alreadyShowDatePickerClicked) {
+      this.alreadyShowDatePickerClicked = false;
+      return;
+    }
+    this.alreadyShowDatePickerClicked = false;
     document.getElementsByTagName('html')[0].click();
     this.oldDateValue = event.target.value.trim();
-    if(this.oldDateValue != '')
+    if (this.oldDateValue != '')
       this.mdsDateTimePickerCore.setDateTimeByString(this.oldDateValue);
-    if (this.textBoxType == TextBoxTypeEnum.withoutButton)
-      this.showDatePickerButtonClicked();
+    this.showDatePickerButtonClicked();
     this.focus.emit(event);
   }
   dateTimeTextBoxOnBlur(event: any): void {
@@ -141,9 +155,10 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
         this.textboxValue = MdsDatetimePickerUtility.toPersianNumber(this.textboxValue);
       else
         this.textboxValue = MdsDatetimePickerUtility.toEnglishString(this.textboxValue);
+      this.textboxValue = this.textboxValue.trim();
     } catch (e) {
       this.textboxValue = this.oldDateValue;
-      console.log(e);
+      console.error(e);
     }
     this.blur.emit(event);
   }

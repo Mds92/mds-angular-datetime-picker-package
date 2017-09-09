@@ -6,7 +6,7 @@
   background: #fff;
   position: absolute;
   z-index: 999999;
-  top: 50px;
+  top: 53px;
   left: 0;
   min-width: 300px;
   border: solid 1px #e7e7e7;
@@ -33,6 +33,10 @@
 
 .mat-form-field{
   width: 100%;
+}
+
+.calendar-icon{
+  font-size: 18px;
 }
 
 
