@@ -38,6 +38,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     }
     else
       this.textboxValue = this.initialValue;
+    if (!this.isPersian) this.persianChar = false;
   }
   ngAfterViewInit() {
     this.afterViewInit = true;

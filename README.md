@@ -41,7 +41,7 @@ export class AppModule { }
 
 | Name        | Type           | Values            | Description  |
 --------------|----------------|-------------------|--------------|
-**value** | string |  | Value of selected Datetime Picker<br> You can initial date time picker with it.<br> Example:<br> `1396/06/06` or `1396/05/06  10:20:00` for persian<br> `2017/06/06` or `2017-06-06  10:20` for gregorian 
+**initialValue** | string |  | Initial value of datetime Picker<br> You can initial date time picker with it.<br> Example:<br> `1396/06/06` or `1396/05/06  10:20:00` for persian<br> `2017/06/06` or `2017-06-06  10:20` for gregorian 
 **isPersian** | boolean | true, [false] | Is date time picker persian or gregorian
 **timePicker** | boolean | true, [false] | Is time picker enable
 **templateType** | Enumeration | 1, [2] | You can choose how your date time picker generate<br>In materials you have animations<br> 1 = bootstrap <br> 2 = material
