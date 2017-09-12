@@ -44,7 +44,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     this.afterViewInit = true;
   }
 
-  @ViewChild('mdsDateTimePickerCore') mdsDateTimePickerCore: MdsDatetimePickerCoreComponent;
+  @ViewChild('mdsDateTimePickerCore') private mdsDateTimePickerCore: MdsDatetimePickerCoreComponent;
 
   @Input() templateType: TemplateTypeEnum = TemplateTypeEnum.bootstrap;
   @Input() textBoxType: TextBoxTypeEnum = TextBoxTypeEnum.withButton;
@@ -102,7 +102,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     this.textboxValue = dateTimeString;
   }
 
-  dateChangedHandler(date: IDate) {
+  private dateChangedHandler(date: IDate) {
     if (!this.afterViewInit) return;
     this.dateChanged.emit(date);
     if (date != null) {
@@ -110,7 +110,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
       this.showDatePicker = false;
     }
   }
-  rangeDateChangedHandler(rangeDate: IRangeDate) {
+  private rangeDateChangedHandler(rangeDate: IRangeDate) {
     if (!this.afterViewInit) return;
     this.textboxValue = '';
     if (rangeDate == null) {
@@ -123,7 +123,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
       this.showDatePicker = false;
   }
-  showDatePickerButtonClicked() {
+  private showDatePickerButtonClicked() {
     this.showDatePicker = !this.showDatePicker;
     this.alreadyShowDatePickerClicked = true;
     if (this.showDatePicker) {
@@ -132,7 +132,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
       this.leftOffset = rectObject.left;
     }
   }
-  dateTimeTextBoxOnFocus(event) {
+  private dateTimeTextBoxOnFocusHandler(event) {
     if (this.alreadyShowDatePickerClicked) {
       this.alreadyShowDatePickerClicked = false;
       return;
@@ -145,7 +145,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     this.showDatePickerButtonClicked();
     this.focus.emit(event);
   }
-  dateTimeTextBoxOnBlur(event: any): void {
+  private dateTimeTextBoxOnBlurHandler(event: any): void {
     if (this.alreadyShowDatePickerClicked && this.textBoxType == TextBoxTypeEnum.withButton) {
       this.alreadyShowDatePickerClicked = false;
       return;
@@ -163,7 +163,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     }
     this.blur.emit(event);
   }
-  dateTimeTextBoxOnKeyDown(event: any): void {
+  private dateTimeTextBoxOnKeyDownHandler(event: any): void {
     this.keyDown.emit(event);
     if (event.keyCode != 13) return;
     let value = event.target.value.trim();
@@ -172,5 +172,10 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     else
       this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
     this.showDatePicker = false;
+  }
+
+  clear() {
+    this.textboxValue = '';
+    this.mdsDateTimePickerCore.clearDateTimePicker();
   }
 }

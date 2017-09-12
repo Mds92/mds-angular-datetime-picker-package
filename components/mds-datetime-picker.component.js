@@ -64,6 +64,8 @@ var MdsDatetimePickerComponent = (function () {
         }
         else
             this.textboxValue = this.initialValue;
+        if (!this.isPersian)
+            this.persianChar = false;
     };
     MdsDatetimePickerComponent.prototype.ngAfterViewInit = function () {
         this.afterViewInit = true;
@@ -104,7 +106,7 @@ var MdsDatetimePickerComponent = (function () {
             this.leftOffset = rectObject.left;
         }
     };
-    MdsDatetimePickerComponent.prototype.dateTimeTextBoxOnFocus = function (event) {
+    MdsDatetimePickerComponent.prototype.dateTimeTextBoxOnFocusHandler = function (event) {
         if (this.alreadyShowDatePickerClicked) {
             this.alreadyShowDatePickerClicked = false;
             return;
@@ -117,7 +119,7 @@ var MdsDatetimePickerComponent = (function () {
         this.showDatePickerButtonClicked();
         this.focus.emit(event);
     };
-    MdsDatetimePickerComponent.prototype.dateTimeTextBoxOnBlur = function (event) {
+    MdsDatetimePickerComponent.prototype.dateTimeTextBoxOnBlurHandler = function (event) {
         if (this.alreadyShowDatePickerClicked && this.textBoxType == enums_1.TextBoxTypeEnum.withButton) {
             this.alreadyShowDatePickerClicked = false;
             return;
@@ -136,7 +138,7 @@ var MdsDatetimePickerComponent = (function () {
         }
         this.blur.emit(event);
     };
-    MdsDatetimePickerComponent.prototype.dateTimeTextBoxOnKeyDown = function (event) {
+    MdsDatetimePickerComponent.prototype.dateTimeTextBoxOnKeyDownHandler = function (event) {
         this.keyDown.emit(event);
         if (event.keyCode != 13)
             return;
@@ -146,6 +148,10 @@ var MdsDatetimePickerComponent = (function () {
         else
             this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
         this.showDatePicker = false;
+    };
+    MdsDatetimePickerComponent.prototype.clear = function () {
+        this.textboxValue = '';
+        this.mdsDateTimePickerCore.clearDateTimePicker();
     };
     __decorate([
         core_1.ViewChild('mdsDateTimePickerCore'),
