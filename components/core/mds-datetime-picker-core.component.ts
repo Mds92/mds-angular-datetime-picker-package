@@ -52,7 +52,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
         } catch (e) {
           console.error('value is in wrong format, when rangeSelector is true you should write value like "1396/03/01 - 1396/03/15" or "2017/3/9 - 2017/3/10"', e);
           this.setSelectedRangeDateTimes(null);
-          this.dateTime = new Date();
+          this.dateTime = null;
         }
       }
       else {
@@ -63,11 +63,11 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
             this.dateTime = new Date(Date.parse(this.initialValue));
         } catch (e) {
           console.error('value is in wrong format, you should write value like "1396/03/01  11:30:27" or "2017/09/03  11:30:00", you can remove time', e);
-          this.dateTime = new Date();
+          this.dateTime = null;
         }
       }
     } else {
-      this.dateTime = new Date();
+      this.dateTime = null;
     }
     this.updateYearsList();
     this.updateMonthDays();
@@ -158,8 +158,8 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   }
   private setSelectedRangeDateTimes(dateTimes: Date[]): void {
     dateTimes = dateTimes == null || dateTimes.length < 2 ? [null, null] : dateTimes;
-    this.selectedStartDateTime = dateTimes[0] == null ? null : new Date(dateTimes[0]);
-    this.selectedEndDateTime = dateTimes[1] == null ? null : new Date(dateTimes[1]);
+    this.selectedStartDateTime = dateTimes[0];
+    this.selectedEndDateTime = dateTimes[1];
   }
   private setSelectedRangePersianDateTimes(persianDateTimes: PersianDateTime[]): void {
     const ranges = [
@@ -191,11 +191,11 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   }
 
   setDateTimeByDate(dateTime: Date): void {    
-    this.dateTime = this.selectedDateTime = dateTime == null ? null : new Date(dateTime);
+    this.dateTime = this.selectedDateTime = dateTime;
     this.selectedStartDateTime = dateTime == null ? null : new Date(dateTime);
   }
   setDateTimeRangesByDate(startDateTime: Date, endDateTime: Date): void {
-    this.dateTime = this.selectedDateTime = startDateTime == null ? null : new Date(startDateTime);
+    this.dateTime = this.selectedDateTime = startDateTime;
     this.selectedStartDateTime = startDateTime == null ? null : new Date(startDateTime);
     this.selectedEndDateTime = endDateTime == null ? null : new Date(endDateTime);
   }
@@ -235,7 +235,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     }
   }
   clearDateTimePicker() {
-    this.dateTime = new Date();
+    this.dateTime = null;
     this.selectedDateTime = this.selectedStartDateTime = this.selectedEndDateTime = null;
     this.resetToFalseRangeParametersInMonthDays();
     if (this.rangeSelector)
@@ -257,7 +257,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     return this._dateTime;
   }
   private set dateTime(dateTime: Date) {
-    this._dateTime = dateTime;
+    this._dateTime = dateTime == null ? new Date() : new Date(dateTime);
     this._persianDateTime = null;
     this._year = this._month = 0;
     this._yearString = this._monthName = '';
@@ -279,7 +279,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     return this._selectedDateTime;
   }
   private set selectedDateTime(dateTime: Date) {
-    this._selectedDateTime = dateTime;
+    this._selectedDateTime = dateTime == null ? null : new Date(dateTime);
     this._iDate = null;
     this._selectedPersianDateTime = null;
     if (this.rangeSelector || !this.timePicker)
@@ -299,7 +299,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     return this._selectedStartDateTime;
   }
   private set selectedStartDateTime(dateTime: Date) {
-    this._selectedStartDateTime = dateTime;
+    this._selectedStartDateTime = dateTime == null ? null : new Date(dateTime);
     this._selectedRangeDatesObject = null;
     this._selectedPersianStartDateTime = null;
     this.clearTime(dateTime);
@@ -318,7 +318,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     return this._selectedEndDateTime;
   }
   private set selectedEndDateTime(dateTime: Date) {
-    this._selectedEndDateTime = dateTime;
+    this._selectedEndDateTime = dateTime == null ? null : new Date(dateTime);
     this._selectedRangeDatesObject = null;
     this._selectedPersianEndDateTime = null;
     this.clearTime(dateTime);
@@ -876,7 +876,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
         dateTimeClone.setDate(dayObject.day);
         dateTimeClone.setMonth(dayObject.month);
         dateTimeClone.setFullYear(dayObject.year);
-        this.dateTime = new Date(dateTimeClone);
+        this.dateTime = dateTimeClone;
       }
       this.updateMonthDays();
       return;
@@ -899,10 +899,10 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     if (this.rangeSelector) {
       if (this.selectedStartDateTime == null || this.selectedStartDateTime >= this.selectedDateTime) {
         this.resetToFalseRangeParametersInMonthDays();
-        this.selectedStartDateTime = new Date(this.selectedDateTime);
+        this.selectedStartDateTime = this.selectedDateTime;
         dayObject.isStartOrEndOfRange = true;
       } else {
-        this.selectedEndDateTime = new Date(this.selectedDateTime);
+        this.selectedEndDateTime = this.selectedDateTime;
         dayObject.isStartOrEndOfRange = true;
       }
     }
