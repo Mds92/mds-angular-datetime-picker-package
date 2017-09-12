@@ -100,7 +100,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
       if (value == null)
         this._selectedDateTime = null;
       else
-        this._selectedDateTime = new Date(value.getTime());
+        this._selectedDateTime = new Date(value);
     } catch (e) {
       this.clear();
       console.error(e);
@@ -117,8 +117,8 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
       this.mdsDateTimePickerCore.setDateTimeRangesByDate(values[0], values[1]);
       this._selectedDateTimeRanges =
         [
-          values[0] == null ? null : new Date(values[0].getTime()),
-          values[1] == null ? null : new Date(values[1].getTime()),
+          values[0] == null ? null : new Date(values[0]),
+          values[1] == null ? null : new Date(values[1]),
         ];
     } catch (e) {
       this.clear();
@@ -147,7 +147,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     this.dateChanged.emit(date);
     if (date != null) {
       this.textboxValue = date.formatString;
-      this.selectedDateTime = new Date(date.utcDateTime.getTime());
+      this.selectedDateTime = new Date(date.utcDateTime);
       this.showDatePicker = false;
     }
   }

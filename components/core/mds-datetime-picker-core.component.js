@@ -150,8 +150,9 @@ var MdsDatetimePickerCoreComponent = (function () {
         return dateString.split(' - ');
     };
     MdsDatetimePickerCoreComponent.prototype.setSelectedRangeDateTimes = function (dateTimes) {
-        this.selectedStartDateTime = dateTimes == null ? null : dateTimes[0];
-        this.selectedEndDateTime = dateTimes == null ? null : dateTimes[1];
+        dateTimes = dateTimes == null || dateTimes.length < 2 ? [null, null] : dateTimes;
+        this.selectedStartDateTime = dateTimes[0] == null ? null : new Date(dateTimes[0]);
+        this.selectedEndDateTime = dateTimes[1] == null ? null : new Date(dateTimes[1]);
     };
     MdsDatetimePickerCoreComponent.prototype.setSelectedRangePersianDateTimes = function (persianDateTimes) {
         var ranges = [
@@ -177,10 +178,7 @@ var MdsDatetimePickerCoreComponent = (function () {
     MdsDatetimePickerCoreComponent.prototype.clearTime = function (dateTime) {
         if (dateTime == null)
             return;
-        dateTime.setHours(0);
-        dateTime.setMinutes(0);
-        dateTime.setSeconds(0);
-        dateTime.setMilliseconds(0);
+        dateTime.setHours(0, 0, 0, 0);
     };
     MdsDatetimePickerCoreComponent.prototype.getDateTimeFormat = function () {
         var format = this.format;
@@ -194,11 +192,13 @@ var MdsDatetimePickerCoreComponent = (function () {
         return format;
     };
     MdsDatetimePickerCoreComponent.prototype.setDateTimeByDate = function (dateTime) {
-        this.dateTime = this.selectedDateTime = this.selectedStartDateTime = dateTime == null ? null : new Date(dateTime.getTime());
+        this.dateTime = this.selectedDateTime = dateTime == null ? null : new Date(dateTime);
+        this.selectedStartDateTime = dateTime == null ? null : new Date(dateTime);
     };
     MdsDatetimePickerCoreComponent.prototype.setDateTimeRangesByDate = function (startDateTime, endDateTime) {
-        this.dateTime = this.selectedDateTime = this.selectedStartDateTime = startDateTime == null ? null : new Date(startDateTime.getTime());
-        this.selectedEndDateTime = endDateTime == null ? null : new Date(endDateTime.getTime());
+        this.dateTime = this.selectedDateTime = startDateTime == null ? null : new Date(startDateTime);
+        this.selectedStartDateTime = startDateTime == null ? null : new Date(startDateTime);
+        this.selectedEndDateTime = endDateTime == null ? null : new Date(endDateTime);
     };
     MdsDatetimePickerCoreComponent.prototype.setDateTimeByString = function (dateTimeString) {
         try {
@@ -757,7 +757,7 @@ var MdsDatetimePickerCoreComponent = (function () {
             var today = dateTimeNow.getDate();
             var isYearAndMonthInCurrentMonth = dateTimeNow.getMonth() == this.dateTime.getMonth() && dateTimeNow.getFullYear() == this.dateTime.getFullYear();
             if (this.gregorianStartDayOfMonth != GregorianDayOfWeek.Saturday) {
-                var dateTimeClone = new Date(this.dateTime.getTime());
+                var dateTimeClone = new Date(this.dateTime);
                 dateTimeClone.setMonth(this.dateTime.getMonth());
                 year = dateTimeClone.getFullYear();
                 month = dateTimeClone.getMonth();
@@ -896,9 +896,9 @@ var MdsDatetimePickerCoreComponent = (function () {
         if (this.isPersian)
             this.dateTime = this.persianDateTime.setPersianMonth(monthIndex + 1).toDate();
         else {
-            var dateTimeClone = new Date(this.dateTime.getTime());
+            var dateTimeClone = new Date(this.dateTime);
             dateTimeClone.setMonth(monthIndex);
-            this.dateTime = new Date(dateTimeClone.getTime());
+            this.dateTime = new Date(dateTimeClone);
         }
         this.hideSelecMonthAndYearBlock();
     };
@@ -907,9 +907,9 @@ var MdsDatetimePickerCoreComponent = (function () {
         if (this.isPersian)
             this.dateTime = this.persianDateTime.setPersianYear(year).toDate();
         else {
-            var dateTimeClone = new Date(this.dateTime.getTime());
+            var dateTimeClone = new Date(this.dateTime);
             dateTimeClone.setFullYear(year);
-            this.dateTime = new Date(dateTimeClone.getTime());
+            this.dateTime = new Date(dateTimeClone);
         }
         this.hideSelecMonthAndYearBlock();
     };
@@ -930,7 +930,7 @@ var MdsDatetimePickerCoreComponent = (function () {
             if (this.isPersian)
                 this.dateTime = PersianDateTime.fromPersianDate(dayObject.year, dayObject.month, dayObject.day).toDate();
             else {
-                var dateTimeClone = new Date(this.dateTime.getTime());
+                var dateTimeClone = new Date(this.dateTime);
                 dateTimeClone.setDate(dayObject.day);
                 dateTimeClone.setMonth(dayObject.month);
                 dateTimeClone.setFullYear(dayObject.year);
@@ -950,11 +950,11 @@ var MdsDatetimePickerCoreComponent = (function () {
         if (this.rangeSelector) {
             if (this.selectedStartDateTime == null || this.selectedStartDateTime >= this.selectedDateTime) {
                 this.resetToFalseRangeParametersInMonthDays();
-                this.selectedStartDateTime = new Date(this.selectedDateTime.getTime());
+                this.selectedStartDateTime = new Date(this.selectedDateTime);
                 dayObject.isStartOrEndOfRange = true;
             }
             else {
-                this.selectedEndDateTime = new Date(this.selectedDateTime.getTime());
+                this.selectedEndDateTime = new Date(this.selectedDateTime);
                 dayObject.isStartOrEndOfRange = true;
             }
         }
