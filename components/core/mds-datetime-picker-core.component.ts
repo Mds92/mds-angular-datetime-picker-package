@@ -99,12 +99,15 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     return this._isPersian;
   };
   set isPersian(value: boolean) {
+    this._isPersian = value;
     this._monthName = '';
     this._monthNames = [];
     this._weekdayNames = [];
     this._resources = null;
-    //this.resetMonthDaysWithContent();
-    this._isPersian = value;
+    if (this.dateTime != null) {
+      this.updateMonthDays();
+      this.updateYearsList();
+    }
   };
   private _isPersian: boolean = true;
 
@@ -272,6 +275,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
 
   private _persianDateTime: PersianDateTime = null;
   private get persianDateTime(): PersianDateTime {
+    if (this.dateTime == null) return null;
     if (this._persianDateTime != null) return this._persianDateTime;
     this._persianDateTime = new PersianDateTime(this.dateTime);
     return this._persianDateTime;
@@ -635,8 +639,6 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     let counter = 0,
       year = 0,
       month = 0;
-    //this.startMdsPersianDateTimeToDateTemp = this.selectedStartDateTime;
-    //this.endMdsPersianDateTimeToDateTemp = this.selectedEndDateTime;
     if (this.isPersian) {
       const persianDateTimeNow = PersianDateTime.now;
       const today = persianDateTimeNow.day;

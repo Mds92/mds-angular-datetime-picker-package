@@ -133,7 +133,7 @@
     <md-grid-tile><button md-button type="button" (click)="selectYearButtonOnClick()">{{yearString}}</button></md-grid-tile>
     <md-grid-tile [colspan]="2"><button md-button type="button" (click)="monthButtonOnClick()">{{monthName}}</button></md-grid-tile>
     <md-grid-tile><button md-button type="button" i18n-title="Previous Month" title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="font18">&#8250;</button></md-grid-tile>
-    <md-grid-tile><button md-button type="button" i18n-title="Previous Year" title="{{resources.previousYear}}" (click)="previousYearButtonOnClick()" class="font18">&#187;</button></md-grid-tile>
+    <md-grid-tile><button md-button type="button" i18n-title="Previous Year" title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()" class="font18">&#187;</button></md-grid-tile>
   </md-grid-list>
   <md-grid-list cols="7" rowHeight="2:1" class="gray1" *ngIf="!isPersian">
     <md-grid-tile><button type="button" md-button i18n-title="Previous Year" title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()" class="font18">&#171;</button></md-grid-tile>
