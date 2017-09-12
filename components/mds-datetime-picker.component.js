@@ -41,6 +41,7 @@ var MdsDatetimePickerComponent = (function () {
         this.showDatePicker = false;
         this.afterViewInit = false;
         this.alreadyShowDatePickerClicked = false;
+        this.inClearFunction = false;
         var doc = document.getElementsByTagName('html')[0];
         doc.addEventListener('click', function (event) {
             var targetElement = event.target;
@@ -78,7 +79,10 @@ var MdsDatetimePickerComponent = (function () {
         set: function (value) {
             try {
                 this.mdsDateTimePickerCore.setDateTimeByDate(value);
-                this._selectedDateTime = new Date(value.getTime());
+                if (value == null)
+                    this._selectedDateTime = null;
+                else
+                    this._selectedDateTime = new Date(value.getTime());
             }
             catch (e) {
                 this.clear();
@@ -97,7 +101,11 @@ var MdsDatetimePickerComponent = (function () {
                 if (values == null || values.length < 2)
                     return;
                 this.mdsDateTimePickerCore.setDateTimeRangesByDate(values[0], values[1]);
-                this._selectedDateTimeRanges = [new Date(values[0].getTime()), new Date(values[1].getTime())];
+                this._selectedDateTimeRanges =
+                    [
+                        values[0] == null ? null : new Date(values[0].getTime()),
+                        values[1] == null ? null : new Date(values[1].getTime()),
+                    ];
             }
             catch (e) {
                 this.clear();
@@ -185,10 +193,14 @@ var MdsDatetimePickerComponent = (function () {
         this.showDatePicker = false;
     };
     MdsDatetimePickerComponent.prototype.clear = function () {
+        if (this.inClearFunction)
+            return;
+        this.inClearFunction = true;
         this.textboxValue = '';
         this.selectedDateTime = null;
         this.selectedDateTimeRanges = [null, null];
         this.mdsDateTimePickerCore.clearDateTimePicker();
+        this.inClearFunction = false;
     };
     MdsDatetimePickerComponent.prototype.setDateTime = function (dateTime) {
         try {

@@ -33,6 +33,7 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     private showDatePicker;
     private afterViewInit;
     private alreadyShowDatePickerClicked;
+    private inClearFunction;
     private showDatePickerButtonClicked();
     private dateChangedHandler(date);
     private rangeDateChangedHandler(rangeDate);

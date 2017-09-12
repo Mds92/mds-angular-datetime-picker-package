@@ -194,11 +194,11 @@ var MdsDatetimePickerCoreComponent = (function () {
         return format;
     };
     MdsDatetimePickerCoreComponent.prototype.setDateTimeByDate = function (dateTime) {
-        this.dateTime = this.selectedDateTime = this.selectedStartDateTime = new Date(dateTime.getTime());
+        this.dateTime = this.selectedDateTime = this.selectedStartDateTime = dateTime == null ? null : new Date(dateTime.getTime());
     };
     MdsDatetimePickerCoreComponent.prototype.setDateTimeRangesByDate = function (startDateTime, endDateTime) {
-        this.dateTime = this.selectedDateTime = this.selectedStartDateTime = new Date(startDateTime.getTime());
-        this.selectedEndDateTime = new Date(endDateTime.getTime());
+        this.dateTime = this.selectedDateTime = this.selectedStartDateTime = startDateTime == null ? null : new Date(startDateTime.getTime());
+        this.selectedEndDateTime = endDateTime == null ? null : new Date(endDateTime.getTime());
     };
     MdsDatetimePickerCoreComponent.prototype.setDateTimeByString = function (dateTimeString) {
         try {

@@ -193,11 +193,11 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   }
 
   setDateTimeByDate(dateTime: Date): void {
-    this.dateTime = this.selectedDateTime = this.selectedStartDateTime = new Date(dateTime.getTime());
+    this.dateTime = this.selectedDateTime = this.selectedStartDateTime = dateTime == null ? null : new Date(dateTime.getTime());
   }
   setDateTimeRangesByDate(startDateTime: Date, endDateTime: Date): void {
-    this.dateTime = this.selectedDateTime = this.selectedStartDateTime = new Date(startDateTime.getTime());
-    this.selectedEndDateTime = new Date(endDateTime.getTime());
+    this.dateTime = this.selectedDateTime = this.selectedStartDateTime = startDateTime == null ? null : new Date(startDateTime.getTime());
+    this.selectedEndDateTime = endDateTime == null ? null : new Date(endDateTime.getTime());
   }
   setDateTimeByString(dateTimeString: string) {
     try {
