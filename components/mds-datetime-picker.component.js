@@ -34,12 +34,13 @@ var MdsDatetimePickerComponent = (function () {
         this.blur = new core_1.EventEmitter();
         this.focus = new core_1.EventEmitter();
         this.textboxValue = '';
+        this._selectedDateTime = null;
+        this._selectedDateTimeRanges = null;
         this.topOffset = 0;
         this.leftOffset = 0;
         this.showDatePicker = false;
         this.afterViewInit = false;
         this.alreadyShowDatePickerClicked = false;
-        this.oldDateValue = '';
         var doc = document.getElementsByTagName('html')[0];
         doc.addEventListener('click', function (event) {
             var targetElement = event.target;
@@ -70,33 +71,42 @@ var MdsDatetimePickerComponent = (function () {
     MdsDatetimePickerComponent.prototype.ngAfterViewInit = function () {
         this.afterViewInit = true;
     };
-    MdsDatetimePickerComponent.prototype.setDateTime = function (dateTimeString) {
-        this.mdsDateTimePickerCore.setDateTimeByString(dateTimeString);
-        this.textboxValue = dateTimeString;
-    };
-    MdsDatetimePickerComponent.prototype.dateChangedHandler = function (date) {
-        if (!this.afterViewInit)
-            return;
-        this.dateChanged.emit(date);
-        if (date != null) {
-            this.textboxValue = date.formatString;
-            this.showDatePicker = false;
-        }
-    };
-    MdsDatetimePickerComponent.prototype.rangeDateChangedHandler = function (rangeDate) {
-        if (!this.afterViewInit)
-            return;
-        this.textboxValue = '';
-        if (rangeDate == null) {
-            this.rangeDateChanged.emit(rangeDate);
-            return;
-        }
-        if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
-            this.textboxValue = rangeDate.startDate.formatString + " - " + rangeDate.endDate.formatString;
-        this.rangeDateChanged.emit(rangeDate);
-        if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
-            this.showDatePicker = false;
-    };
+    Object.defineProperty(MdsDatetimePickerComponent.prototype, "selectedDateTime", {
+        get: function () {
+            return this._selectedDateTime;
+        },
+        set: function (value) {
+            try {
+                this.mdsDateTimePickerCore.setDateTimeByDate(value);
+                this._selectedDateTime = new Date(value.getTime());
+            }
+            catch (e) {
+                this.clear();
+                console.error(e);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MdsDatetimePickerComponent.prototype, "selectedDateTimeRanges", {
+        get: function () {
+            return this._selectedDateTimeRanges;
+        },
+        set: function (values) {
+            try {
+                if (values == null || values.length < 2)
+                    return;
+                this.mdsDateTimePickerCore.setDateTimeRangesByDate(values[0], values[1]);
+                this._selectedDateTimeRanges = [new Date(values[0].getTime()), new Date(values[1].getTime())];
+            }
+            catch (e) {
+                this.clear();
+                console.error(e);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     MdsDatetimePickerComponent.prototype.showDatePickerButtonClicked = function () {
         this.showDatePicker = !this.showDatePicker;
         this.alreadyShowDatePickerClicked = true;
@@ -106,6 +116,32 @@ var MdsDatetimePickerComponent = (function () {
             this.leftOffset = rectObject.left;
         }
     };
+    MdsDatetimePickerComponent.prototype.dateChangedHandler = function (date) {
+        if (!this.afterViewInit)
+            return;
+        this.dateChanged.emit(date);
+        if (date != null) {
+            this.textboxValue = date.formatString;
+            this.selectedDateTime = new Date(date.utcDateTime.getTime());
+            this.showDatePicker = false;
+        }
+    };
+    MdsDatetimePickerComponent.prototype.rangeDateChangedHandler = function (rangeDate) {
+        if (!this.afterViewInit)
+            return;
+        this.textboxValue = '';
+        if (rangeDate == null) {
+            this.rangeDateChanged.emit(rangeDate);
+            this.selectedDateTimeRanges = [null, null];
+            return;
+        }
+        if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
+            this.textboxValue = rangeDate.startDate.formatString + " - " + rangeDate.endDate.formatString;
+        this.rangeDateChanged.emit(rangeDate);
+        if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
+            this.showDatePicker = false;
+        this.selectedDateTimeRanges = [rangeDate.startDate.utcDateTime, rangeDate.endDate.utcDateTime];
+    };
     MdsDatetimePickerComponent.prototype.dateTimeTextBoxOnFocusHandler = function (event) {
         if (this.alreadyShowDatePickerClicked) {
             this.alreadyShowDatePickerClicked = false;
@@ -113,9 +149,14 @@ var MdsDatetimePickerComponent = (function () {
         }
         this.alreadyShowDatePickerClicked = false;
         document.getElementsByTagName('html')[0].click();
-        this.oldDateValue = event.target.value.trim();
-        if (this.oldDateValue != '')
-            this.mdsDateTimePickerCore.setDateTimeByString(this.oldDateValue);
+        try {
+            if (this.selectedDateTime != null)
+                this.mdsDateTimePickerCore.setDateTimeByDate(this.selectedDateTime);
+        }
+        catch (e) {
+            this.clear();
+            console.error(e);
+        }
         this.showDatePickerButtonClicked();
         this.focus.emit(event);
     };
@@ -125,17 +166,11 @@ var MdsDatetimePickerComponent = (function () {
             return;
         }
         this.alreadyShowDatePickerClicked = false;
-        try {
-            if (this.persianChar)
-                this.textboxValue = mds_datetime_picker_utility_1.MdsDatetimePickerUtility.toPersianNumber(this.textboxValue);
-            else
-                this.textboxValue = mds_datetime_picker_utility_1.MdsDatetimePickerUtility.toEnglishString(this.textboxValue);
-            this.textboxValue = this.textboxValue.trim();
-        }
-        catch (e) {
-            this.textboxValue = this.oldDateValue;
-            console.error(e);
-        }
+        this.textboxValue = this.textboxValue.trim();
+        if (this.persianChar)
+            this.textboxValue = mds_datetime_picker_utility_1.MdsDatetimePickerUtility.toPersianNumber(this.textboxValue);
+        else
+            this.textboxValue = mds_datetime_picker_utility_1.MdsDatetimePickerUtility.toEnglishString(this.textboxValue);
         this.blur.emit(event);
     };
     MdsDatetimePickerComponent.prototype.dateTimeTextBoxOnKeyDownHandler = function (event) {
@@ -151,7 +186,27 @@ var MdsDatetimePickerComponent = (function () {
     };
     MdsDatetimePickerComponent.prototype.clear = function () {
         this.textboxValue = '';
+        this.selectedDateTime = null;
+        this.selectedDateTimeRanges = [null, null];
         this.mdsDateTimePickerCore.clearDateTimePicker();
+    };
+    MdsDatetimePickerComponent.prototype.setDateTime = function (dateTime) {
+        try {
+            this.mdsDateTimePickerCore.setDateTimeByDate(dateTime);
+        }
+        catch (e) {
+            this.clear();
+            console.error(e);
+        }
+    };
+    MdsDatetimePickerComponent.prototype.setDateTimeRanges = function (startDateTime, endDateTime) {
+        try {
+            this.mdsDateTimePickerCore.setDateTimeRangesByDate(startDateTime, endDateTime);
+        }
+        catch (e) {
+            this.clear();
+            console.error(e);
+        }
     };
     __decorate([
         core_1.ViewChild('mdsDateTimePickerCore'),

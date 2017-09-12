@@ -1,4 +1,3 @@
-import { IDate } from './date.interface';
 export interface IDay {
     year: number;
     month: number;

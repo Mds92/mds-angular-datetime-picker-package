@@ -90,39 +90,49 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
 
   textboxValue = '';
 
+  private _selectedDateTime: Date = null;
+  get selectedDateTime(): Date {
+    return this._selectedDateTime;
+  }
+  set selectedDateTime(value: Date) {
+    try {
+      this.mdsDateTimePickerCore.setDateTimeByDate(value);
+      if (value == null)
+        this._selectedDateTime = null;
+      else
+        this._selectedDateTime = new Date(value.getTime());
+    } catch (e) {
+      this.clear();
+      console.error(e);
+    }
+  }
+
+
+  private _selectedDateTimeRanges: Date[] = null;
+  get selectedDateTimeRanges(): Date[] {
+    return this._selectedDateTimeRanges;
+  }
+  set selectedDateTimeRanges(values: Date[]) {
+    try {
+      if (values == null || values.length < 2) return;
+      this.mdsDateTimePickerCore.setDateTimeRangesByDate(values[0], values[1]);
+      this._selectedDateTimeRanges =
+        [
+          values[0] == null ? null : new Date(values[0].getTime()),
+          values[1] == null ? null : new Date(values[1].getTime()), 
+        ];
+    } catch (e) {
+      this.clear();
+      console.error(e);
+    }
+  }
+
   private topOffset = 0;
   private leftOffset = 0;
   private showDatePicker = false;
   private afterViewInit = false;
   private alreadyShowDatePickerClicked = false;
-  private oldDateValue = '';
 
-  private setDateTime(dateTimeString: string): void {
-    this.mdsDateTimePickerCore.setDateTimeByString(dateTimeString);
-    this.textboxValue = dateTimeString;
-  }
-
-  private dateChangedHandler(date: IDate) {
-    if (!this.afterViewInit) return;
-    this.dateChanged.emit(date);
-    if (date != null) {
-      this.textboxValue = date.formatString;
-      this.showDatePicker = false;
-    }
-  }
-  private rangeDateChangedHandler(rangeDate: IRangeDate) {
-    if (!this.afterViewInit) return;
-    this.textboxValue = '';
-    if (rangeDate == null) {
-      this.rangeDateChanged.emit(rangeDate);
-      return;
-    }
-    if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
-      this.textboxValue = `${rangeDate.startDate.formatString} - ${rangeDate.endDate.formatString}`;
-    this.rangeDateChanged.emit(rangeDate);
-    if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
-      this.showDatePicker = false;
-  }
   private showDatePickerButtonClicked() {
     this.showDatePicker = !this.showDatePicker;
     this.alreadyShowDatePickerClicked = true;
@@ -132,6 +142,30 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
       this.leftOffset = rectObject.left;
     }
   }
+  private dateChangedHandler(date: IDate) {
+    if (!this.afterViewInit) return;
+    this.dateChanged.emit(date);
+    if (date != null) {
+      this.textboxValue = date.formatString;
+      this.selectedDateTime = new Date(date.utcDateTime.getTime());
+      this.showDatePicker = false;
+    }
+  }
+  private rangeDateChangedHandler(rangeDate: IRangeDate) {
+    if (!this.afterViewInit) return;
+    this.textboxValue = '';
+    if (rangeDate == null) {
+      this.rangeDateChanged.emit(rangeDate);
+      this.selectedDateTimeRanges = [null, null];
+      return;
+    }
+    if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
+      this.textboxValue = `${rangeDate.startDate.formatString} - ${rangeDate.endDate.formatString}`;
+    this.rangeDateChanged.emit(rangeDate);
+    if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
+      this.showDatePicker = false;
+    this.selectedDateTimeRanges = [rangeDate.startDate.utcDateTime, rangeDate.endDate.utcDateTime];
+  }
   private dateTimeTextBoxOnFocusHandler(event) {
     if (this.alreadyShowDatePickerClicked) {
       this.alreadyShowDatePickerClicked = false;
@@ -139,9 +173,13 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     }
     this.alreadyShowDatePickerClicked = false;
     document.getElementsByTagName('html')[0].click();
-    this.oldDateValue = event.target.value.trim();
-    if (this.oldDateValue != '')
-      this.mdsDateTimePickerCore.setDateTimeByString(this.oldDateValue);
+    try {
+      if (this.selectedDateTime != null)
+        this.mdsDateTimePickerCore.setDateTimeByDate(this.selectedDateTime);
+    } catch (e) {
+      this.clear();
+      console.error(e);
+    }
     this.showDatePickerButtonClicked();
     this.focus.emit(event);
   }
@@ -151,16 +189,11 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
       return;
     }
     this.alreadyShowDatePickerClicked = false;
-    try {
-      if (this.persianChar)
-        this.textboxValue = MdsDatetimePickerUtility.toPersianNumber(this.textboxValue);
-      else
-        this.textboxValue = MdsDatetimePickerUtility.toEnglishString(this.textboxValue);
-      this.textboxValue = this.textboxValue.trim();
-    } catch (e) {
-      this.textboxValue = this.oldDateValue;
-      console.error(e);
-    }
+    this.textboxValue = this.textboxValue.trim();
+    if (this.persianChar)
+      this.textboxValue = MdsDatetimePickerUtility.toPersianNumber(this.textboxValue);
+    else
+      this.textboxValue = MdsDatetimePickerUtility.toEnglishString(this.textboxValue);
     this.blur.emit(event);
   }
   private dateTimeTextBoxOnKeyDownHandler(event: any): void {
@@ -176,6 +209,24 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
 
   clear() {
     this.textboxValue = '';
+    this.selectedDateTime = null;
+    this.selectedDateTimeRanges = [null, null];
     this.mdsDateTimePickerCore.clearDateTimePicker();
+  }
+  setDateTime(dateTime: Date) {
+    try {
+      this.mdsDateTimePickerCore.setDateTimeByDate(dateTime);
+    } catch (e) {
+      this.clear();
+      console.error(e);
+    }
+  }
+  setDateTimeRanges(startDateTime: Date, endDateTime: Date) {
+    try {
+      this.mdsDateTimePickerCore.setDateTimeRangesByDate(startDateTime, endDateTime);
+    } catch (e) {
+      this.clear();
+      console.error(e);
+    }
   }
 }

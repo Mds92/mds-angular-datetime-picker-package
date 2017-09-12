@@ -24,18 +24,22 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     blur: EventEmitter<any>;
     focus: EventEmitter<any>;
     textboxValue: string;
+    private _selectedDateTime;
+    selectedDateTime: Date;
+    private _selectedDateTimeRanges;
+    selectedDateTimeRanges: Date[];
     private topOffset;
     private leftOffset;
     private showDatePicker;
     private afterViewInit;
     private alreadyShowDatePickerClicked;
-    private oldDateValue;
-    private setDateTime(dateTimeString);
+    private showDatePickerButtonClicked();
     private dateChangedHandler(date);
     private rangeDateChangedHandler(rangeDate);
-    private showDatePickerButtonClicked();
     private dateTimeTextBoxOnFocusHandler(event);
     private dateTimeTextBoxOnBlurHandler(event);
     private dateTimeTextBoxOnKeyDownHandler(event);
     clear(): void;
+    setDateTime(dateTime: Date): void;
+    setDateTimeRanges(startDateTime: Date, endDateTime: Date): void;
 }

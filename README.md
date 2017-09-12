@@ -70,3 +70,5 @@ export class AppModule { }
 <mds-datetime-picker (dateChanged)="mdsDatePicker2OnDateChange($event)" (rangeDateChanged)="mdsDatePicker1OnDateRangeChange($event)"  [isPersian]="false" [templateType]="1" [rangeSelector]="true">
 </mds-datetime-picker>
 ```
+
+https://github.com/Mds92/Mds92.github.io/tree/master/MdsDateTimePickerSample

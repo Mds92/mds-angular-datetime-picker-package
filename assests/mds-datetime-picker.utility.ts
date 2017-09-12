@@ -56,23 +56,23 @@ export class MdsDatetimePickerUtility {
     if (format == '' || format == null)
       return `${this.zeroPad(date.getFullYear(), '0000')}/${this.zeroPad(date.getMonth() + 1, '00')}/${this.zeroPad(date.getDate(), '00')}   ${this.zeroPad(date.getHours(), '00')}:${this.zeroPad(date.getMinutes(), '00')}:${this.zeroPad(date.getSeconds(), '00')}`;
     var dateTimeString = format;
-    dateTimeString = dateTimeString.replace(/yyyy/mg, this.zeroPad(date.getFullYear(), '0000'));
-    dateTimeString = dateTimeString.replace(/yy/mg, this.zeroPad(date.getFullYear(), '00'));
-    dateTimeString = dateTimeString.replace(/MMMM/mg, this.getGregorianMonthName(date.getMonth()));
-    dateTimeString = dateTimeString.replace(/MM/mg, this.zeroPad(date.getMonth() + 1, '00'));
-    dateTimeString = dateTimeString.replace(/M/mg, (date.getMonth() + 1).toString());
-    dateTimeString = dateTimeString.replace(/dddd/mg, this.getGregorianWeekDayName(date.getDay()));
-    dateTimeString = dateTimeString.replace(/dd/mg, this.zeroPad(date.getDate(), '00'));
-    dateTimeString = dateTimeString.replace(/d/mg, date.getDate().toString());
-    dateTimeString = dateTimeString.replace(/hh/mg, this.zeroPad(date.getHours(), '00'));
-    dateTimeString = dateTimeString.replace(/h/mg, date.getHours().toString());
-    dateTimeString = dateTimeString.replace(/mm/mg, this.zeroPad(date.getMinutes(), '00'));
-    dateTimeString = dateTimeString.replace(/m/mg, date.getMinutes().toString());
-    dateTimeString = dateTimeString.replace(/ss/mg, this.zeroPad(date.getSeconds(), '00'));
-    dateTimeString = dateTimeString.replace(/s/mg, date.getSeconds().toString());
-    dateTimeString = dateTimeString.replace(/fff/mg, this.zeroPad(date.getMilliseconds(), '000'));
-    dateTimeString = dateTimeString.replace(/ff/mg, this.zeroPad(date.getMilliseconds() / 10, '00'));
-    dateTimeString = dateTimeString.replace(/f/mg, (date.getMilliseconds() / 10).toString());
+    dateTimeString = dateTimeString.replace(/yyyy/, this.zeroPad(date.getFullYear(), '0000'));
+    dateTimeString = dateTimeString.replace(/yy/, this.zeroPad(date.getFullYear(), '00'));    
+    dateTimeString = dateTimeString.replace(/dddd/, this.getGregorianWeekDayName(date.getDay()));
+    dateTimeString = dateTimeString.replace(/dd/, this.zeroPad(date.getDate(), '00'));
+    dateTimeString = dateTimeString.replace(/d/, date.getDate().toString());
+    dateTimeString = dateTimeString.replace(/hh/, this.zeroPad(date.getHours(), '00'));
+    dateTimeString = dateTimeString.replace(/h/, date.getHours().toString());
+    dateTimeString = dateTimeString.replace(/mm/, this.zeroPad(date.getMinutes(), '00'));
+    dateTimeString = dateTimeString.replace(/m/, date.getMinutes().toString());
+    dateTimeString = dateTimeString.replace(/ss/, this.zeroPad(date.getSeconds(), '00'));
+    dateTimeString = dateTimeString.replace(/s/, date.getSeconds().toString());
+    dateTimeString = dateTimeString.replace(/fff/, this.zeroPad(date.getMilliseconds(), '000'));
+    dateTimeString = dateTimeString.replace(/ff/, this.zeroPad(date.getMilliseconds() / 10, '00'));
+    dateTimeString = dateTimeString.replace(/f/, (date.getMilliseconds() / 10).toString());
+    dateTimeString = dateTimeString.replace(/MMMM/, this.getGregorianMonthName(date.getMonth()));
+    dateTimeString = dateTimeString.replace(/MM/, this.zeroPad(date.getMonth() + 1, '00'));
+    dateTimeString = dateTimeString.replace(/M(?!a)/, (date.getMonth() + 1).toString());
     return dateTimeString;
   }
   static zeroPad(nr: any, base: string): string {

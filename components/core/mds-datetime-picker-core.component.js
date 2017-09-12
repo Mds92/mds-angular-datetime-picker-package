@@ -49,13 +49,13 @@ var MdsDatetimePickerCoreComponent = (function () {
         this._yearString = '';
         this._month = 0;
         this._monthName = '';
+        this._monthNames = [];
         this._hour = 0;
         this._hourString = '';
         this._minute = 0;
         this._minuteString = '';
         this._second = 0;
         this._secondString = '';
-        this._monthNames = [];
         this._weekdayNames = [];
         this._iDate = null;
         this._selectedRangeDatesObject = null;
@@ -65,11 +65,6 @@ var MdsDatetimePickerCoreComponent = (function () {
             this.timePicker = false;
         if (!this.isPersian)
             this.persianChar = false;
-        if (this.format == '') {
-            this.format = 'yyyy/MM/dd';
-            if (this.timePicker && !this.rangeSelector)
-                this.format += '   hh:mm:ss';
-        }
         if (this.initialValue != '') {
             if (this.rangeSelector) {
                 try {
@@ -121,8 +116,9 @@ var MdsDatetimePickerCoreComponent = (function () {
         set: function (value) {
             if (this._persianChar == value)
                 return;
-            this.resetMonthDaysWithContent();
             this._persianChar = value;
+            this._yearString = '';
+            this.resetMonthDaysWithContent();
         },
         enumerable: true,
         configurable: true
@@ -134,11 +130,16 @@ var MdsDatetimePickerCoreComponent = (function () {
             return this._isPersian;
         },
         set: function (value) {
+            this._isPersian = value;
             this._monthName = '';
             this._monthNames = [];
             this._weekdayNames = [];
             this._resources = null;
-            this._isPersian = value;
+            this._yearString = '';
+            if (this.dateTime != null) {
+                this.updateYearsList();
+                this.updateMonthDays();
+            }
         },
         enumerable: true,
         configurable: true
@@ -183,31 +184,21 @@ var MdsDatetimePickerCoreComponent = (function () {
     };
     MdsDatetimePickerCoreComponent.prototype.getDateTimeFormat = function () {
         var format = this.format;
-        if (this.rangeSelector || !this.timePicker) {
-            if (format.trim() == '')
-                format = 'yyyy/MM/dd';
-            else
-                format = format.replace(/t*|f*|s*|m*|h*|H*/, '');
+        if (format.trim() == '') {
+            format = 'yyyy/MM/dd';
+            if (this.timePicker && !this.rangeSelector)
+                format += '   hh:mm:ss';
         }
+        else if (this.rangeSelector || !this.timePicker)
+            format = format.replace(/t*|f*|s*|m*|h*|H*/, '');
         return format;
     };
     MdsDatetimePickerCoreComponent.prototype.setDateTimeByDate = function (dateTime) {
-        this.dateTime = this.selectedDateTime = this.selectedStartDateTime = dateTime;
+        this.dateTime = this.selectedDateTime = this.selectedStartDateTime = new Date(dateTime.getTime());
     };
-    MdsDatetimePickerCoreComponent.prototype.setDateTime = function (date) {
-        try {
-            if (this.isPersian) {
-                var persianDateTime = PersianDateTime.fromPersianDateTime(date.year, date.month, date.day, date.hour, date.minute, date.second, date.millisecond);
-                this.dateTime = persianDateTime.toDate();
-            }
-            else
-                this.dateTime = new Date(date.year, date.month, date.day, date.hour, date.minute, date.second, date.millisecond);
-            this.selectedStartDateTime = this.selectedDateTime = this.dateTime;
-            this.updateMonthDays();
-        }
-        catch (exp) {
-            console.error("Your date is not valid", exp);
-        }
+    MdsDatetimePickerCoreComponent.prototype.setDateTimeRangesByDate = function (startDateTime, endDateTime) {
+        this.dateTime = this.selectedDateTime = this.selectedStartDateTime = new Date(startDateTime.getTime());
+        this.selectedEndDateTime = new Date(endDateTime.getTime());
     };
     MdsDatetimePickerCoreComponent.prototype.setDateTimeByString = function (dateTimeString) {
         try {
@@ -284,6 +275,8 @@ var MdsDatetimePickerCoreComponent = (function () {
     });
     Object.defineProperty(MdsDatetimePickerCoreComponent.prototype, "persianDateTime", {
         get: function () {
+            if (this.dateTime == null)
+                return null;
             if (this._persianDateTime != null)
                 return this._persianDateTime;
             this._persianDateTime = new PersianDateTime(this.dateTime);
@@ -391,7 +384,7 @@ var MdsDatetimePickerCoreComponent = (function () {
         get: function () {
             if (this._yearString != '')
                 return this._yearString;
-            this._yearString = this.isPersian
+            this._yearString = this.persianChar
                 ? mds_datetime_picker_utility_1.MdsDatetimePickerUtility.toPersianNumber(this.year.toString())
                 : this.dateTime.getFullYear().toString();
             return this._yearString;
@@ -419,6 +412,27 @@ var MdsDatetimePickerCoreComponent = (function () {
                 ? this.persianDateTime.monthName
                 : PersianDateTime.getGregorianMonthNames[this.month];
             return this._monthName;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MdsDatetimePickerCoreComponent.prototype, "monthNames", {
+        get: function () {
+            if (this._monthNames != null && this._monthNames.length > 0)
+                return this._monthNames;
+            if (this.isPersian) {
+                var allPersianMonths = PersianDateTime.getPersianMonthNames;
+                this._monthNames = [
+                    allPersianMonths[2], allPersianMonths[1], allPersianMonths[0],
+                    allPersianMonths[5], allPersianMonths[4], allPersianMonths[3],
+                    allPersianMonths[8], allPersianMonths[7], allPersianMonths[6],
+                    allPersianMonths[11], allPersianMonths[10], allPersianMonths[9]
+                ];
+            }
+            else {
+                this._monthNames = PersianDateTime.getGregorianMonthNames;
+            }
+            return this._monthNames;
         },
         enumerable: true,
         configurable: true
@@ -485,27 +499,6 @@ var MdsDatetimePickerCoreComponent = (function () {
             if (this.persianChar)
                 this._secondString = mds_datetime_picker_utility_1.MdsDatetimePickerUtility.toPersianNumber(this._secondString);
             return this._secondString;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MdsDatetimePickerCoreComponent.prototype, "monthNames", {
-        get: function () {
-            if (this._monthNames != null && this._monthNames.length > 0)
-                return this._monthNames;
-            if (this.isPersian) {
-                var allPersianMonths = PersianDateTime.getPersianMonthNames;
-                this._monthNames = [
-                    allPersianMonths[2], allPersianMonths[1], allPersianMonths[0],
-                    allPersianMonths[5], allPersianMonths[4], allPersianMonths[3],
-                    allPersianMonths[8], allPersianMonths[7], allPersianMonths[6],
-                    allPersianMonths[11], allPersianMonths[10], allPersianMonths[9]
-                ];
-            }
-            else {
-                this._monthNames = PersianDateTime.getGregorianMonthNames;
-            }
-            return this._monthNames;
         },
         enumerable: true,
         configurable: true

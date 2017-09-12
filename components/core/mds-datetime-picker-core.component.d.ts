@@ -31,7 +31,7 @@ export declare class MdsDatetimePickerCoreComponent implements OnInit {
     private clearTime(dateTime);
     private getDateTimeFormat();
     setDateTimeByDate(dateTime: Date): void;
-    setDateTime(date: IDate): void;
+    setDateTimeRangesByDate(startDateTime: Date, endDateTime: Date): void;
     setDateTimeByString(dateTimeString: string): void;
     clearDateTimePicker(): void;
     readonly getSelectedDate: IDate | IRangeDate;
@@ -66,6 +66,8 @@ export declare class MdsDatetimePickerCoreComponent implements OnInit {
     private readonly month;
     private _monthName;
     private readonly monthName;
+    private _monthNames;
+    private readonly monthNames;
     private _hour;
     private readonly hour;
     private _hourString;
@@ -78,8 +80,6 @@ export declare class MdsDatetimePickerCoreComponent implements OnInit {
     private readonly second;
     private _secondString;
     private readonly secondString;
-    private _monthNames;
-    private readonly monthNames;
     private _weekdayNames;
     private readonly weekdayNames;
     private _iDate;
