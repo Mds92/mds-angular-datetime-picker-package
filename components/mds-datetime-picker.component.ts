@@ -134,7 +134,8 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   private getEventObject(event: any): IEventModel {
     return {
       event: event,
-      selectedDate: this.mdsDateTimePickerCore.getSelectedDate()
+      selectedDate: this.mdsDateTimePickerCore.getSelectedDate,
+      selectedRangeDates: this.mdsDateTimePickerCore.getSelectedRangeDates
     };
   }
   private showDatePickerButtonClicked() {

@@ -29,5 +29,6 @@ export interface IRangeDate {
 
 export interface IEventModel {
   event: any;
-  selectedDate: IDate | IRangeDate;
+  selectedDate: IDate;
+  selectedRangeDates: IRangeDate;
 }

@@ -245,10 +245,11 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     this.updateMonthDays();
   }
 
-  get getSelectedDate(): any {
-    if (this.rangeSelector)
-      return this.getSelectedRangeDatesObject;
+  get getSelectedDate(): IDate {    
     return this.getSelectedDateObject;
+  }
+  get getSelectedRangeDates(): IRangeDate {    
+    return this.getSelectedRangeDatesObject;
   }
 
   // تاریخی که برای نمایش تقویم استفاده می شود

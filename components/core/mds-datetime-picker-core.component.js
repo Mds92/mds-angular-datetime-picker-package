@@ -251,9 +251,14 @@ var MdsDatetimePickerCoreComponent = (function () {
     };
     Object.defineProperty(MdsDatetimePickerCoreComponent.prototype, "getSelectedDate", {
         get: function () {
-            if (this.rangeSelector)
-                return this.getSelectedRangeDatesObject;
             return this.getSelectedDateObject;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MdsDatetimePickerCoreComponent.prototype, "getSelectedRangeDates", {
+        get: function () {
+            return this.getSelectedRangeDatesObject;
         },
         enumerable: true,
         configurable: true

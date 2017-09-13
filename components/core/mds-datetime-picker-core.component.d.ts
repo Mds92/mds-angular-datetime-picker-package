@@ -34,7 +34,8 @@ export declare class MdsDatetimePickerCoreComponent implements OnInit {
     setDateTimeRangesByDate(startDateTime: Date, endDateTime: Date): void;
     setDateTimeByString(dateTimeString: string): void;
     clearDateTimePicker(): void;
-    readonly getSelectedDate: any;
+    readonly getSelectedDate: IDate;
+    readonly getSelectedRangeDates: IRangeDate;
     private _dateTime;
     private dateTime;
     private _persianDateTime;

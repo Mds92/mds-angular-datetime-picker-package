@@ -113,7 +113,8 @@ var MdsDatetimePickerComponent = (function () {
     MdsDatetimePickerComponent.prototype.getEventObject = function (event) {
         return {
             event: event,
-            selectedDate: this.mdsDateTimePickerCore.getSelectedDate()
+            selectedDate: this.mdsDateTimePickerCore.getSelectedDate,
+            selectedRangeDates: this.mdsDateTimePickerCore.getSelectedRangeDates
         };
     };
     MdsDatetimePickerComponent.prototype.showDatePickerButtonClicked = function () {
