@@ -1,6 +1,7 @@
 import { OnInit, EventEmitter, AfterViewInit, ElementRef } from '@angular/core';
 import { TextBoxTypeEnum, TemplateTypeEnum } from "../assests/enums";
 import { IDate, IRangeDate } from "../assests/interfaces";
+import { IEventModel } from '../index';
 export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     private element;
     constructor(element: ElementRef);
@@ -20,9 +21,9 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     format: string;
     dateChanged: EventEmitter<IDate>;
     rangeDateChanged: EventEmitter<IRangeDate>;
-    keyDown: EventEmitter<any>;
-    blur: EventEmitter<any>;
-    focus: EventEmitter<any>;
+    keyDown: EventEmitter<IEventModel>;
+    blur: EventEmitter<IEventModel>;
+    focus: EventEmitter<IEventModel>;
     textboxValue: string;
     private _selectedDateTime;
     selectedDateTime: Date;
@@ -32,8 +33,8 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     private leftOffset;
     private showDatePicker;
     private afterViewInit;
-    private alreadyShowDatePickerClicked;
     private inClearFunction;
+    private getEventObject(event);
     private showDatePickerButtonClicked();
     private dateChangedHandler(date);
     private rangeDateChangedHandler(rangeDate);
@@ -43,4 +44,6 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     clear(): void;
     setDateTime(dateTime: Date): void;
     setDateTimeRanges(startDateTime: Date, endDateTime: Date): void;
+    showDateTimePicker(): void;
+    hideDateTimePicker(): void;
 }

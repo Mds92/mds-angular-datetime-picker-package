@@ -24,3 +24,7 @@ export interface IRangeDate {
     startDate: IDate;
     endDate: IDate;
 }
+export interface IEventModel {
+    event: any;
+    selectedDate: IDate | IRangeDate;
+}

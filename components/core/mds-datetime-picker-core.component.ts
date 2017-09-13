@@ -245,7 +245,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     this.updateMonthDays();
   }
 
-  get getSelectedDate(): IDate | IRangeDate {
+  get getSelectedDate(): any {
     if (this.rangeSelector)
       return this.getSelectedRangeDatesObject;
     return this.getSelectedDateObject;

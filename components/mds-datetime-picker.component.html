@@ -9,7 +9,7 @@
   <md-input-container>
     <input type="text" mdInput [placeholder]="placeHolder" [(ngModel)]="textboxValue" (focus)="dateTimeTextBoxOnFocusHandler($event)"
       (blur)="dateTimeTextBoxOnBlurHandler($event)" (keydown)="dateTimeTextBoxOnKeyDownHandler($event)">
-    <button type="button" *ngIf="textBoxType == 1" mdSuffix md-button (click)="showDatePickerButtonClicked()" class="calendar-icon">
+    <button type="button" *ngIf="textBoxType == 1" mdSuffix md-button class="calendar-icon">
       <div [innerHTML]="buttonIcon"></div>
     </button>
   </md-input-container>  

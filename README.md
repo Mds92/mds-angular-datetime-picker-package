@@ -60,9 +60,9 @@ export class AppModule { }
 --------------|--------------|
 **dateChanged(date: IDate)** | Occurs whenever selected date change
 **rangeDateChanged(rangeDate: IRangeDate)** | Occurs whenever selected range date change
-**keyDown(event: any)** | Occurs whenever keydown event fires on datepicker text box
-**blur(event: any)** | Occurs whenever blur event fires on datepicker text box
-**focus(event: any)** | Occurs whenever focus event fires on datepicker text box
+**keyDown(event: IEventModel)** | Occurs whenever keydown event fires on datepicker text box
+**blur(event: IEventModel)** | Occurs whenever blur event fires on datepicker text box
+**focus(event: IEventModel)** | Occurs whenever focus event fires on datepicker text box
 
 #### Sample
 

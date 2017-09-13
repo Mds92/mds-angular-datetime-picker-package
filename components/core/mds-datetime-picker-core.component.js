@@ -81,7 +81,7 @@ var MdsDatetimePickerCoreComponent = (function () {
                 catch (e) {
                     console.error('value is in wrong format, when rangeSelector is true you should write value like "1396/03/01 - 1396/03/15" or "2017/3/9 - 2017/3/10"', e);
                     this.setSelectedRangeDateTimes(null);
-                    this.dateTime = new Date();
+                    this.dateTime = null;
                 }
             }
             else {
@@ -93,12 +93,12 @@ var MdsDatetimePickerCoreComponent = (function () {
                 }
                 catch (e) {
                     console.error('value is in wrong format, you should write value like "1396/03/01  11:30:27" or "2017/09/03  11:30:00", you can remove time', e);
-                    this.dateTime = new Date();
+                    this.dateTime = null;
                 }
             }
         }
         else {
-            this.dateTime = new Date();
+            this.dateTime = null;
         }
         this.updateYearsList();
         this.updateMonthDays();
@@ -151,8 +151,8 @@ var MdsDatetimePickerCoreComponent = (function () {
     };
     MdsDatetimePickerCoreComponent.prototype.setSelectedRangeDateTimes = function (dateTimes) {
         dateTimes = dateTimes == null || dateTimes.length < 2 ? [null, null] : dateTimes;
-        this.selectedStartDateTime = dateTimes[0] == null ? null : new Date(dateTimes[0]);
-        this.selectedEndDateTime = dateTimes[1] == null ? null : new Date(dateTimes[1]);
+        this.selectedStartDateTime = dateTimes[0];
+        this.selectedEndDateTime = dateTimes[1];
     };
     MdsDatetimePickerCoreComponent.prototype.setSelectedRangePersianDateTimes = function (persianDateTimes) {
         var ranges = [
@@ -192,11 +192,11 @@ var MdsDatetimePickerCoreComponent = (function () {
         return format;
     };
     MdsDatetimePickerCoreComponent.prototype.setDateTimeByDate = function (dateTime) {
-        this.dateTime = this.selectedDateTime = dateTime == null ? null : new Date(dateTime);
+        this.dateTime = this.selectedDateTime = dateTime;
         this.selectedStartDateTime = dateTime == null ? null : new Date(dateTime);
     };
     MdsDatetimePickerCoreComponent.prototype.setDateTimeRangesByDate = function (startDateTime, endDateTime) {
-        this.dateTime = this.selectedDateTime = startDateTime == null ? null : new Date(startDateTime);
+        this.dateTime = this.selectedDateTime = startDateTime;
         this.selectedStartDateTime = startDateTime == null ? null : new Date(startDateTime);
         this.selectedEndDateTime = endDateTime == null ? null : new Date(endDateTime);
     };
@@ -240,7 +240,7 @@ var MdsDatetimePickerCoreComponent = (function () {
         }
     };
     MdsDatetimePickerCoreComponent.prototype.clearDateTimePicker = function () {
-        this.dateTime = new Date();
+        this.dateTime = null;
         this.selectedDateTime = this.selectedStartDateTime = this.selectedEndDateTime = null;
         this.resetToFalseRangeParametersInMonthDays();
         if (this.rangeSelector)
@@ -263,12 +263,12 @@ var MdsDatetimePickerCoreComponent = (function () {
             return this._dateTime;
         },
         set: function (dateTime) {
+            this._dateTime = dateTime == null ? new Date() : new Date(dateTime);
             this._persianDateTime = null;
             this._year = this._month = 0;
             this._yearString = this._monthName = '';
             this._hour = this._minute = this._second = 0;
             this._hourString = this._minuteString = this._secondString = '';
-            this._dateTime = dateTime;
         },
         enumerable: true,
         configurable: true
@@ -290,11 +290,11 @@ var MdsDatetimePickerCoreComponent = (function () {
             return this._selectedDateTime;
         },
         set: function (dateTime) {
+            this._selectedDateTime = dateTime == null ? null : new Date(dateTime);
             this._iDate = null;
             this._selectedPersianDateTime = null;
             if (this.rangeSelector || !this.timePicker)
                 this.clearTime(dateTime);
-            this._selectedDateTime = dateTime;
         },
         enumerable: true,
         configurable: true
@@ -314,10 +314,10 @@ var MdsDatetimePickerCoreComponent = (function () {
             return this._selectedStartDateTime;
         },
         set: function (dateTime) {
+            this._selectedStartDateTime = dateTime == null ? null : new Date(dateTime);
             this._selectedRangeDatesObject = null;
             this._selectedPersianStartDateTime = null;
             this.clearTime(dateTime);
-            this._selectedStartDateTime = dateTime;
         },
         enumerable: true,
         configurable: true
@@ -337,10 +337,10 @@ var MdsDatetimePickerCoreComponent = (function () {
             return this._selectedEndDateTime;
         },
         set: function (dateTime) {
+            this._selectedEndDateTime = dateTime == null ? null : new Date(dateTime);
             this._selectedRangeDatesObject = null;
             this._selectedPersianEndDateTime = null;
             this.clearTime(dateTime);
-            this._selectedEndDateTime = dateTime;
         },
         enumerable: true,
         configurable: true
@@ -518,13 +518,13 @@ var MdsDatetimePickerCoreComponent = (function () {
             else {
                 var gregorianWeekDayNames = PersianDateTime.getGregorianWeekdayNames;
                 this._weekdayNames = [
-                    gregorianWeekDayNames[0][0] + gregorianWeekDayNames[0][1],
                     gregorianWeekDayNames[1][0] + gregorianWeekDayNames[1][1],
                     gregorianWeekDayNames[2][0] + gregorianWeekDayNames[2][1],
                     gregorianWeekDayNames[3][0] + gregorianWeekDayNames[3][1],
                     gregorianWeekDayNames[4][0] + gregorianWeekDayNames[4][1],
                     gregorianWeekDayNames[5][0] + gregorianWeekDayNames[5][1],
-                    gregorianWeekDayNames[6][0] + gregorianWeekDayNames[6][1]
+                    gregorianWeekDayNames[6][0] + gregorianWeekDayNames[6][1],
+                    gregorianWeekDayNames[0][0] + gregorianWeekDayNames[0][1]
                 ];
             }
             return this._weekdayNames;
@@ -934,7 +934,7 @@ var MdsDatetimePickerCoreComponent = (function () {
                 dateTimeClone.setDate(dayObject.day);
                 dateTimeClone.setMonth(dayObject.month);
                 dateTimeClone.setFullYear(dayObject.year);
-                this.dateTime = new Date(dateTimeClone);
+                this.dateTime = dateTimeClone;
             }
             this.updateMonthDays();
             return;
@@ -950,11 +950,11 @@ var MdsDatetimePickerCoreComponent = (function () {
         if (this.rangeSelector) {
             if (this.selectedStartDateTime == null || this.selectedStartDateTime >= this.selectedDateTime) {
                 this.resetToFalseRangeParametersInMonthDays();
-                this.selectedStartDateTime = new Date(this.selectedDateTime);
+                this.selectedStartDateTime = this.selectedDateTime;
                 dayObject.isStartOrEndOfRange = true;
             }
             else {
-                this.selectedEndDateTime = new Date(this.selectedDateTime);
+                this.selectedEndDateTime = this.selectedDateTime;
                 dayObject.isStartOrEndOfRange = true;
             }
         }
