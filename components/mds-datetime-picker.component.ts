@@ -191,6 +191,9 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     this.blur.emit(this.getEventObject(event));
     if (!this.inLine)
       this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
+    //TODO: وقتی روی دکمه نمایش تقویم کلیک میشه تقویم نمایش داده میشه
+    // حالا اگر کاربر بیاد روی روزها کلیک کنه برای اولین بار دوباره تقویم رفرش میشه 
+    // چون تکس باکس بلور میشه و این متد فراخوانی میشه
   }
   private dateTimeTextBoxOnKeyDownHandler(event: any): void {
     this.keyDown.emit(this.getEventObject(event));
