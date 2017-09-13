@@ -127,9 +127,9 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
 
   private topOffset = 0;
   private leftOffset = 0;
-  private showDatePicker = false;
   private afterViewInit = false;
   private inClearFunction = false;
+  private showDatePicker = false;  
 
   private getEventObject(event: any): IEventModel {
     return {
@@ -140,11 +140,6 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   }
   private showDatePickerButtonClicked() {
     this.showDatePicker = !this.showDatePicker;
-    /*
-    this.numberOfClickOnButton.push(1);
-    if(this.templateType == TemplateTypeEnum.material &&  this.textBoxType == TextBoxTypeEnum.withButton)
-      this.numberOfClickOnButton.push(1);
-    */
     if (this.showDatePicker) {
       const rectObject = this.element.nativeElement.getBoundingClientRect();
       this.topOffset = rectObject.top;
@@ -188,19 +183,14 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     this.focus.emit(this.getEventObject(event));
   }
   private dateTimeTextBoxOnBlurHandler(event: any): void {
-    if (this.showDatePicker) return;
     this.textboxValue = this.textboxValue.trim();
     if (this.persianChar)
       this.textboxValue = MdsDatetimePickerUtility.toPersianNumber(this.textboxValue);
     else
       this.textboxValue = MdsDatetimePickerUtility.toEnglishString(this.textboxValue);
-    try {
-      this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
-    }
-    catch (ex) {
-      console.error(ex);
-    }
     this.blur.emit(this.getEventObject(event));
+    if (!this.inLine)
+      this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
   }
   private dateTimeTextBoxOnKeyDownHandler(event: any): void {
     this.keyDown.emit(this.getEventObject(event));
@@ -239,9 +229,9 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     }
   }
   showDateTimePicker() {
-    this.showDatePickerButtonClicked();
+    this.showDatePicker = true;
   }
   hideDateTimePicker() {
-    document.getElementsByTagName('html')[0].click();
+    this.showDatePicker = false;
   }
 }

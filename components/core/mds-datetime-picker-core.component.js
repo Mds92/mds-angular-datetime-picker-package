@@ -590,7 +590,7 @@ var MdsDatetimePickerCoreComponent = (function () {
     });
     Object.defineProperty(MdsDatetimePickerCoreComponent.prototype, "getSelectedRangeDatesObject", {
         get: function () {
-            if (this.selectedStartDateTime == null && this.selectedEndDateTime == null)
+            if (!this.rangeSelector || this.selectedStartDateTime == null && this.selectedEndDateTime == null)
                 return null;
             if (this._selectedRangeDatesObject != null)
                 return this._selectedRangeDatesObject;

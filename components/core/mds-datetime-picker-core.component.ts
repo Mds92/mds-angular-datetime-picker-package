@@ -517,7 +517,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
 
   private _selectedRangeDatesObject: IRangeDate = null;
   private get getSelectedRangeDatesObject(): IRangeDate {
-    if (this.selectedStartDateTime == null && this.selectedEndDateTime == null) return null;
+    if (!this.rangeSelector || this.selectedStartDateTime == null && this.selectedEndDateTime == null) return null;
     if (this._selectedRangeDatesObject != null) return this._selectedRangeDatesObject;
     let format = this.getDateTimeFormat();
     let startDate: IDate;
