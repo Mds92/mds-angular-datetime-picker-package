@@ -192,6 +192,12 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
       this.textboxValue = MdsDatetimePickerUtility.toPersianNumber(this.textboxValue);
     else
       this.textboxValue = MdsDatetimePickerUtility.toEnglishString(this.textboxValue);
+    try {
+      this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
+    }
+    catch (ex) {
+      console.error(ex);
+    }
     this.blur.emit(event);
   }
   private dateTimeTextBoxOnKeyDownHandler(event: any): void {
