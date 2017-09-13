@@ -335,8 +335,7 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
   private endMdsPersianDateTimeToDateTemp: Date = null;
 
   private yearsToSelect: string[];
-  private daysInMonth: IDay[];
-  private weekDayNames: string[];
+  private daysInMonth: IDay[];  
 
   private _resources: any = null;
   private get resources(): any {
@@ -460,13 +459,13 @@ export class MdsDatetimePickerCoreComponent implements OnInit {
     } else {
       const gregorianWeekDayNames = PersianDateTime.getGregorianWeekdayNames;
       this._weekdayNames = [
-        gregorianWeekDayNames[0][0] + gregorianWeekDayNames[0][1],
         gregorianWeekDayNames[1][0] + gregorianWeekDayNames[1][1],
         gregorianWeekDayNames[2][0] + gregorianWeekDayNames[2][1],
         gregorianWeekDayNames[3][0] + gregorianWeekDayNames[3][1],
         gregorianWeekDayNames[4][0] + gregorianWeekDayNames[4][1],
         gregorianWeekDayNames[5][0] + gregorianWeekDayNames[5][1],
-        gregorianWeekDayNames[6][0] + gregorianWeekDayNames[6][1]
+        gregorianWeekDayNames[6][0] + gregorianWeekDayNames[6][1],
+        gregorianWeekDayNames[0][0] + gregorianWeekDayNames[0][1]
       ];
     }
     return this._weekdayNames;
