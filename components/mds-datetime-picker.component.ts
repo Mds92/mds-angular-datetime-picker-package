@@ -20,7 +20,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
       if (this.showDatePicker && event.target &&
         this.element.nativeElement !== event.target &&
         !this.element.nativeElement.contains(event.target) &&
-        !targetElement.hasAttribute('data-mdspersiancalendar')) {
+        !targetElement.hasAttribute('data-mds-persian-datetimepicker')) {
         this.showDatePicker = false;
         this.mdsDateTimePickerCore.hideSelecMonthAndYearBlock();
         this.mdsDateTimePickerCore.resetIncompleteRanges();
@@ -90,6 +90,30 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   @Output() focus = new EventEmitter<IEventModel>();
 
   textboxValue = '';
+  private topOffset = 0;
+  private leftOffset = 0;
+  private afterViewInit = false;
+  private inClearFunction = false;
+  private showingDateTimePickerLocked = false;
+  
+  private _showDatePicker = false;
+  private get showDatePicker(): boolean {
+    return this._showDatePicker;
+  };
+  private set showDatePicker(value: boolean) {
+    if (this._showDatePicker == value) return;
+    this._showDatePicker = value;
+    try {
+      if (!this.inLine && value) {
+        this.showingDateTimePickerLocked = true;
+        this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
+        this.showingDateTimePickerLocked = false;
+      }
+    }
+    catch (ex) {
+      console.error(ex);
+    }
+  }
 
   private _selectedDateTime: Date = null;
   get selectedDateTime(): Date {
@@ -125,12 +149,6 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private topOffset = 0;
-  private leftOffset = 0;
-  private afterViewInit = false;
-  private inClearFunction = false;
-  private showDatePicker = false;  
-
   private getEventObject(event: any): IEventModel {
     return {
       event: event,
@@ -152,7 +170,8 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     if (date != null) {
       this.textboxValue = date.formatString;
       this.selectedDateTime = new Date(date.utcDateTime);
-      this.showDatePicker = false;
+      if(!this.showingDateTimePickerLocked)
+        this.showDatePicker = false;
     }
   }
   private rangeDateChangedHandler(rangeDate: IRangeDate) {
@@ -166,7 +185,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
       this.textboxValue = `${rangeDate.startDate.formatString} - ${rangeDate.endDate.formatString}`;
     this.rangeDateChanged.emit(rangeDate);
-    if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
+    if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '' && !this.showingDateTimePickerLocked)
       this.showDatePicker = false;
     this.selectedDateTimeRanges = [rangeDate.startDate.utcDateTime, rangeDate.endDate.utcDateTime];
   }
@@ -189,11 +208,6 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     else
       this.textboxValue = MdsDatetimePickerUtility.toEnglishString(this.textboxValue);
     this.blur.emit(this.getEventObject(event));
-    if (!this.inLine)
-      this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
-    //TODO: وقتی روی دکمه نمایش تقویم کلیک میشه تقویم نمایش داده میشه
-    // حالا اگر کاربر بیاد روی روزها کلیک کنه برای اولین بار دوباره تقویم رفرش میشه 
-    // چون تکس باکس بلور میشه و این متد فراخوانی میشه
   }
   private dateTimeTextBoxOnKeyDownHandler(event: any): void {
     this.keyDown.emit(this.getEventObject(event));

@@ -31,9 +31,9 @@ export declare class MdsDatetimePickerComponent implements OnInit, AfterViewInit
     selectedDateTimeRanges: Date[];
     private topOffset;
     private leftOffset;
-    private showDatePicker;
     private afterViewInit;
     private inClearFunction;
+    private showDatePicker;
     private getEventObject(event);
     private showDatePickerButtonClicked();
     private dateChangedHandler(date);
