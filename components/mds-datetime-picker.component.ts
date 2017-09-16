@@ -16,7 +16,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   constructor(private element: ElementRef) {
     const doc = document.getElementsByTagName('html')[0];
     doc.addEventListener('click', (event) => {
-      var targetElement = event.target as HTMLElement;
+      let targetElement = event.target as HTMLElement;
       if (this.showDatePicker && event.target &&
         this.element.nativeElement !== event.target &&
         !this.element.nativeElement.contains(event.target) &&
@@ -85,9 +85,10 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
 
   @Output() dateChanged = new EventEmitter<IDate>();
   @Output() rangeDateChanged = new EventEmitter<IRangeDate>();
-  @Output() keyDown = new EventEmitter<IEventModel>();
-  @Output() blur = new EventEmitter<IEventModel>();
-  @Output() focus = new EventEmitter<IEventModel>();
+  @Output() textBoxKeyDown = new EventEmitter<IEventModel>();
+  @Output() textBoxBlur = new EventEmitter<IEventModel>();
+  @Output() textBoxFocus = new EventEmitter<IEventModel>();
+  @Output() textBoxChange = new EventEmitter<IEventModel>();
 
   textboxValue = '';
   private topOffset = 0;
@@ -95,25 +96,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
   private afterViewInit = false;
   private inClearFunction = false;
   private showingDateTimePickerLocked = false;
-  
-  private _showDatePicker = false;
-  private get showDatePicker(): boolean {
-    return this._showDatePicker;
-  };
-  private set showDatePicker(value: boolean) {
-    if (this._showDatePicker == value) return;
-    this._showDatePicker = value;
-    try {
-      if (!this.inLine && value) {
-        this.showingDateTimePickerLocked = true;
-        this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
-        this.showingDateTimePickerLocked = false;
-      }
-    }
-    catch (ex) {
-      console.error(ex);
-    }
-  }
+  private showDatePicker = false;
 
   private _selectedDateTime: Date = null;
   get selectedDateTime(): Date {
@@ -170,7 +153,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
     if (date != null) {
       this.textboxValue = date.formatString;
       this.selectedDateTime = new Date(date.utcDateTime);
-      if(!this.showingDateTimePickerLocked)
+      if (!this.showingDateTimePickerLocked)
         this.showDatePicker = false;
     }
   }
@@ -199,7 +182,7 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
       console.error(e);
     }
     this.showDatePickerButtonClicked();
-    this.focus.emit(this.getEventObject(event));
+    this.textBoxFocus.emit(this.getEventObject(event));
   }
   private dateTimeTextBoxOnBlurHandler(event: any): void {
     this.textboxValue = this.textboxValue.trim();
@@ -207,17 +190,26 @@ export class MdsDatetimePickerComponent implements OnInit, AfterViewInit {
       this.textboxValue = MdsDatetimePickerUtility.toPersianNumber(this.textboxValue);
     else
       this.textboxValue = MdsDatetimePickerUtility.toEnglishString(this.textboxValue);
-    this.blur.emit(this.getEventObject(event));
+    let targetElement = event.target as HTMLElement;
+    if (!targetElement.hasAttribute('data-mds-persian-datetimepicker')) {
+      this.showingDateTimePickerLocked = true;
+      this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
+      this.showingDateTimePickerLocked = false;
+    }
+    this.textBoxBlur.emit(this.getEventObject(event));
   }
   private dateTimeTextBoxOnKeyDownHandler(event: any): void {
-    this.keyDown.emit(this.getEventObject(event));
-    if (event.keyCode != 13) return;
+    if (event.keyCode != 13) {
+      this.textBoxKeyDown.emit(this.getEventObject(event));
+      return;
+    }
     let value = event.target.value.trim();
     if (value == '')
       this.mdsDateTimePickerCore.clearDateTimePicker();
     else
       this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
     this.showDatePicker = false;
+    this.textBoxKeyDown.emit(this.getEventObject(event));
   }
 
   clear() {
