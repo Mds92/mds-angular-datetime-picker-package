@@ -19,7 +19,7 @@ var MdsDatetimePickerModule = (function () {
     }
     MdsDatetimePickerModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, animations_1.BrowserAnimationsModule, material_1.MaterialModule, forms_1.FormsModule],
+            imports: [common_1.CommonModule, animations_1.BrowserAnimationsModule, forms_1.FormsModule, material_1.MatGridListModule, material_1.MdInputModule],
             exports: [mds_datetime_picker_component_1.MdsDatetimePickerComponent, mds_datetime_picker_core_component_1.MdsDatetimePickerCoreComponent],
             declarations: [mds_datetime_picker_component_1.MdsDatetimePickerComponent, mds_datetime_picker_core_component_1.MdsDatetimePickerCoreComponent],
             providers: [mds_datetime_picker_resources_service_1.MdsDatetimePickerResourcesService]
