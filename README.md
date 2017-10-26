@@ -5,6 +5,10 @@ Installing package via npm:
 ```
 npm install mds.angular.datetimepicker@latest --save
 ```
+Also, you need to install `mds.persian.datetime` via npm:
+```
+npm install mds.persian.datetime@latest --save
+```
 
 [Demo](https://mds92.github.io/MdsDateTimePickerSample/sample/)
 
