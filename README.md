@@ -31,8 +31,8 @@ export class AppModule { }
 You can install these packages as follows:
 ```
 npm install mds.persian.datetime
-npm install --save @angular/material @angular/cdk
-npm install --save @angular/animations
+npm install @angular/material @angular/cdk
+npm install @angular/animations
 npm install jquery
 npm install popper.js
 npm install bootstrap
