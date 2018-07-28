@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -14,7 +15,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 @NgModule({
   imports: [
     CommonModule, BrowserModule, BrowserAnimationsModule,
-    MatFormFieldModule, MatButtonModule,
+    MatFormFieldModule, MatButtonModule, MatInputModule,
     MatGridListModule,  FormsModule,
   ],
   declarations: [
