@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { MdsAngularPersianDateTimePickerModule } from 'MdsAngularPersianDateTimePicker/public_api';
+import { MdsAngularPersianDateTimePickerModule } from 'projects/mds-angular-persian-date-time-picker/src/lib/mds-angular-persian-date-time-picker.module';
 
 @NgModule({
   declarations: [
