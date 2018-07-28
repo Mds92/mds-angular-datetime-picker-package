@@ -1,6 +1,6 @@
 {
   "name": "mds.angular.datetimepicker",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "Persian and gregorian DateTimePicker with angular and materials",
   "license": "MIT",
   "moduleResolution": "node",

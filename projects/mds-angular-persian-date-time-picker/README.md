@@ -31,19 +31,10 @@ import { MdsAngularPersianDateTimePickerModule } from 'mds.angular.datetimepicke
 })
 export class AppModule { }
 ```
-2. Imports Requirements:
-```javascript
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-```
+2. Install Requirements:
 You can install these packages as follows:
 ```
+npm install mds.persian.datetime
 npm install --save @angular/material @angular/cdk
 npm install --save @angular/animations
 npm install jquery
@@ -53,7 +44,9 @@ npm install bootstrap
 
 3. Add to view:
 ```html
-<mds-angular-persian-datetimepicker></mds-angular-persian-datetimepicker>
+    <mds-angular-persian-datetimepicker      
+      [inLine]="false" [placeHolder]="'Mds DateTime Picker'"> 
+    </mds-angular-persian-datetimepicker>
 ```
 
 ------------------------------------------
