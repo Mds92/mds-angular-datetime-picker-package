@@ -41,6 +41,22 @@ npm install jquery
 npm install popper.js
 npm install bootstrap
 ```
+**Guidance**
+You can add bootstrap and jquery to your angular 6 project as follows:
+Open `angular.json`
+add these lines
+```json
+ "styles": [
+    "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+    "node_modules/bootstrap/dist/css/bootstrap.min.css",
+    "src/styles.css"
+  ],
+  "scripts": [
+    "node_modules/jquery/dist/jquery.min.js",
+    "node_modules/popper.js/dist/umd/popper.min.js",
+    "node_modules/bootstrap/dist/js/bootstrap.min.js"
+  ]
+```
 
 3. Add to view:
 ```html
