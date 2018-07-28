@@ -21,22 +21,48 @@ npm install mds.persian.datetime@latest
 ## How To Use:
 1. First add `import` to your module,
 ```javascript
-import { MdsDatetimePickerModule } from 'mds.angular.datetimepicker';
-```
-2. Add to `imports` section of your @NgModule, sample:
-```javascript
+import { MdsAngularPersianDateTimePickerModule } from 'mds.angular.datetimepicker';
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, MdsDatetimePickerModule],
+  imports: [BrowserModule, MdsAngularPersianDateTimePickerModule],
   providers: [], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 ```
+2. Install Requirements:
+You can install these packages as follows:
+```
+npm install mds.persian.datetime
+npm install --save @angular/material @angular/cdk
+npm install --save @angular/animations
+npm install jquery
+npm install popper.js
+npm install bootstrap
+```
+**Guidance**
+You can add bootstrap and jquery to your angular 6 project as follows:
+Open `angular.json`
+add these lines
+```json
+ "styles": [
+    "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+    "node_modules/bootstrap/dist/css/bootstrap.min.css",
+    "src/styles.css"
+  ],
+  "scripts": [
+    "node_modules/jquery/dist/jquery.min.js",
+    "node_modules/popper.js/dist/umd/popper.min.js",
+    "node_modules/bootstrap/dist/js/bootstrap.min.js"
+  ]
+```
 
 3. Add to view:
 ```html
-<mds-datetime-picker></mds-datetime-picker>
+    <mds-angular-persian-datetimepicker      
+      [inLine]="false" [placeHolder]="'Mds DateTime Picker'"> 
+    </mds-angular-persian-datetimepicker>
 ```
 
 ------------------------------------------
