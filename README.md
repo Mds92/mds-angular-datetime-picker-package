@@ -1,5 +1,5 @@
 # Mds Angular Persian and Gregorian DateTimePicker
-Persian and gregorian DateTimePicker with angular 4 and angular materials
+Persian and gregorian DateTimePicker with angular 6 and angular materials
 
 Installing package via npm:
 ```
@@ -97,8 +97,8 @@ add these lines
 #### Sample
 
 ```html
-<mds-datetime-picker (dateChanged)="mdsDatePicker2OnDateChange($event)" (rangeDateChanged)="mdsDatePicker1OnDateRangeChange($event)"  [isPersian]="false" [templateType]="1" [rangeSelector]="true">
-</mds-datetime-picker>
+<mds-angular-persian-datetimepicker (dateChanged)="mdsDatePicker2OnDateChange($event)" (rangeDateChanged)="mdsDatePicker1OnDateRangeChange($event)"  [isPersian]="false" [templateType]="1" [rangeSelector]="true">
+</mds-angular-persian-datetimepicker>
 ```
 
 https://github.com/Mds92/Mds92.github.io/tree/master/MdsDateTimePickerSample
