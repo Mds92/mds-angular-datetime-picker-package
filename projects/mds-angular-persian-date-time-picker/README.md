@@ -21,22 +21,39 @@ npm install mds.persian.datetime@latest
 ## How To Use:
 1. First add `import` to your module,
 ```javascript
-import { MdsDatetimePickerModule } from 'mds.angular.datetimepicker';
-```
-2. Add to `imports` section of your @NgModule, sample:
-```javascript
+import { MdsAngularPersianDateTimePickerModule } from 'mds.angular.datetimepicker';
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, MdsDatetimePickerModule],
+  imports: [BrowserModule, MdsAngularPersianDateTimePickerModule],
   providers: [], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 ```
+2. Imports Requirements:
+```javascript
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+```
+You can install these packages as follows:
+```
+npm install --save @angular/material @angular/cdk
+npm install --save @angular/animations
+npm install jquery
+npm install popper.js
+npm install bootstrap
+```
 
 3. Add to view:
 ```html
-<mds-datetime-picker></mds-datetime-picker>
+<mds-angular-persian-datetimepicker></mds-angular-persian-datetimepicker>
 ```
 
 ------------------------------------------

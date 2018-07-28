@@ -1,5 +1,5 @@
 ﻿<ng-container *ngIf="templateType == 1">
-  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="monthSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="monthsBlockVisibilityAnimationDone($event)">
+  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="monthSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="monthsBlockVisibilityAnimationDone()">
     <table class="table table-sm table-striped text-center">
       <tbody>
         <tr *ngFor="let row of [1, 2, 3, 4]">
@@ -10,7 +10,7 @@
       </tbody>
     </table>
   </div>
-  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="yearSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="yearsBlockVisibilityAnimationDone($event)">
+  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="yearSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="yearsBlockVisibilityAnimationDone()">
     <table class="table table-sm table-striped text-center">
       <tbody>
         <tr *ngFor="let row of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]">
@@ -115,7 +115,7 @@
 
 <ng-container *ngIf="templateType == 2">
   <!-- نمایش تمامی ماه های برای انتخاب -->
-  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="monthSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="monthsBlockVisibilityAnimationDone($event)">
+  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="monthSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="monthsBlockVisibilityAnimationDone()">
     <mat-grid-list cols="3" rowHeight="2:1">
       <mat-grid-tile *ngFor="let monthName of monthNames">
         <button type="button" mat-button (click)="monthOnClick(monthName)" data-mds-persian-datetimepicker>{{monthName}}</button>
@@ -123,7 +123,7 @@
     </mat-grid-list>
   </div>
   <!-- نمایش تمامی سال ها برای انتخاب -->
-  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="yearSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="yearsBlockVisibilityAnimationDone($event)">
+  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="yearSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="yearsBlockVisibilityAnimationDone()">
     <mat-grid-list cols="5" rowHeight="2:1">
       <mat-grid-tile *ngFor="let year of yearsToSelect">
         <button type="button" mat-button (click)="yearOnClick(year)" [ngClass]="{'warning1': year == yearString}" data-mds-persian-datetimepicker>{{year}}</button>

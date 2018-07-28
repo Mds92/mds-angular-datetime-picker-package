@@ -89,12 +89,12 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
   @Output() textBoxChange = new EventEmitter<IEventModel>();
 
   textboxValue = '';
-  private topOffset = 0;
-  private leftOffset = 0;
+  //private topOffset = 0;
+  //private leftOffset = 0;
   private afterViewInit = false;
   private inClearFunction = false;
   private showingDateTimePickerLocked = false;
-  private showDatePicker = false;
+  showDatePicker = false;
 
   private _selectedDateTime: Date = null;
   get selectedDateTime(): Date {
@@ -137,15 +137,15 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
       selectedRangeDates: this.mdsDateTimePickerCore.getSelectedRangeDates
     };
   }
-  private showDatePickerButtonClicked() {
+  showDatePickerButtonClicked() {
     this.showDatePicker = !this.showDatePicker;
     if (this.showDatePicker) {
-      const rectObject = this.element.nativeElement.getBoundingClientRect();
-      this.topOffset = rectObject.top;
-      this.leftOffset = rectObject.left;
+      //const rectObject = this.element.nativeElement.getBoundingClientRect();
+      //this.topOffset = rectObject.top;
+      //this.leftOffset = rectObject.left;
     }
   }
-  private dateChangedHandler(date: IDate) {
+  dateChangedHandler(date: IDate) {
     if (!this.afterViewInit) return;
     this.dateChanged.emit(date);
     if (date != null) {
@@ -155,7 +155,7 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
         this.showDatePicker = false;
     }
   }
-  private rangeDateChangedHandler(rangeDate: IRangeDate) {
+  rangeDateChangedHandler(rangeDate: IRangeDate) {
     if (!this.afterViewInit) return;
     this.textboxValue = '';
     if (rangeDate == null) {
@@ -170,7 +170,7 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
       this.showDatePicker = false;
     this.selectedDateTimeRanges = [rangeDate.startDate.utcDateTime, rangeDate.endDate.utcDateTime];
   }
-  private dateTimeTextBoxOnFocusHandler(event: any) {
+  dateTimeTextBoxOnFocusHandler(event: any) {
     document.getElementsByTagName('html')[0].click();
     try {
       if (this.selectedDateTime != null)
@@ -182,7 +182,7 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
     this.showDatePickerButtonClicked();
     this.textBoxFocus.emit(this.getEventObject(event));
   }
-  private dateTimeTextBoxOnBlurHandler(event: any): void {
+  dateTimeTextBoxOnBlurHandler(event: any): void {
     this.textboxValue = this.textboxValue.trim();
     if (this.persianChar)
       this.textboxValue = MdsDatetimePickerUtility.toPersianNumber(this.textboxValue);
@@ -196,7 +196,7 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
     }
     this.textBoxBlur.emit(this.getEventObject(event));
   }
-  private dateTimeTextBoxOnKeyDownHandler(event: any): void {
+  dateTimeTextBoxOnKeyDownHandler(event: any): void {
     if (event.keyCode != 13) {
       this.textBoxKeyDown.emit(this.getEventObject(event));
       return;
