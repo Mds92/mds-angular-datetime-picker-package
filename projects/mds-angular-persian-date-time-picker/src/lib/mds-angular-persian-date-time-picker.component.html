@@ -1,0 +1,40 @@
+﻿<div *ngIf="inLine" class="datepicker-box">
+  <mds-datetime-picker-core *ngIf="inLine" [initialValue]="initialValue" [rangeSelector]="rangeSelector" [persianChar]="persianChar"
+    [isPersian]="isPersian" [timePicker]="timePicker" [format]="format" [templateType]="templateType" #mdsDateTimePickerCore
+    (dateChanged)="dateChangedHandler($event)" (rangeDateChanged)="rangeDateChangedHandler($event)">
+  </mds-datetime-picker-core>
+</div>
+
+<div *ngIf="!inLine && templateType == 2" class="datepicker-container">
+  <mat-form-field>
+    <input type="text" matInput [placeholder]="placeHolder" [(ngModel)]="textboxValue" (focus)="dateTimeTextBoxOnFocusHandler($event)"
+      (blur)="dateTimeTextBoxOnBlurHandler($event)" (keydown)="dateTimeTextBoxOnKeyDownHandler($event)" data-mds-persian-datetimepicker>
+    <button type="button" *ngIf="textBoxType == 1" mat-button class="calendar-icon">
+      <div [innerHTML]="buttonIcon"></div>
+    </button>
+  </mat-form-field>
+  <div class="datepicker" [hidden]="!showDatePicker">
+    <mds-datetime-picker-core #mdsDateTimePickerCore [initialValue]="initialValue" [rangeSelector]="rangeSelector" [persianChar]="persianChar"
+      [isPersian]="isPersian" [timePicker]="timePicker" [format]="format" [templateType]="2" (dateChanged)="dateChangedHandler($event)"
+      (rangeDateChanged)="rangeDateChangedHandler($event)">
+    </mds-datetime-picker-core>
+  </div>
+</div>
+
+<div *ngIf="!inLine && templateType == 1" class="datepicker-container">
+  <div class="input-group" *ngIf="textBoxType == 1">
+    <div class="input-group-addon cursor-pointer calendar-icon" (click)="showDatePickerButtonClicked()">
+      <div [innerHTML]="buttonIcon"></div>
+    </div>
+    <input type="text" class="form-control" [placeholder]="placeHolder" [(ngModel)]="textboxValue" (focus)="dateTimeTextBoxOnFocusHandler($event)"
+      (blur)="dateTimeTextBoxOnBlurHandler($event)" (keydown)="dateTimeTextBoxOnKeyDownHandler($event)" data-mds-persian-datetimepicker>
+  </div>
+  <input type="text" *ngIf="textBoxType == 2" class="form-control" [(ngModel)]="textboxValue" (focus)="dateTimeTextBoxOnFocusHandler($event)"
+    (blur)="dateTimeTextBoxOnBlurHandler($event)" (keydown)="dateTimeTextBoxOnKeyDownHandler($event)" data-mds-persian-datetimepicker>
+  <div class="datepicker datepicker-bootstrap" [hidden]="!showDatePicker">
+    <mds-datetime-picker-core #mdsDateTimePickerCore [initialValue]="initialValue" [rangeSelector]="rangeSelector" [persianChar]="persianChar"
+      [isPersian]="isPersian" [timePicker]="timePicker" [format]="format" [templateType]="1" (dateChanged)="dateChangedHandler($event)"
+      (rangeDateChanged)="rangeDateChangedHandler($event)">
+    </mds-datetime-picker-core>
+  </div>
+</div>

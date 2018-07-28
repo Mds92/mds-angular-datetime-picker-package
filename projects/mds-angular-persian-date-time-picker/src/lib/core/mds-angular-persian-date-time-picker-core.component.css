@@ -1,0 +1,104 @@
+﻿.mds-datetime-picker {
+
+}
+
+.mds-datepicker-years-months {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #fff;
+  overflow: hidden;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+.width100{
+  width: 100%;
+}
+
+.minWidth30px{
+  min-width: 30px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.selected-day {
+  display: block;
+  margin: 0 auto;
+  background: #c9e1ff;
+}
+
+.text-muted {
+  opacity: 0.4;
+}
+
+.warning1 {
+  background-color: #ffe66d;
+}
+
+.gray1 {
+  background-color: #e8e8e8;
+}
+.gray2 {
+  background-color: #f8f8f8;
+}
+
+.selected-range {
+  background-color: #D9F2E6;
+}
+
+.today {
+  background-color: #b4e5fb;
+}
+
+.text-danger {
+  color: red;
+}
+
+.disable {
+  opacity: 0.5;
+}
+
+hr {
+  margin: 1px 0 1px 0;
+}
+
+button{
+  width: 100%;
+}
+
+.font18{
+  font-size: 18px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.table{
+  margin-bottom: 0;
+}
+
+td.cursor-pointer:hover{
+  background-color: #e0e0e0;
+}
+
+.table-condensed>tbody>tr>td, 
+.table-condensed>tbody>tr>th, 
+.table-condensed>tfoot>tr>td, 
+.table-condensed>tfoot>tr>th, 
+.table-condensed>thead>tr>td, 
+.table-condensed>thead>tr>th{
+  padding: 2px;
+}
+
+.rotate90{
+  transform: rotate(90deg);
+}
+.rotate-90{
+  transform: rotate(-90deg);
+}

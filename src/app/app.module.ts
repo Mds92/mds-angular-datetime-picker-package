@@ -1,6 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { MdsAngularPersianDateTimePickerModule } from 'projects/mds-angular-persian-date-time-picker/src/public_api';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -8,9 +8,10 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    MdsAngularPersianDateTimePickerModule, 
   ],
-  providers: [],
+  providers: [],  
   bootstrap: [AppComponent]
 })
 export class AppModule { }
