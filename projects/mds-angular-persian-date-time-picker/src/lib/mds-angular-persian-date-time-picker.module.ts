@@ -15,7 +15,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
   imports: [
     CommonModule, BrowserAnimationsModule,
     MatFormFieldModule, MatButtonModule, MatInputModule,
-    MatGridListModule,  FormsModule,
+    MatGridListModule, FormsModule,
   ],
   declarations: [
     MdsAngularPersianDateTimePickerCoreComponent,
