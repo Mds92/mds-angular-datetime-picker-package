@@ -56,7 +56,7 @@ add these lines
 
 3. Add to view:
 ```html
-    <mds-angular-persian-datetimepicker      
+    <mds-angular-persian-datetimepicker [(ngModel)]="mdsDateTimePickerObject"
       [inLine]="false" [placeHolder]="'Mds DateTime Picker'"> 
     </mds-angular-persian-datetimepicker>
 ```
