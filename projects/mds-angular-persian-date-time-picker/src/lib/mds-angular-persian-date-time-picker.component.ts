@@ -167,7 +167,7 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
     return this._selectedDateTime;
   }
   set selectedDateTime(value: Date) {
-    if(!this.mdsDateTimePickerCore) return;
+    if (!this.mdsDateTimePickerCore) return;
     try {
       this.mdsDateTimePickerCore.setDateTimeByDate(!value ? null : new Date(value));
       if (value == null)
@@ -185,7 +185,7 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
     return this._selectedDateTimeRanges;
   }
   set selectedDateTimeRanges(values: Date[]) {
-    if(!this.mdsDateTimePickerCore) return;
+    if (!this.mdsDateTimePickerCore) return;
     try {
       if (values == null || values.length < 2) return;
       this.mdsDateTimePickerCore.setDateTimeRangesByDate(
@@ -326,13 +326,13 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
   private valIMdsAngularDateTimePickerDateFn: any = () => { };
 
   writeValue(valueModel: IMdsAngularDateTimePickerDateModel): void {
-    if (!valueModel) {
+    if (!valueModel || (!valueModel.selectedDate && !valueModel.selectedRangeDates)) {
       this.clear();
       return;
     }
-    if (this.rangeSelector)
+    if (this.rangeSelector && valueModel.selectedRangeDates)
       this.selectedDateTimeRanges = [valueModel.selectedRangeDates.startDate.utcDateTime, valueModel.selectedRangeDates.endDate.utcDateTime];
-    else
+    else if (valueModel.selectedDate)
       this.selectedDateTime = valueModel.selectedDate.utcDateTime;
   }
   registerOnChange(fn: any): void {
