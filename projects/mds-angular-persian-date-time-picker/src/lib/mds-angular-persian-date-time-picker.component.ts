@@ -1,15 +1,27 @@
-﻿import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { MdsDatetimePickerUtility } from './classes/mds-datetime-picker.utility';
+﻿import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Mds } from 'mds.persian.datetime';
 import { TemplateTypeEnum, TextBoxTypeEnum } from './classes/enums';
-import { IDate, IRangeDate, IEventModel } from './classes/interfaces';
+import { IMdsAngularDateTimePickerDate, IMdsAngularDateTimePickerEventModel, IMdsAngularDateTimePickerRangeDate, IMdsAngularDateTimePickerDateModel } from './classes/interfaces';
+import { MdsDatetimePickerUtility } from './classes/mds-datetime-picker.utility';
 import { MdsAngularPersianDateTimePickerCoreComponent } from './core/mds-angular-persian-date-time-picker-core.component';
+import PersianDateTime = Mds.PersianDateTime;
+
 
 @Component({
   selector: 'mds-angular-persian-datetimepicker',
   templateUrl: './mds-angular-persian-date-time-picker.component.html',
-  styleUrls: ['./mds-angular-persian-date-time-picker.component.css']
+  styleUrls: ['./mds-angular-persian-date-time-picker.component.css'],
+  providers:
+    [
+      {
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => MdsAngularPersianDateTimePickerComponent),
+        multi: true
+      }
+    ]
 })
-export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterViewInit {
+export class MdsAngularPersianDateTimePickerComponent implements ControlValueAccessor, OnInit, AfterViewInit {
 
   constructor(private element: ElementRef) {
     const doc = document.getElementsByTagName('html')[0];
@@ -27,16 +39,14 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
   }
 
   ngOnInit() {
-    this.initialValue = !this.persianChar ? MdsDatetimePickerUtility.toEnglishString(this.initialValue) : MdsDatetimePickerUtility.toPersianNumber(this.initialValue);
-    if (this.initialValue != '' && this.rangeSelector) {
-      if (this.isPersian)
-        MdsDatetimePickerUtility.getPersianDateRanges(this.initialValue);
-      else
-        MdsDatetimePickerUtility.getDateRanges(this.initialValue);
-      this.textboxValue = this.initialValue;
-    }
-    else
-      this.textboxValue = this.initialValue;
+    // this.initialValue = !this.persianChar ? MdsDatetimePickerUtility.toEnglishString(this.initialValue) : MdsDatetimePickerUtility.toPersianNumber(this.initialValue);
+    // if (this.initialValue != '' && this.rangeSelector) {
+    //   if (this.isPersian)
+    //     MdsDatetimePickerUtility.getPersianDateRanges(this.initialValue);
+    //   else
+    //     MdsDatetimePickerUtility.getDateRanges(this.initialValue);
+    // }
+    // this.myControl.setValue(this.initialValue);
     if (!this.isPersian) this.persianChar = false;
   }
   ngAfterViewInit() {
@@ -45,15 +55,53 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
 
   @ViewChild('mdsDateTimePickerCore') private mdsDateTimePickerCore: MdsAngularPersianDateTimePickerCoreComponent;
 
+  //#region Input OutPut
+
+
+  /**
+   * از بوت استرپ استفاده شود یا متریال
+   * TemplateTypeEnum
+   */
   @Input() templateType: TemplateTypeEnum = TemplateTypeEnum.bootstrap;
+
+  /**
+   * نوع نمایش تکس باکس
+   * TextBoxTypeEnum
+   */
   @Input() textBoxType: TextBoxTypeEnum = TextBoxTypeEnum.withButton;
+  /**
+   * مقدار اولیه
+   */
   @Input() initialValue = '';
+  /**
+   * نوع نمایش دیت پیکر به صورت این لاین باشد یا نه
+   */
   @Input() inLine = true;
+  /**
+   * آیا از کاراکترهای فارسی استفاده شود
+   * وقتی تقویم میلادی است بدون تاثیر می شود
+   */
   @Input() persianChar = true;
+  /**
+   * آیا دیت پیکر به شکل انتخاب رنج تاریخی باشد یا نه
+   */
   @Input() rangeSelector = false;
+  /**
+   * تقویم میلادی باشد یا شمسی
+   */
   @Input() isPersian = true;
+  /**
+   * آیا تایم پیکر نمایش داده بشود یا نه
+   * در نوع انتخاب رنج تاریخی بدون تاثیر است
+   */
   @Input() timePicker = true;
+  /**
+   * PlaceHolder
+   */
   @Input() placeHolder = '';
+  /**
+   * آیکون
+   */
   @Input() buttonIcon = '📅';
   /**
     * فرمت پیش فرض 1393/09/14   13:49:40 
@@ -81,16 +129,34 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
     **/
   @Input() format = '';
 
-  @Output() dateChanged = new EventEmitter<IDate>();
-  @Output() rangeDateChanged = new EventEmitter<IRangeDate>();
-  @Output() textBoxKeyDown = new EventEmitter<IEventModel>();
-  @Output() textBoxBlur = new EventEmitter<IEventModel>();
-  @Output() textBoxFocus = new EventEmitter<IEventModel>();
-  @Output() textBoxChange = new EventEmitter<IEventModel>();
+  /**
+   * وقتی تاریخ انتخابی عوض می شود این اونت فراخوانی می شود
+   */
+  @Output() dateChanged = new EventEmitter<IMdsAngularDateTimePickerDate>();
+  /**
+   * وقتی رنج تاریخی انتخاب شده عوض می شود این اونت فراخوانی می شود
+   */
+  @Output() rangeDateChanged = new EventEmitter<IMdsAngularDateTimePickerRangeDate>();
+  /**
+   * وقتی کلیدی روی تکس باکس انتخاب تاریخ فشرده می شود این اونت فراخوانی می شود
+   */
+  @Output() textBoxKeyDown = new EventEmitter<IMdsAngularDateTimePickerEventModel>();
+  /**
+   * وقتی روی تکس باکس انتخاب تاریخ بلور می شود این اونت فراخوانی می شود
+   */
+  @Output() textBoxBlur = new EventEmitter<IMdsAngularDateTimePickerEventModel>();
+  /**
+   * وقتی روی تکس باکس انتخاب تاریخ فوکوس می شود این اونت فراخوانی می شود
+   */
+  @Output() textBoxFocus = new EventEmitter<IMdsAngularDateTimePickerEventModel>();
+  /**
+   * وقتی روی تکس باکس انتخاب تاریخ تغییری ایجاد می شود این اونت فراخوانی می شود
+   */
+  @Output() textBoxChange = new EventEmitter<IMdsAngularDateTimePickerEventModel>();
 
-  textboxValue = '';
-  //private topOffset = 0;
-  //private leftOffset = 0;
+  //#endregion
+
+  myControl = new FormControl();
   private afterViewInit = false;
   private inClearFunction = false;
   private showingDateTimePickerLocked = false;
@@ -101,8 +167,9 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
     return this._selectedDateTime;
   }
   set selectedDateTime(value: Date) {
+    if(!this.mdsDateTimePickerCore) return;
     try {
-      this.mdsDateTimePickerCore.setDateTimeByDate(value == null ? null : new Date(value));
+      this.mdsDateTimePickerCore.setDateTimeByDate(!value ? null : new Date(value));
       if (value == null)
         this._selectedDateTime = null;
       else
@@ -118,6 +185,7 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
     return this._selectedDateTimeRanges;
   }
   set selectedDateTimeRanges(values: Date[]) {
+    if(!this.mdsDateTimePickerCore) return;
     try {
       if (values == null || values.length < 2) return;
       this.mdsDateTimePickerCore.setDateTimeRangesByDate(
@@ -130,9 +198,15 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
     }
   }
 
-  private getEventObject(event: any): IEventModel {
+  private getEventObject(event: any): IMdsAngularDateTimePickerEventModel {
     return {
-      event: event,
+      eventArgs: event,
+      selectedDate: this.mdsDateTimePickerCore.getSelectedDate,
+      selectedRangeDates: this.mdsDateTimePickerCore.getSelectedRangeDates
+    };
+  }
+  private getSelectedDateObject(): IMdsAngularDateTimePickerDateModel {
+    return {
       selectedDate: this.mdsDateTimePickerCore.getSelectedDate,
       selectedRangeDates: this.mdsDateTimePickerCore.getSelectedRangeDates
     };
@@ -145,30 +219,33 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
       //this.leftOffset = rectObject.left;
     }
   }
-  dateChangedHandler(date: IDate) {
+  dateChangedHandler(date: IMdsAngularDateTimePickerDate) {
     if (!this.afterViewInit) return;
     this.dateChanged.emit(date);
     if (date != null) {
-      this.textboxValue = date.formatString;
+      this.myControl.setValue(date.formatString);
       this.selectedDateTime = new Date(date.utcDateTime);
       if (!this.showingDateTimePickerLocked)
         this.showDatePicker = false;
+      this.propagateChange(this.getSelectedDateObject());
     }
   }
-  rangeDateChangedHandler(rangeDate: IRangeDate) {
+  rangeDateChangedHandler(rangeDate: IMdsAngularDateTimePickerRangeDate) {
     if (!this.afterViewInit) return;
-    this.textboxValue = '';
+    this.myControl.setValue('');
     if (rangeDate == null) {
       this.rangeDateChanged.emit(rangeDate);
       this.selectedDateTimeRanges = [null, null];
+      this.propagateChange(this.getSelectedDateObject());
       return;
     }
     if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '')
-      this.textboxValue = `${rangeDate.startDate.formatString} - ${rangeDate.endDate.formatString}`;
+      this.myControl.setValue(`${rangeDate.startDate.formatString} - ${rangeDate.endDate.formatString}`);
     this.rangeDateChanged.emit(rangeDate);
     if (rangeDate.startDate.formatString != '' && rangeDate.endDate.formatString != '' && !this.showingDateTimePickerLocked)
       this.showDatePicker = false;
     this.selectedDateTimeRanges = [rangeDate.startDate.utcDateTime, rangeDate.endDate.utcDateTime];
+    this.propagateChange(this.getSelectedDateObject());
   }
   dateTimeTextBoxOnFocusHandler(event: any) {
     document.getElementsByTagName('html')[0].click();
@@ -183,15 +260,15 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
     this.textBoxFocus.emit(this.getEventObject(event));
   }
   dateTimeTextBoxOnBlurHandler(event: any): void {
-    this.textboxValue = this.textboxValue.trim();
+    let value = this.myControl.value.trim();
     if (this.persianChar)
-      this.textboxValue = MdsDatetimePickerUtility.toPersianNumber(this.textboxValue);
+      value = MdsDatetimePickerUtility.toPersianNumber(value);
     else
-      this.textboxValue = MdsDatetimePickerUtility.toEnglishString(this.textboxValue);
+      value = MdsDatetimePickerUtility.toEnglishString(value);
     let targetElement = event.target as HTMLElement;
     if (!targetElement.hasAttribute('data-mds-persian-datetimepicker')) {
       this.showingDateTimePickerLocked = true;
-      this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
+      this.mdsDateTimePickerCore.setDateTimeByString(value);
       this.showingDateTimePickerLocked = false;
     }
     this.textBoxBlur.emit(this.getEventObject(event));
@@ -202,20 +279,21 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
       return;
     }
     let value = event.target.value.trim();
-    if (value == '')
+    if (!value)
       this.mdsDateTimePickerCore.clearDateTimePicker();
     else
-      this.mdsDateTimePickerCore.setDateTimeByString(this.textboxValue);
+      this.mdsDateTimePickerCore.setDateTimeByString(value);
     this.showDatePicker = false;
     this.textBoxKeyDown.emit(this.getEventObject(event));
   }
 
   clear() {
-    if (this.inClearFunction) return;
+    if (this.inClearFunction || !this.mdsDateTimePickerCore) return;
     this.inClearFunction = true;
-    this.textboxValue = '';
+    this.myControl.setValue('');
     this.selectedDateTime = null;
     this.selectedDateTimeRanges = [null, null];
+
     this.mdsDateTimePickerCore.clearDateTimePicker();
     this.inClearFunction = false;
   }
@@ -241,4 +319,39 @@ export class MdsAngularPersianDateTimePickerComponent implements OnInit, AfterVi
   hideDateTimePicker() {
     this.showDatePicker = false;
   }
+
+  //#region ControlValueAccessor
+
+  private propagateChange: any = () => { };
+  private valIMdsAngularDateTimePickerDateFn: any = () => { };
+
+  writeValue(valueModel: IMdsAngularDateTimePickerDateModel): void {
+    if (!valueModel) {
+      this.clear();
+      return;
+    }
+    if (this.rangeSelector)
+      this.selectedDateTimeRanges = [valueModel.selectedRangeDates.startDate.utcDateTime, valueModel.selectedRangeDates.endDate.utcDateTime];
+    else
+      this.selectedDateTime = valueModel.selectedDate.utcDateTime;
+  }
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+
+  }
+  setDisabledState?(isDisabled: boolean): void {
+    //this.disabled = isDisabled
+    if (isDisabled)
+      this.myControl.disable();
+    else
+      this.myControl.enable();
+  }
+
+  valIMdsAngularDateTimePickerDate(c: any) {
+    return this.valIMdsAngularDateTimePickerDateFn(c.value);
+  }
+
+  //#endregion
 }

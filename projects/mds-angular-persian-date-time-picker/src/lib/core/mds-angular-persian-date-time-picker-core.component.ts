@@ -7,7 +7,7 @@ import GregorianDayOfWeek = Mds.GregorianDayOfWeek;
 import { MdsDatetimePickerResourcesService } from '../service/mds-datetime-picker-resources.service';
 import { MdsDatetimePickerUtility } from '../classes/mds-datetime-picker.utility';
 import { TemplateTypeEnum } from '../classes/enums';
-import { IDate, IRangeDate, IDay } from '../classes/interfaces';
+import { IMdsAngularDateTimePickerDate, IMdsAngularDateTimePickerRangeDate, IMdsAngularDateTimePickerDay } from '../classes/interfaces';
 
 @Component({
   selector: 'mds-datetime-picker-core',
@@ -140,8 +140,8 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
     **/
   @Input() format: string = '';
 
-  @Output() dateChanged = new EventEmitter<IDate>();
-  @Output() rangeDateChanged = new EventEmitter<IRangeDate>();
+  @Output() dateChanged = new EventEmitter<IMdsAngularDateTimePickerDate>();
+  @Output() rangeDateChanged = new EventEmitter<IMdsAngularDateTimePickerRangeDate>();
 
   daysAnimationStateName = 'visible';
   monthOrYearSelectorVisibilityStateName = 'hidden';
@@ -188,9 +188,9 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
     return format;
   }
 
-  setDateTimeByDate(dateTime: Date): void {    
+  setDateTimeByDate(dateTime: Date): void {
     this.dateTime = this.selectedDateTime = dateTime;
-    this.selectedStartDateTime = dateTime == null ? null : new Date(dateTime);
+    this.selectedStartDateTime = !dateTime ? null : new Date(dateTime);
   }
   setDateTimeRangesByDate(startDateTime: Date, endDateTime: Date): void {
     this.dateTime = this.selectedDateTime = startDateTime;
@@ -243,10 +243,10 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
     this.updateMonthDays();
   }
 
-  get getSelectedDate(): IDate {    
+  get getSelectedDate(): IMdsAngularDateTimePickerDate {    
     return this.getSelectedDateObject;
   }
-  get getSelectedRangeDates(): IRangeDate {    
+  get getSelectedRangeDates(): IMdsAngularDateTimePickerRangeDate {    
     return this.getSelectedRangeDatesObject;
   }
 
@@ -279,7 +279,7 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
   }
   private set selectedDateTime(dateTime: Date) {
     this._selectedDateTime = dateTime == null ? null : new Date(dateTime);
-    this._iDate = null;
+    this._IMdsAngularDateTimePickerDate = null;
     this._selectedPersianDateTime = null;
     if (this.rangeSelector || !this.timePicker)
       this.clearTime(dateTime);
@@ -331,7 +331,7 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
   }
 
   yearsToSelect: string[];
-  daysInMonth: IDay[];  
+  daysInMonth: IMdsAngularDateTimePickerDay[];  
 
   private _resources: any = null;
   get resources(): any {
@@ -467,13 +467,13 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
     return this._weekdayNames;
   }
 
-  private _iDate: IDate = null;
-  private get getSelectedDateObject(): IDate {
+  private _IMdsAngularDateTimePickerDate: IMdsAngularDateTimePickerDate = null;
+  private get getSelectedDateObject(): IMdsAngularDateTimePickerDate {
     if (this.selectedDateTime == null) return null;
-    if (this._iDate != null) return this._iDate;
+    if (this._IMdsAngularDateTimePickerDate != null) return this._IMdsAngularDateTimePickerDate;
     let format = this.getDateTimeFormat();
     if (this.isPersian) {
-      this._iDate = {
+      this._IMdsAngularDateTimePickerDate = {
         year: this.selectedPersianDateTime.year,
         month: this.selectedPersianDateTime.month,
         day: this.selectedPersianDateTime.day,
@@ -486,7 +486,7 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
       };
     }
     else {
-      this._iDate = {
+      this._IMdsAngularDateTimePickerDate = {
         year: this.selectedDateTime.getFullYear(),
         month: this.selectedDateTime.getMonth(),
         day: this.selectedDateTime.getDate(),
@@ -499,10 +499,10 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
       };
     }
     if (this.persianChar)
-      this._iDate.formatString = MdsDatetimePickerUtility.toPersianNumber(this._iDate.formatString);
+      this._IMdsAngularDateTimePickerDate.formatString = MdsDatetimePickerUtility.toPersianNumber(this._IMdsAngularDateTimePickerDate.formatString);
     else
-      this._iDate.formatString = MdsDatetimePickerUtility.toEnglishString(this._iDate.formatString);
-    return this._iDate;
+      this._IMdsAngularDateTimePickerDate.formatString = MdsDatetimePickerUtility.toEnglishString(this._IMdsAngularDateTimePickerDate.formatString);
+    return this._IMdsAngularDateTimePickerDate;
   }
   get getSelectedDay(): number {
     if (this.getSelectedDateObject == null || this.rangeSelector) return 0;
@@ -510,13 +510,13 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
   }
 
 
-  private _selectedRangeDatesObject: IRangeDate = null;
-  private get getSelectedRangeDatesObject(): IRangeDate {
+  private _selectedRangeDatesObject: IMdsAngularDateTimePickerRangeDate = null;
+  private get getSelectedRangeDatesObject(): IMdsAngularDateTimePickerRangeDate {
     if (!this.rangeSelector || this.selectedStartDateTime == null && this.selectedEndDateTime == null) return null;
     if (this._selectedRangeDatesObject != null) return this._selectedRangeDatesObject;
     let format = this.getDateTimeFormat();
-    let startDate: IDate;
-    let endDate: IDate;
+    let startDate: IMdsAngularDateTimePickerDate;
+    let endDate: IMdsAngularDateTimePickerDate;
     if (this.isPersian) {
       startDate = {
         year: this.selectedStartDateTime == null ? 0 : this.selectedPersianStartDateTime.year,
@@ -588,7 +588,7 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
         this.yearsToSelect.push(i.toString());
     }
   }
-  private getDayObject(year: number, month: number, day: number, disabled: boolean, holiday: boolean, isToday: boolean): IDay {
+  private getDayObject(year: number, month: number, day: number, disabled: boolean, holiDay: boolean, isToday: boolean): IMdsAngularDateTimePickerDay {
     let isWithinDateRange = false;
     let isStartOrEndOfRange = false;
     if (this.rangeSelector && this.selectedStartDateTime != null) {
@@ -608,7 +608,7 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
       day: day,
       dayString: this.persianChar ? MdsDatetimePickerUtility.toPersianNumber(day.toString()) : day.toString(),
       disable: disabled,
-      holiday: holiday,
+      holiDay: holiDay,
       today: isToday,
       isWithinRange: isWithinDateRange,
       isStartOrEndOfRange: isStartOrEndOfRange
@@ -622,7 +622,7 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
   }
 
   private updateMonthDays(): void {
-    const days: IDay[] = [];
+    const days: IMdsAngularDateTimePickerDay[] = [];
     let counter = 0,
       year = 0,
       month = 0;
@@ -663,7 +663,7 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
           const index2 = Math.abs((row + 1) * 7 - (column + 1));
           days[index1] = temp[index2];
           if (column == 0)
-            days[index1].holiday = true;
+            days[index1].holiDay = true;
         }
       }
     }
@@ -704,7 +704,7 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
         for (let column = 0; column < 7; column++) {
           const index1 = row * 7 + column;
           if (column == 0)
-            days[index1].holiday = true;
+            days[index1].holiDay = true;
         }
       }
     }
@@ -718,9 +718,9 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
   }
 
   private resetToFalseRangeParametersInMonthDays() {
-    for (let iday of this.daysInMonth) {
-      iday.isWithinRange = false;
-      iday.isStartOrEndOfRange = false;
+    for (let IMdsAngularDateTimePickerDay of this.daysInMonth) {
+      IMdsAngularDateTimePickerDay.isWithinRange = false;
+      IMdsAngularDateTimePickerDay.isStartOrEndOfRange = false;
     }
   }
 
@@ -729,12 +729,12 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
    */
   private resetMonthDaysWithContent() {
     if (this.daysInMonth == undefined) return;
-    for (let iday of this.daysInMonth) {
-      iday.isWithinRange = false;
-      iday.isStartOrEndOfRange = false;
-      iday.dayString = this.persianChar
-        ? MdsDatetimePickerUtility.toPersianNumber(iday.day.toString())
-        : iday.day.toString();
+    for (let IMdsAngularDateTimePickerDay of this.daysInMonth) {
+      IMdsAngularDateTimePickerDay.isWithinRange = false;
+      IMdsAngularDateTimePickerDay.isStartOrEndOfRange = false;
+      IMdsAngularDateTimePickerDay.dayString = this.persianChar
+        ? MdsDatetimePickerUtility.toPersianNumber(IMdsAngularDateTimePickerDay.day.toString())
+        : IMdsAngularDateTimePickerDay.day.toString();
     }
   }
 
@@ -861,7 +861,7 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
     this.selectedDateTime = dateTimeNow;
     if (!this.rangeSelector) this.fireChangeEvent();
   }
-  dayButtonOnClick(dayObject: IDay): void {
+  dayButtonOnClick(dayObject: IMdsAngularDateTimePickerDay): void {
     // روی روزهای ماه های قبل یا بعد کلیک شده است
     if (dayObject.disable) {
       if (this.isPersian)
@@ -906,17 +906,17 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
     else if (!this.rangeSelector)
       this.fireChangeEvent();
   }
-  dayButtonOnHover(dayObject: IDay): void {
+  dayButtonOnHover(dayObject: IMdsAngularDateTimePickerDay): void {
     if (!this.isRangeSelectorReady) return;
     // تاریخ روزی که موس روی آن است
     let hoverCellDate: Date = this.isPersian
       ? PersianDateTime.fromPersianDate(dayObject.year, dayObject.month, dayObject.day).toDate()
       : new Date(dayObject.year, dayObject.month, dayObject.day);
-    for (let iday of this.daysInMonth) {
+    for (let IMdsAngularDateTimePickerDay of this.daysInMonth) {
       let currentDate: Date = this.isPersian
-        ? PersianDateTime.fromPersianDate(iday.year, iday.month, iday.day).toDate()
-        : new Date(iday.year, iday.month, iday.day);
-      iday.isWithinRange = currentDate >= this.selectedStartDateTime && currentDate <= hoverCellDate;
+        ? PersianDateTime.fromPersianDate(IMdsAngularDateTimePickerDay.year, IMdsAngularDateTimePickerDay.month, IMdsAngularDateTimePickerDay.day).toDate()
+        : new Date(IMdsAngularDateTimePickerDay.year, IMdsAngularDateTimePickerDay.month, IMdsAngularDateTimePickerDay.day);
+      IMdsAngularDateTimePickerDay.isWithinRange = currentDate >= this.selectedStartDateTime && currentDate <= hoverCellDate;
     }
   }
   rejectButtonOnClick(): void {

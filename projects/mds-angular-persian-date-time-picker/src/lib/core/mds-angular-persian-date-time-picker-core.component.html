@@ -73,7 +73,7 @@
         <tr *ngFor="let row of [1, 2, 3, 4, 5, 6]">
           <ng-container *ngFor="let col of [1, 2, 3, 4, 5, 6, 7]">
             <td *ngIf="daysInMonth[(row - 1) * 7 + col - 1] as dayObject" data-mds-persian-datetimepicker [@daysStateName]="daysAnimationStateName"
-              class="cursor-pointer" [ngClass]="{'text-danger': dayObject.holiday,
+              class="cursor-pointer" [ngClass]="{'text-danger': dayObject.holiDay,
                         'today': dayObject.today,
                         'warning1': dayObject.day == getSelectedDay,
                         'selected-range': dayObject.isWithinRange,
@@ -159,7 +159,7 @@
   </mat-grid-list>
   <mat-grid-list cols="7" rowHeight="2:1">
     <mat-grid-tile *ngFor="let dayObject of daysInMonth; let i = index;">
-      <button type="button" mat-button data-mds-persian-datetimepicker [@daysStateName]="daysAnimationStateName" [ngClass]="{'text-danger': dayObject.holiday,
+      <button type="button" mat-button data-mds-persian-datetimepicker [@daysStateName]="daysAnimationStateName" [ngClass]="{'text-danger': dayObject.holiDay,
                         'today': dayObject.today,
                         'warning1': dayObject.day == getSelectedDay,
                         'selected-range': dayObject.isWithinRange,

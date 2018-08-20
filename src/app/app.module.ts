@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
 import { MdsAngularPersianDateTimePickerModule } from 'projects/mds-angular-persian-date-time-picker/src/lib/mds-angular-persian-date-time-picker.module';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule, FormsModule, ReactiveFormsModule,
     MdsAngularPersianDateTimePickerModule, 
   ],
   providers: [],  

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,7 +15,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
   imports: [
     CommonModule, BrowserAnimationsModule,
     MatFormFieldModule, MatButtonModule, MatInputModule,
-    MatGridListModule, FormsModule,
+    MatGridListModule, FormsModule, ReactiveFormsModule
   ],
   declarations: [
     MdsAngularPersianDateTimePickerCoreComponent,

@@ -7,7 +7,7 @@
 
 <div *ngIf="!inLine && templateType == 2" class="datepicker-container">
   <mat-form-field>
-    <input matInput type="text" [placeholder]="placeHolder" [(ngModel)]="textboxValue" (focus)="dateTimeTextBoxOnFocusHandler($event)"
+    <input matInput type="text" [placeholder]="placeHolder" [formControl]="myControl" (focus)="dateTimeTextBoxOnFocusHandler($event)"
       (blur)="dateTimeTextBoxOnBlurHandler($event)" (keydown)="dateTimeTextBoxOnKeyDownHandler($event)" data-mds-persian-datetimepicker>
     <span matPrefix>
       <span *ngIf="textBoxType == 1" mat-button class="calendar-icon cursor-pointer">
@@ -28,10 +28,10 @@
     <div class="input-group-prepend cursor-pointer calendar-icon" (click)="showDatePickerButtonClicked()">
       <span class="input-group-text" [innerHTML]="buttonIcon"></span>
     </div>
-    <input type="text" class="form-control" [placeholder]="placeHolder" [(ngModel)]="textboxValue" (focus)="dateTimeTextBoxOnFocusHandler($event)"
+    <input type="text" class="form-control" [placeholder]="placeHolder" [formControl]="myControl" (focus)="dateTimeTextBoxOnFocusHandler($event)"
       (blur)="dateTimeTextBoxOnBlurHandler($event)" (keydown)="dateTimeTextBoxOnKeyDownHandler($event)" data-mds-persian-datetimepicker>
   </div>
-  <input type="text" *ngIf="textBoxType == 2" [placeholder]="placeHolder" class="form-control" [(ngModel)]="textboxValue" (focus)="dateTimeTextBoxOnFocusHandler($event)"
+  <input type="text" *ngIf="textBoxType == 2" [placeholder]="placeHolder" class="form-control" [formControl]="myControl" (focus)="dateTimeTextBoxOnFocusHandler($event)"
     (blur)="dateTimeTextBoxOnBlurHandler($event)" (keydown)="dateTimeTextBoxOnKeyDownHandler($event)" data-mds-persian-datetimepicker>
   <div class="datepicker datepicker-bootstrap" [hidden]="!showDatePicker">
     <mds-datetime-picker-core #mdsDateTimePickerCore [initialValue]="initialValue" [rangeSelector]="rangeSelector" [persianChar]="persianChar"

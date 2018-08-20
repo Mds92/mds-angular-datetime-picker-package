@@ -86,7 +86,7 @@ export class MdsDatetimePickerUtility {
     ][monthIndex];
   }
   static getGregorianWeekDayName(weekDayIndex: number): string {
-    return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][weekDayIndex];
+    return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "FrIMdsAngularDateTimePickerDay", "Saturday"][weekDayIndex];
   }
   static getPersianDateRanges(dateRangeString: string): PersianDateTime[] {
     const startEndDateArrayResult = new Array<PersianDateTime>();
