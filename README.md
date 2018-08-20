@@ -1,5 +1,5 @@
 # Mds Angular 6+, Bootstrap 4+ Persian and Gregorian DateTimePicker
-Persian and gregorian DateTimePicker with angular 6 and angular materials
+Persian and gregorian DateTimePicker with angular 6 and `AngularMaterials 6+` and `Bootstrap 4+`
 
 Installing package via npm:
 ```
