@@ -260,7 +260,7 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
     this.textBoxFocus.emit(this.getEventObject(event));
   }
   dateTimeTextBoxOnBlurHandler(event: any): void {
-    let value = this.myControl.value.trim();
+    let value = !this.myControl.value ? '' : this.myControl.value.trim();
     if (this.persianChar)
       value = MdsDatetimePickerUtility.toPersianNumber(value);
     else

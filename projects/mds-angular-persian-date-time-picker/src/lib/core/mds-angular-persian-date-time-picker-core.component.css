@@ -1,5 +1,5 @@
 ﻿.mds-datetime-picker {
-
+  direction: ltr;
 }
 
 .mds-datepicker-years-months {
@@ -12,13 +12,14 @@
   overflow: hidden;
   overflow-y: auto;
   z-index: 999;
+  direction: ltr;
 }
 
-.width100{
+.width100 {
   width: 100%;
 }
 
-.minWidth30px{
+.minWidth30px {
   min-width: 30px;
 }
 
@@ -43,6 +44,7 @@
 .gray1 {
   background-color: #e8e8e8;
 }
+
 .gray2 {
   background-color: #f8f8f8;
 }
@@ -67,11 +69,11 @@ hr {
   margin: 1px 0 1px 0;
 }
 
-button{
+button {
   width: 100%;
 }
 
-.font18{
+.font18 {
   font-size: 18px;
 }
 
@@ -79,26 +81,31 @@ button{
   cursor: pointer;
 }
 
-.table{
+.table {
   margin-bottom: 0;
 }
 
-td.cursor-pointer:hover{
+.table td {
+  vertical-align: middle;
+}
+
+td.cursor-pointer:hover {
   background-color: #e0e0e0;
 }
 
-.table-condensed>tbody>tr>td, 
-.table-condensed>tbody>tr>th, 
-.table-condensed>tfoot>tr>td, 
-.table-condensed>tfoot>tr>th, 
-.table-condensed>thead>tr>td, 
-.table-condensed>thead>tr>th{
+.table-condensed>tbody>tr>td,
+.table-condensed>tbody>tr>th,
+.table-condensed>tfoot>tr>td,
+.table-condensed>tfoot>tr>th,
+.table-condensed>thead>tr>td,
+.table-condensed>thead>tr>th {
   padding: 2px;
 }
 
-.rotate90{
+.rotate90 {
   transform: rotate(90deg);
 }
-.rotate-90{
+
+.rotate-90 {
   transform: rotate(-90deg);
 }

@@ -1,5 +1,6 @@
 ﻿.datepicker-container {
   position: relative;
+  direction: ltr;
 }
 
 .datepicker {
@@ -10,7 +11,7 @@
   left: 0;
   min-width: 300px;
   border: solid 1px #e7e7e7;
-  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
   border: 1px solid #f7f7f7;
 }
 
@@ -26,17 +27,20 @@
   cursor: pointer;
 }
 
-.datepicker-box{
+.datepicker-box {
   border: 1px solid #ccc;
   position: relative;
 }
 
-.mat-form-field{
+.mat-form-field {
   width: 100%;
 }
 
-.calendar-icon{
+.calendar-icon {
   font-size: 18px;
 }
 
-
+.calendar-icon[mat-button] {
+  margin-right: 6px;
+  float: left;
+}

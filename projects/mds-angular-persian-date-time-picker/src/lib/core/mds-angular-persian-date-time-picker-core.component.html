@@ -1,6 +1,6 @@
-﻿<ng-container *ngIf="templateType == 1">
+﻿<ng-container class="mds-datetime-picker">
   <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="monthSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="monthsBlockVisibilityAnimationDone()">
-    <table class="table table-sm table-striped text-center">
+    <table class="table table-sm text-center">
       <tbody>
         <tr *ngFor="let row of [1, 2, 3, 4]">
           <td *ngFor="let col of [1, 2, 3]" (click)="monthOnClick(monthNames[(row - 1) * 3 + col - 1])" class="cursor-pointer" data-mds-persian-datetimepicker>
@@ -29,29 +29,29 @@
       <thead>
         <tr class="gray1" *ngIf="isPersian">
           <td colspan="100">
-            <table class="width100">
+            <table class="table table-sm gray1">
               <tr>
-                <td title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&#171;</td>
-                <td title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&#8249;</td>
+                <td title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&lt;&lt;</td>
+                <td title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&lt;</td>
                 <td (click)="selectYearButtonOnClick()" class="cursor-pointer" data-mds-persian-datetimepicker>{{yearString}}</td>
-                <td colspan="2" (click)="monthButtonOnClick()" class="cursor-pointer" data-mds-persian-datetimepicker>{{monthName}}</td>
-                <td title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&#8250;</td>
-                <td title="{{resources.previousYear}}" (click)="previousYearButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&#187;</td>
+                <td (click)="monthButtonOnClick()" class="cursor-pointer" data-mds-persian-datetimepicker>{{monthName}}</td>
+                <td title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&gt;</td>
+                <td title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&gt;&gt;</td>
               </tr>
             </table>
           </td>
         </tr>
         <tr class="gray1" *ngIf="!isPersian">
           <td colspan="100">
-            <table class="width100">
+            <table class="table table-sm gray1">
               <tr>
-                <td title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&#171;</td>
+                <td title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&lt;&lt;</td>
                 <td title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="cursor-pointer font18 minWidth30px"
-                  data-mds-persian-datetimepicker>&#8249;</td>
-                <td colspan="2" (click)="monthButtonOnClick()" class="cursor-pointer" data-mds-persian-datetimepicker>{{monthName}}</td>
+                  data-mds-persian-datetimepicker>&lt;</td>
+                <td (click)="monthButtonOnClick()" class="cursor-pointer" data-mds-persian-datetimepicker>{{monthName}}</td>
                 <td (click)="selectYearButtonOnClick()" class="cursor-pointer" data-mds-persian-datetimepicker>{{yearString}}</td>
-                <td title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&#8250;</td>
-                <td title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&#187;</td>
+                <td title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&gt;</td>
+                <td title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="cursor-pointer font18 minWidth30px" data-mds-persian-datetimepicker>&gt;&gt;</td>
               </tr>
             </table>
           </td>
@@ -111,77 +111,4 @@
       </tfoot>
     </table>
   </div>
-</ng-container>
-
-<ng-container *ngIf="templateType == 2">
-  <!-- نمایش تمامی ماه های برای انتخاب -->
-  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="monthSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="monthsBlockVisibilityAnimationDone()">
-    <mat-grid-list cols="3" rowHeight="2:1">
-      <mat-grid-tile *ngFor="let monthName of monthNames">
-        <button type="button" mat-button (click)="monthOnClick(monthName)" data-mds-persian-datetimepicker>{{monthName}}</button>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
-  <!-- نمایش تمامی سال ها برای انتخاب -->
-  <div class="mds-datepicker-years-months" [@monthAndYearSelectorVisibility]="yearSelectorVisibilityStateName" (@monthAndYearSelectorVisibility.done)="yearsBlockVisibilityAnimationDone()">
-    <mat-grid-list cols="5" rowHeight="2:1">
-      <mat-grid-tile *ngFor="let year of yearsToSelect">
-        <button type="button" mat-button (click)="yearOnClick(year)" [ngClass]="{'warning1': year == yearString}" data-mds-persian-datetimepicker>{{year}}</button>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
-  <mat-grid-list cols="7" rowHeight="2:1" class="gray1" *ngIf="isPersian">
-    <mat-grid-tile><button type="button" mat-button i18n-title="Next Year" title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="font18" data-mds-persian-datetimepicker>&#171;</button></mat-grid-tile>
-    <mat-grid-tile><button mat-button type="button" i18n-title="Next Month" title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="font18" data-mds-persian-datetimepicker>&#8249;</button></mat-grid-tile>
-    <mat-grid-tile><button mat-button type="button" (click)="selectYearButtonOnClick()" data-mds-persian-datetimepicker>{{yearString}}</button></mat-grid-tile>
-    <mat-grid-tile [colspan]="2"><button mat-button type="button" (click)="monthButtonOnClick()" data-mds-persian-datetimepicker>{{monthName}}</button></mat-grid-tile>
-    <mat-grid-tile><button mat-button type="button" i18n-title="Previous Month" title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" class="font18" data-mds-persian-datetimepicker>&#8250;</button></mat-grid-tile>
-    <mat-grid-tile><button mat-button type="button" i18n-title="Previous Year" title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()" class="font18" data-mds-persian-datetimepicker>&#187;</button></mat-grid-tile>
-  </mat-grid-list>
-  <mat-grid-list cols="7" rowHeight="2:1" class="gray1" *ngIf="!isPersian">
-    <mat-grid-tile><button type="button" mat-button i18n-title="Previous Year" title="{{resources.PreviousYear}}" (click)="previousYearButtonOnClick()" data-mds-persian-datetimepicker class="font18">&#171;</button></mat-grid-tile>
-    <mat-grid-tile><button type="button" mat-button i18n-title="Previous Month" title="{{resources.PreviousMonth}}" (click)="previousMonthButtonOnClick()" data-mds-persian-datetimepicker class="font18">&#8249;</button></mat-grid-tile>
-    <mat-grid-tile [colspan]="2"><button mat-button type="button" (click)="monthButtonOnClick()" data-mds-persian-datetimepicker>{{monthName}}</button></mat-grid-tile>
-    <mat-grid-tile><button type="button" mat-button (click)="selectYearButtonOnClick()" data-mds-persian-datetimepicker>{{yearString}}</button></mat-grid-tile>
-    <mat-grid-tile><button type="button" mat-button i18n-title="Next Month" title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()"  data-mds-persian-datetimepicker class="font18">&#8250;</button></mat-grid-tile>
-    <mat-grid-tile><button type="button" mat-button i18n-title="Next Year" title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" data-mds-persian-datetimepicker class="font18">&#187;</button></mat-grid-tile>
-  </mat-grid-list>
-  <mat-grid-list cols="4" rowHeight="3:1" *ngIf="rangeSelector">
-    <mat-grid-tile></mat-grid-tile>
-    <mat-grid-tile><button type="button" mat-button [disabled]="isRejectButtonDisable" title="{{resources.Reject}}" (click)="rejectButtonOnClick()" class="font18" data-mds-persian-datetimepicker>&#215;</button></mat-grid-tile>
-    <mat-grid-tile><button type="button" mat-button [disabled]="isConfirmButtonDisable" title="{{resources.Confirm}}" (click)="confirmButtonOnClick()" class="font18" data-mds-persian-datetimepicker>&#10003;</button></mat-grid-tile>
-    <mat-grid-tile></mat-grid-tile>
-  </mat-grid-list>
-  <mat-grid-list cols="7" rowHeight="1.6:1" class="gray2">
-    <ng-container *ngFor="let dayName of weekdayNames; let i = index;">
-      <mat-grid-tile [ngClass]="{'text-danger': i == 0}">{{dayName}}</mat-grid-tile>
-    </ng-container>
-  </mat-grid-list>
-  <mat-grid-list cols="7" rowHeight="2:1">
-    <mat-grid-tile *ngFor="let dayObject of daysInMonth; let i = index;">
-      <button type="button" mat-button data-mds-persian-datetimepicker [@daysStateName]="daysAnimationStateName" [ngClass]="{'text-danger': dayObject.holiDay,
-                        'today': dayObject.today,
-                        'warning1': dayObject.day == getSelectedDay,
-                        'selected-range': dayObject.isWithinRange,
-                        'text-muted': dayObject.disable}" (click)="dayButtonOnClick(dayObject)" (mouseenter)="dayButtonOnHover(dayObject)">
-      <span [ngClass]="{'selected-day': dayObject.isStartOrEndOfRange}" data-mds-persian-datetimepicker>{{dayObject.dayString}}</span>
-    </button>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <hr *ngIf="timePicker" />
-  <mat-grid-list cols="3" rowHeight="6:1" *ngIf="timePicker">
-    <mat-grid-tile><button type="button" mat-button (click)="hourUpButtonOnClick()" data-mds-persian-datetimepicker>▲</button></mat-grid-tile>
-    <mat-grid-tile><button type="button" mat-button (click)="minuteUpButtonOnClick()" data-mds-persian-datetimepicker>▲</button></mat-grid-tile>
-    <mat-grid-tile><button type="button" mat-button (click)="secondUpButtonOnClick()" data-mds-persian-datetimepicker>▲</button></mat-grid-tile>
-    <mat-grid-tile>{{hourString}}</mat-grid-tile>
-    <mat-grid-tile>{{minuteString}}</mat-grid-tile>
-    <mat-grid-tile>{{secondString}}</mat-grid-tile>
-    <mat-grid-tile><button type="button" mat-button (click)="hourDownButtonOnClick()" data-mds-persian-datetimepicker>▼</button></mat-grid-tile>
-    <mat-grid-tile><button type="button" mat-button (click)="minuteDownButtonOnClick()" data-mds-persian-datetimepicker>▼</button></mat-grid-tile>
-    <mat-grid-tile><button type="button" mat-button (click)="secondDownButtonOnClick()" data-mds-persian-datetimepicker>▼</button></mat-grid-tile>
-  </mat-grid-list>
-  <hr />
-  <mat-grid-list cols="1" rowHeight="12:1">
-    <mat-grid-tile><button type="button" mat-button (click)="todayButtonOnClick()" data-mds-persian-datetimepicker>{{resources.Today}}</button></mat-grid-tile>
-  </mat-grid-list>
 </ng-container>
