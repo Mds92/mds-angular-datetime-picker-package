@@ -131,7 +131,7 @@
     </mat-grid-list>
   </div>
   <mat-grid-list cols="7" rowHeight="2:1" class="gray1" *ngIf="isPersian">
-    <mat-grid-tile><button mat-button i18n-title="Next Year" title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="font18" data-mds-persian-datetimepicker>&#171;</button></mat-grid-tile>
+    <mat-grid-tile><button type="button" mat-button i18n-title="Next Year" title="{{resources.NextYear}}" (click)="nextYearButtonOnClick()" class="font18" data-mds-persian-datetimepicker>&#171;</button></mat-grid-tile>
     <mat-grid-tile><button mat-button type="button" i18n-title="Next Month" title="{{resources.NextMonth}}" (click)="nextMonthButtonOnClick()" class="font18" data-mds-persian-datetimepicker>&#8249;</button></mat-grid-tile>
     <mat-grid-tile><button mat-button type="button" (click)="selectYearButtonOnClick()" data-mds-persian-datetimepicker>{{yearString}}</button></mat-grid-tile>
     <mat-grid-tile [colspan]="2"><button mat-button type="button" (click)="monthButtonOnClick()" data-mds-persian-datetimepicker>{{monthName}}</button></mat-grid-tile>
