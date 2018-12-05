@@ -39,6 +39,15 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
   }
 
   private _persianChar = true;
+  private _isPersian = true;
+  myControl = new FormControl();
+  private afterViewInit = false;
+  private inClearFunction = false;
+  private showingDateTimePickerLocked = false;
+  showDatePicker = false;
+
+  private _selectedDateTime: Date = null;
+  private _selectedDateTimeRanges: Date[] = null;
 
   get selectedDateTime(): Date {
     return this._selectedDateTime;
@@ -124,7 +133,27 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
   /**
    * تقویم میلادی باشد یا شمسی
    */
-  @Input() isPersian = true;
+  @Input()
+  get isPersian() {
+    return this._isPersian;
+  }
+  set isPersian(value) {
+    if (value == this._isPersian) { return; }
+    this._isPersian = value;
+    if (!this.mdsDateTimePickerCore) { return; }
+    this.mdsDateTimePickerCore.isPersian = this._isPersian;
+    setTimeout(() => {
+      const selectedRangeDates = this.mdsDateTimePickerCore.getSelectedRangeDates;
+      const selectedDate = this.mdsDateTimePickerCore.getSelectedDate;
+      if (this.rangeSelector && selectedRangeDates) {
+        this.rangeDateChangedHandler(selectedRangeDates);
+        // this.mdsDateTimePickerCore.setDateTimeRangesByDate(selectedRangeDates.startDate.utcDateTime, selectedRangeDates.endDate.utcDateTime);
+      } else if (selectedDate) {
+        this.dateChangedHandler(selectedDate);
+        // this.mdsDateTimePickerCore.setDateTimeByDate(selectedDate.utcDateTime);
+      }
+    }, 10);
+  }
   /**
    * آیا تایم پیکر نمایش داده بشود یا نه
    * در نوع انتخاب رنج تاریخی بدون تاثیر است
@@ -191,15 +220,6 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
 
   //#endregion
 
-  myControl = new FormControl();
-  private afterViewInit = false;
-  private inClearFunction = false;
-  private showingDateTimePickerLocked = false;
-  showDatePicker = false;
-
-  private _selectedDateTime: Date = null;
-
-  private _selectedDateTimeRanges: Date[] = null;
 
   ngOnInit() {
     if (!this.isPersian) { this.persianChar = false; }
