@@ -13,6 +13,7 @@ export class AppComponent {
   timePicker = false;
   inLine = false;
   isPersian = false;
+  persianChar = false;
   format = '';
   placeHolder = 'Date Time Picker';
 

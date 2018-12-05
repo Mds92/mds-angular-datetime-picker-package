@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-sm-4">
       <lib-mds-angular-persian-datetimepicker [(ngModel)]="dateTime" [rangeSelector]="rangeSelector" [isPersian]="isPersian"
-        templateType="1" [inLine]="inLine" [timePicker]="timePicker" [placeHolder]="placeHolder" [format]="format">
+        templateType="1" [inLine]="inLine" [timePicker]="timePicker" [persianChar]="persianChar" [placeHolder]="placeHolder" [format]="format">
       </lib-mds-angular-persian-datetimepicker>
       <hr>
       <div class="mx-auto" class="text-left" style="direction: ltr;">
@@ -15,10 +15,14 @@
       </div>
     </div>
     <div class="col-sm-8 border-left">
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheckBoxIsPersian" [(ngModel)]="isPersian">
-            <label class="custom-control-label" for="customCheckBoxIsPersian">Is Persian</label>
-          </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="customCheckBoxIsPersian" [(ngModel)]="isPersian">
+        <label class="custom-control-label" for="customCheckBoxIsPersian">Is Persian</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="customCheckBoxPersianChar" [(ngModel)]="persianChar">
+        <label class="custom-control-label" for="customCheckBoxPersianChar">Persian Char</label>
+      </div>
       <div class="custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" id="customCheckBoxInLine" [(ngModel)]="inLine">
         <label class="custom-control-label" for="customCheckBoxInLine">In Line</label>
