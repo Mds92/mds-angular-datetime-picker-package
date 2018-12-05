@@ -126,7 +126,6 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
       this.updateYearsList();
       this.updateMonthDays();
     }
-    if (!this.initialized) { return; }
   }
   private get persianStartDayOfMonth(): PersianDayOfWeek {
     return this.persianDateTime.startDayOfMonthDayOfWeek;
