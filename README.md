@@ -75,7 +75,7 @@ add these lines
 **placeHolder** | string | | Place holder of text box
 **buttonIcon** | string | | Icon of datepicker button<br>Sample:<br> `<span class="fa fa-calendar" aria-hidden="true"></span>` <br> Default is 📅<br>
 **rangeSelector** | boolean | false, [true] | Is date picker range selector
-**format** | string | format string | Format of showing date time <br> فرمت پیش فرض 1393/09/14   13:49:40 <br> **yyyy**: سال چهار رقمی <br> **yy**: سال دو رقمی <br> **MMMM**: نام ماه <br> **MM**: عدد دو رقمی ماه <br> **dddd**: نام روز هفته <br> **dd**: عدد دو رقمی روز ماه <br> **d**: عدد یک رقمی روز ماه <br> **HH**: ساعت دو رقمی با فرمت 00 تا 24 <br> **hh**: ساعت دو رقمی با فرمت 00 تا 12 <br> **mm**: عدد دو رقمی دقیقه <br> **ss**: ثانیه دو رقمی <br> **fff**: میلی ثانیه 3 رقمی <br> **ff**: میلی ثانیه 2 رقمی <br> **tt**: ب.ظ یا ق.ظ <br> 
+**format** | string | format string | Format of showing date time <br> فرمت پیش فرض 1393/09/14   13:49:40 <br> **yyyy**: سال چهار رقمی <br> **yy**: سال دو رقمی <br> **MMMM**: نام ماه <br> **MM**: عدد دو رقمی ماه <br> **dddd**: نام روز هفته <br> **dd**: عدد دو رقمی روز ماه <br> **HH**: ساعت دو رقمی با فرمت 00 تا 24 <br> **hh**: ساعت دو رقمی با فرمت 00 تا 12 <br> **mm**: عدد دو رقمی دقیقه <br> **ss**: ثانیه دو رقمی <br> **fff**: میلی ثانیه 3 رقمی <br> **ff**: میلی ثانیه 2 رقمی <br> **tt**: ب.ظ یا ق.ظ <br> 
 
 ------------------------------------------
 
