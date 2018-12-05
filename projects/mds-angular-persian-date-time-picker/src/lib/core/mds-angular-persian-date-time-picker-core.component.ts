@@ -40,8 +40,8 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
   private _rangeSelector = true;
   private _timePicker = true;
 
-  @Input() templateType: TemplateTypeEnum = TemplateTypeEnum.bootstrap;
   @Input() initialValue = '';
+  @Input() templateType: TemplateTypeEnum = TemplateTypeEnum.bootstrap;
 
   @Input()
   get rangeSelector(): boolean {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IMdsAngularDateTimePickerDataModel } from 'projects/mds-angular-persian-date-time-picker/src/public_api';
+import { IMdsAngularDateTimePickerDataModel, TemplateTypeEnum } from 'projects/mds-angular-persian-date-time-picker/src/public_api';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +15,7 @@ export class AppComponent {
   isPersian = false;
   persianChar = false;
   format = '';
+  templateType = TemplateTypeEnum.bootstrap.toString();
   placeHolder = 'Date Time Picker';
 
   dateTime: IMdsAngularDateTimePickerDataModel = {

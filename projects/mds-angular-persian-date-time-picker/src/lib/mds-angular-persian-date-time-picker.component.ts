@@ -37,6 +37,9 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
       }
     }, false);
   }
+
+  private _persianChar = true;
+
   get selectedDateTime(): Date {
     return this._selectedDateTime;
   }
@@ -99,7 +102,21 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
    * آیا از کاراکترهای فارسی استفاده شود
    * وقتی تقویم میلادی است بدون تاثیر می شود
    */
-  @Input() persianChar = true;
+  @Input()
+  get persianChar() {
+    return this._persianChar;
+  }
+  set persianChar(value) {
+    if (value == this._persianChar) { return; }
+    this._persianChar = value;
+    let controlValue = this.myControl.value;
+    if (this._persianChar) {
+      controlValue = MdsDatetimePickerUtility.toPersianNumber(controlValue);
+    } else {
+      controlValue = MdsDatetimePickerUtility.toEnglishString(controlValue);
+    }
+    this.myControl.setValue(controlValue);
+  }
   /**
    * آیا دیت پیکر به شکل انتخاب رنج تاریخی باشد یا نه
    */
