@@ -6,8 +6,8 @@
   <h4>Gregorian DateTimePicker</h4>
   <div class="row">
     <div class="col-sm-4">
-      <lib-mds-angular-persian-datetimepicker [(ngModel)]="dateTime" [rangeSelector]="rangeSelector" [isPersian]="false"
-        templateType="1" [inLine]="false" [timePicker]="timePicker" [placeHolder]="placeHolder">
+      <lib-mds-angular-persian-datetimepicker [(ngModel)]="dateTime" [rangeSelector]="rangeSelector" [isPersian]="isPersian"
+        templateType="1" [inLine]="inLine" [timePicker]="timePicker" [placeHolder]="placeHolder" [format]="format">
       </lib-mds-angular-persian-datetimepicker>
       <hr>
       <div class="mx-auto" class="text-left" style="direction: ltr;">
@@ -15,6 +15,14 @@
       </div>
     </div>
     <div class="col-sm-8 border-left">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="customCheckBoxIsPersian" [(ngModel)]="isPersian">
+            <label class="custom-control-label" for="customCheckBoxIsPersian">Is Persian</label>
+          </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="customCheckBoxInLine" [(ngModel)]="inLine">
+        <label class="custom-control-label" for="customCheckBoxInLine">In Line</label>
+      </div>
       <div class="custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" id="customCheckRangeSelector" [(ngModel)]="rangeSelector">
         <label class="custom-control-label" for="customCheckRangeSelector">Range Selector</label>
@@ -27,6 +35,12 @@
         <label for="textBoxPlaceHolder" class="col-sm-2 col-form-label">Place Holder</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="textBoxPlaceHolder" [(ngModel)]="placeHolder">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="textBoxFormat" class="col-sm-2 col-form-label">Format</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="textBoxFormat" [(ngModel)]="format">
         </div>
       </div>
     </div>

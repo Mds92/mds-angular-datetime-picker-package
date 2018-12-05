@@ -11,6 +11,9 @@ export class AppComponent {
 
   rangeSelector = false;
   timePicker = false;
+  inLine = false;
+  isPersian = false;
+  format = '';
   placeHolder = 'Date Time Picker';
 
   dateTime: IMdsAngularDateTimePickerDataModel = {
