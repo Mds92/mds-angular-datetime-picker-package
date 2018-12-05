@@ -141,18 +141,7 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
     if (value == this._isPersian) { return; }
     this._isPersian = value;
     if (!this.mdsDateTimePickerCore) { return; }
-    this.mdsDateTimePickerCore.isPersian = this._isPersian;
-    setTimeout(() => {
-      const selectedRangeDates = this.mdsDateTimePickerCore.getSelectedRangeDates;
-      const selectedDate = this.mdsDateTimePickerCore.getSelectedDate;
-      if (this.rangeSelector && selectedRangeDates) {
-        this.rangeDateChangedHandler(selectedRangeDates);
-        // this.mdsDateTimePickerCore.setDateTimeRangesByDate(selectedRangeDates.startDate.utcDateTime, selectedRangeDates.endDate.utcDateTime);
-      } else if (selectedDate) {
-        this.dateChangedHandler(selectedDate);
-        // this.mdsDateTimePickerCore.setDateTimeByDate(selectedDate.utcDateTime);
-      }
-    }, 10);
+    this.clear();
   }
   /**
    * آیا تایم پیکر نمایش داده بشود یا نه

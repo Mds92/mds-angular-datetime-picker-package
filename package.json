@@ -24,7 +24,7 @@
     "@angular/platform-browser-dynamic": "^6.1.10",
     "@angular/router": "^6.1.10",
     "bootstrap": "^4.1.3",
-    "core-js": "^2.5.7",
+    "core-js": "^2.6.0",
     "hammerjs": "^2.0.8",
     "jquery": "^3.3.1",
     "mds.persian.datetime": "^0.9.21",
