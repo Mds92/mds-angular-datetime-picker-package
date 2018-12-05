@@ -1,5 +1,5 @@
 ﻿export interface IMdsAngularDateTimePickerDay {
-  year: number,
+  year: number;
   month: number;
   day: number;
   dayString: string;
@@ -36,4 +36,9 @@ export interface IMdsAngularDateTimePickerEventModel {
 export interface IMdsAngularDateTimePickerDateModel {
   selectedDate: IMdsAngularDateTimePickerDate;
   selectedRangeDates: IMdsAngularDateTimePickerRangeDate;
+}
+
+export interface IMdsAngularDateTimePickerDataModel {
+  selectedDate: Date;
+  selectedRangeDates: Date[];
 }

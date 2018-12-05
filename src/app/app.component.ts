@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IMdsAngularDateTimePickerDataModel } from 'projects/mds-angular-persian-date-time-picker/src/public_api';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'MdsAngularPersianDateTimePicker Sample';
-  dateTime = '';
+
+  rangeSelector = false;
+  timePicker = false;
+  placeHolder = 'Date Time Picker';
+
+  dateTime: IMdsAngularDateTimePickerDataModel = {
+    selectedDate: new Date(Date.parse('2016-01-01 3:3:3')),
+    selectedRangeDates: []
+  };
+
+
 }

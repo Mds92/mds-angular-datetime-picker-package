@@ -33,5 +33,5 @@ export class MdsDatetimePickerResourcesService {
     'Reject': 'Reject',
     'Start': 'Start',
     'End': 'End'
-  }
+  };
 }

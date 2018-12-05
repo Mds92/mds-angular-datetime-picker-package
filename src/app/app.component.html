@@ -3,17 +3,34 @@
     Welcome to {{ title }}!
   </h1>
   <hr>
-  <div class="mx-auto" style="max-width: 300px;">
-    <mds-angular-persian-datetimepicker [(ngModel)]="dateTime" [rangeSelector]="false" [isPersian]="true" templateType="2" [inLine]="false"
-      [placeHolder]="'انتخاب تاریخ'">
-    </mds-angular-persian-datetimepicker>
+  <h4>Gregorian DateTimePicker</h4>
+  <div class="row">
+    <div class="col-sm-4">
+      <lib-mds-angular-persian-datetimepicker [(ngModel)]="dateTime" [rangeSelector]="rangeSelector" [isPersian]="false"
+        templateType="1" [inLine]="false" [timePicker]="timePicker" [placeHolder]="placeHolder">
+      </lib-mds-angular-persian-datetimepicker>
+      <hr>
+      <div class="mx-auto" class="text-left" style="direction: ltr;">
+        <pre>{{dateTime | json}}</pre>
+      </div>
+    </div>
+    <div class="col-sm-8 border-left">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="customCheckRangeSelector" [(ngModel)]="rangeSelector">
+        <label class="custom-control-label" for="customCheckRangeSelector">Range Selector</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="customCheckTimePicker" [(ngModel)]="timePicker">
+        <label class="custom-control-label" for="customCheckTimePicker">Time Picker</label>
+      </div>
+      <div class="form-group row">
+        <label for="textBoxPlaceHolder" class="col-sm-2 col-form-label">Place Holder</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="textBoxPlaceHolder" [(ngModel)]="placeHolder">
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="mx-auto" style="max-width: 300px;">
-    <mds-angular-persian-datetimepicker [(ngModel)]="dateTime" [rangeSelector]="true" [isPersian]="false" templateType="1" [inLine]="false"
-      [placeHolder]="'Gregorian Range Selector'">
-    </mds-angular-persian-datetimepicker>
-  </div>
-  <div class="mx-auto" class="text-left" style="direction: ltr;">
-    <pre>{{dateTime | json}}</pre>
-  </div>
+
+
 </div>

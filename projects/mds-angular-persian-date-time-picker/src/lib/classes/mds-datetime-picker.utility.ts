@@ -3,9 +3,9 @@ import PersianDateTime = Mds.PersianDateTime;
 
 export class MdsDatetimePickerUtility {
   static toPersianNumber(input: string): string {
-    if (input == '' || input == null) return '';
+    if (input == '' || input == null) { return ''; }
     input = input.replace(/ي/img, 'ی').replace(/ك/img, 'ک');
-    //۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹
+    // ۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹
     return input.replace(/0/img, '۰')
       .replace(/1/img, '۱')
       .replace(/2/img, '۲')
@@ -18,9 +18,9 @@ export class MdsDatetimePickerUtility {
       .replace(/9/img, '۹');
   }
   static toEnglishNumber(input: string): number {
-    if (input == '' || input == null) return 0;
+    if (input == '' || input == null) { return 0; }
     input = input.replace(/ي/img, 'ی').replace(/ك/img, 'ک');
-    //۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹
+    // ۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹
     input = input.replace(/,/img, '')
       .replace(/۰/img, '0')
       .replace(/۱/img, '1')
@@ -35,9 +35,9 @@ export class MdsDatetimePickerUtility {
     return Number(input);
   }
   static toEnglishString(input: string): string {
-    if (input == '' || input == null) return '';
+    if (input == '' || input == null) { return ''; }
     input = input.replace(/ي/img, 'ی').replace(/ك/img, 'ک');
-    //۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹
+    // ۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹
     input = input.replace(/,/img, '')
       .replace(/۰/img, '0')
       .replace(/۱/img, '1')
@@ -52,11 +52,12 @@ export class MdsDatetimePickerUtility {
     return input;
   }
   static dateTimeToString(date: Date, format: string = ''): string {
-    if (format == '' || format == null)
+    if (format == '' || format == null) {
       return `${this.zeroPad(date.getFullYear(), '0000')}/${this.zeroPad(date.getMonth() + 1, '00')}/${this.zeroPad(date.getDate(), '00')}   ${this.zeroPad(date.getHours(), '00')}:${this.zeroPad(date.getMinutes(), '00')}:${this.zeroPad(date.getSeconds(), '00')}`;
-    var dateTimeString = format;
+    }
+    let dateTimeString = format;
     dateTimeString = dateTimeString.replace(/yyyy/, this.zeroPad(date.getFullYear(), '0000'));
-    dateTimeString = dateTimeString.replace(/yy/, this.zeroPad(date.getFullYear(), '00'));    
+    dateTimeString = dateTimeString.replace(/yy/, this.zeroPad(date.getFullYear(), '00'));
     dateTimeString = dateTimeString.replace(/dddd/, this.getGregorianWeekDayName(date.getDay()));
     dateTimeString = dateTimeString.replace(/dd/, this.zeroPad(date.getDate(), '00'));
     dateTimeString = dateTimeString.replace(/d/, date.getDate().toString());
@@ -75,18 +76,18 @@ export class MdsDatetimePickerUtility {
     return dateTimeString;
   }
   static zeroPad(nr: any, base: string): string {
-    if (nr == undefined || nr == '') return base;
+    if (nr == undefined || nr == '') { return base; }
     const len = (String(base).length - String(nr).length) + 1;
     return len > 0 ? new Array(len).join('0') + nr : nr;
   }
   static getGregorianMonthName(monthIndex: number): string {
     return [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
     ][monthIndex];
   }
   static getGregorianWeekDayName(weekDayIndex: number): string {
-    return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "FrIMdsAngularDateTimePickerDay", "Saturday"][weekDayIndex];
+    return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'FrIMdsAngularDateTimePickerDay', 'Saturday'][weekDayIndex];
   }
   static getPersianDateRanges(dateRangeString: string): PersianDateTime[] {
     const startEndDateArrayResult = new Array<PersianDateTime>();
@@ -94,8 +95,9 @@ export class MdsDatetimePickerUtility {
       const startEndDateArray = dateRangeString.split(' - ');
       const startMdsPersianDateTime = PersianDateTime.parse(startEndDateArray[0]);
       const endMdsPersianDateTime = PersianDateTime.parse(startEndDateArray[1]);
-      if (endMdsPersianDateTime.toDate() < startMdsPersianDateTime.toDate())
+      if (endMdsPersianDateTime.toDate() < startMdsPersianDateTime.toDate()) {
         throw new Error('Range date is not valid. End date must be bigger than start date');
+      }
       startEndDateArrayResult.push(startMdsPersianDateTime);
       startEndDateArrayResult.push(endMdsPersianDateTime);
     } catch (e) {
@@ -109,8 +111,9 @@ export class MdsDatetimePickerUtility {
       const startEndDateArray = dateRangeString.split(' - ');
       const startDateTime = new Date(Date.parse(startEndDateArray[0]));
       const endDateTime = new Date(Date.parse(startEndDateArray[1]));
-      if (endDateTime < startDateTime)
+      if (endDateTime < startDateTime) {
         throw new Error('Range date is not valid. End date must be bigger than start date');
+      }
       startEndDateArrayResult.push(startDateTime);
       startEndDateArrayResult.push(endDateTime);
     } catch (e) {
