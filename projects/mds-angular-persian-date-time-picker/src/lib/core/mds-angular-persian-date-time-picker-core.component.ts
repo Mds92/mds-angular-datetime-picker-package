@@ -40,7 +40,7 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
   private _rangeSelector = true;
   private _timePicker = true;
 
-  @Input() initialValue = '';
+  // @Input() initialValue = '';
   @Input() templateType: TemplateTypeEnum = TemplateTypeEnum.bootstrap;
 
   @Input()
@@ -455,79 +455,68 @@ export class MdsAngularPersianDateTimePickerCoreComponent implements OnInit {
   daysInMonth: IMdsAngularDateTimePickerDay[];
 
   private _resources: any = null;
-
   private _year = 0;
-
   private _yearString = '';
-
   private _month = 0;
-
   private _monthName = '';
-
   private _monthNames: string[] = [];
-
   private _hour = 0;
-
   private _hourString = '';
-
   private _minute = 0;
-
   private _minuteString = '';
-
   private _second = 0;
-
   private _secondString = '';
-
   private _weekdayNames: string[] = [];
-
   private _IMdsAngularDateTimePickerDate: IMdsAngularDateTimePickerDate = null;
-
 
   private _selectedRangeDatesObject: IMdsAngularDateTimePickerRangeDate = null;
   ngOnInit() {
     if (this.rangeSelector) { this.timePicker = false; }
     if (!this.isPersian) { this.persianChar = false; }
-    if (this.initialValue != '') {
-      if (this.rangeSelector) {
-        try {
-          if (this.isPersian) {
-            const ranges = MdsDatetimePickerUtility.getPersianDateRanges(this.initialValue);
-            this.setSelectedRangePersianDateTimes(ranges);
-          } else {
-            const ranges = MdsDatetimePickerUtility.getDateRanges(this.initialValue);
-            this.setSelectedRangeDateTimes(ranges);
-          }
-          this.dateTime = this.selectedStartDateTime;
-        } catch (e) {
-          console.error('value is in wrong format, when rangeSelector is true you should write value like "1396/03/01 - 1396/03/15" or "2017/3/9 - 2017/3/10"', e);
-          this.setSelectedRangeDateTimes(null);
-          this.dateTime = null;
-        }
-      } else {
-        try {
-          if (this.isPersian) {
-            this.dateTime = PersianDateTime.parse(this.initialValue).toDate();
-          } else {
-            this.dateTime = new Date(Date.parse(this.initialValue));
-          }
-        } catch (e) {
-          console.error('value is in wrong format, you should write value like "1396/03/01  11:30:27" or "2017/09/03  11:30:00", you can remove time', e);
-          this.dateTime = null;
-        }
-      }
-    } else {
-      this.dateTime = null;
-    }
+    // if (this.initialValue != '') {
+    //   if (this.rangeSelector) {
+    //     try {
+    //       if (this.isPersian) {
+    //         const ranges = MdsDatetimePickerUtility.getPersianDateRanges(this.initialValue);
+    //         this.setSelectedRangePersianDateTimes(ranges);
+    //       } else {
+    //         const ranges = MdsDatetimePickerUtility.getDateRanges(this.initialValue);
+    //         this.setSelectedRangeDateTimes(ranges);
+    //       }
+    //       this.dateTime = this.selectedStartDateTime;
+    //     } catch (e) {
+    //       console.error('value is in wrong format, when rangeSelector is true you should write value like "1396/03/01 - 1396/03/15" or "2017/3/9 - 2017/3/10"', e);
+    //       this.setSelectedRangeDateTimes(null);
+    //       this.dateTime = null;
+    //     }
+    //   } else {
+    //     try {
+    //       if (this.isPersian) {
+    //         this.dateTime = PersianDateTime.parse(this.initialValue).toDate();
+    //       } else {
+    //         this.dateTime = new Date(Date.parse(this.initialValue));
+    //       }
+    //     } catch (e) {
+    //       console.error('value is in wrong format, you should write value like "1396/03/01  11:30:27" or "2017/09/03  11:30:00", you can remove time', e);
+    //       this.dateTime = null;
+    //     }
+    //   }
+    // } else {
+    //   this.dateTime = null;
+    // }
+    // this.updateYearsList();
+    // this.updateMonthDays();
+
+    // if (this.initialValue != '') {
+    //   if (this.rangeSelector) {
+    //     this.fireRangeChangeEvent();
+    //   } else {
+    //     this.fireChangeEvent();
+    //   }
+    // }
+    this.dateTime = null;
     this.updateYearsList();
     this.updateMonthDays();
-
-    if (this.initialValue != '') {
-      if (this.rangeSelector) {
-        this.fireRangeChangeEvent();
-      } else {
-        this.fireChangeEvent();
-      }
-    }
     this.initialized = true;
   }
 

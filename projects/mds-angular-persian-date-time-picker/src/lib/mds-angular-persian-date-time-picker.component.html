@@ -1,5 +1,5 @@
 ﻿<div *ngIf="inLine" class="datepicker-box">
-  <lib-mds-datetime-picker-core *ngIf="inLine" [initialValue]="initialValue" [rangeSelector]="rangeSelector" [persianChar]="persianChar"
+  <lib-mds-datetime-picker-core *ngIf="inLine" [rangeSelector]="rangeSelector" [persianChar]="persianChar"
     [isPersian]="isPersian" [timePicker]="timePicker" [format]="format" [templateType]="templateType" #mdsDateTimePickerCore
     (dateChanged)="dateChangedHandler($event)" (rangeDateChanged)="rangeDateChangedHandler($event)">
   </lib-mds-datetime-picker-core>
@@ -16,7 +16,7 @@
     </span>
   </mat-form-field>
   <div class="datepicker" [hidden]="!showDatePicker">
-    <lib-mds-datetime-picker-core #mdsDateTimePickerCore [initialValue]="initialValue" [rangeSelector]="rangeSelector" [persianChar]="persianChar"
+    <lib-mds-datetime-picker-core #mdsDateTimePickerCore [rangeSelector]="rangeSelector" [persianChar]="persianChar"
       [isPersian]="isPersian" [timePicker]="timePicker" [format]="format" [templateType]="2" (dateChanged)="dateChangedHandler($event)"
       (rangeDateChanged)="rangeDateChangedHandler($event)">
     </lib-mds-datetime-picker-core>
@@ -34,7 +34,7 @@
   <input type="text" *ngIf="textBoxType == 2" [placeholder]="placeHolder" class="form-control" [formControl]="myControl" (focus)="dateTimeTextBoxOnFocusHandler($event)"
     (blur)="dateTimeTextBoxOnBlurHandler($event)" (keyup)="dateTimeTextBoxOnKeyupHandler($event)" data-mds-persian-datetimepicker>
   <div class="datepicker datepicker-bootstrap" [hidden]="!showDatePicker">
-    <lib-mds-datetime-picker-core #mdsDateTimePickerCore [initialValue]="initialValue" [rangeSelector]="rangeSelector" [persianChar]="persianChar"
+    <lib-mds-datetime-picker-core #mdsDateTimePickerCore [rangeSelector]="rangeSelector" [persianChar]="persianChar"
       [isPersian]="isPersian" [timePicker]="timePicker" [format]="format" [templateType]="1" (dateChanged)="dateChangedHandler($event)"
       (rangeDateChanged)="rangeDateChangedHandler($event)">
     </lib-mds-datetime-picker-core>

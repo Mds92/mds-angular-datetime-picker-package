@@ -15,6 +15,7 @@ export class AppComponent {
   isPersian = false;
   persianChar = false;
   format = '';
+  initialValue = new Date().toString();
   templateType = TemplateTypeEnum.bootstrap.toString();
   placeHolder = 'Date Time Picker';
 

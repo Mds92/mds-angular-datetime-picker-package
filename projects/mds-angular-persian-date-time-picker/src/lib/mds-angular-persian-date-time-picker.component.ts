@@ -102,7 +102,7 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
   /**
    * مقدار اولیه
    */
-  @Input() initialValue = '';
+  // @Input() initialValue = '';
   /**
    * نوع نمایش دیت پیکر به صورت این لاین باشد یا نه
    */
@@ -314,6 +314,7 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
 
   clear() {
     if (this.inClearFunction || !this.mdsDateTimePickerCore) { return; }
+    // this.initialValue = '';
     this.inClearFunction = true;
     this.myControl.setValue('');
     this.selectedDateTime = null;
@@ -357,10 +358,12 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
     }
     if (this.rangeSelector && model.selectedRangeDates) {
       this.selectedDateTimeRanges = model.selectedRangeDates;
-      // this.mdsDateTimePickerCore.setDateTimeRangesByDate(this.selectedDateTimeRanges[0], this.selectedDateTimeRanges[1]);
+      // this.initialValue = this.selectedDateTimeRanges[0].toString() + '-' + this.selectedDateTimeRanges[1].toString();
+      this.mdsDateTimePickerCore.setDateTimeRangesByDate(this.selectedDateTimeRanges[0], this.selectedDateTimeRanges[1]);
     } else if (model.selectedDate) {
       this.selectedDateTime = model.selectedDate;
-      // this.mdsDateTimePickerCore.setDateTimeByDate(this.selectedDateTime);
+      // this.initialValue = this.selectedDateTime.toString();
+      this.mdsDateTimePickerCore.setDateTimeByDate(this.selectedDateTime);
     }
   }
   registerOnChange(fn: any): void {

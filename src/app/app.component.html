@@ -7,8 +7,8 @@
   <div class="row">
     <div class="col-sm-4">
       <lib-mds-angular-persian-datetimepicker [(ngModel)]="dateTime" [rangeSelector]="rangeSelector" [isPersian]="isPersian"
-        [templateType]="templateType" [inLine]="inLine" [timePicker]="timePicker" [persianChar]="persianChar" [placeHolder]="placeHolder"
-        [format]="format">
+        [templateType]="templateType" [inLine]="inLine" [timePicker]="timePicker" [persianChar]="persianChar"
+        [placeHolder]="placeHolder" [format]="format">
       </lib-mds-angular-persian-datetimepicker>
       <hr>
       <div class="mx-auto" class="text-left" style="direction: ltr;">
@@ -17,11 +17,13 @@
     </div>
     <div class="col-sm-8 border-left">
       <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="customRadioInlineTemplateType1" name="customRadioInlineTemplateType" class="custom-control-input" value="1" [(ngModel)]="templateType">
+        <input type="radio" id="customRadioInlineTemplateType1" name="customRadioInlineTemplateType" class="custom-control-input"
+          value="1" [(ngModel)]="templateType">
         <label class="custom-control-label" for="customRadioInlineTemplateType1">Template Bootstrap 4+</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="customRadioInlineTemplateType2" name="customRadioInlineTemplateType" class="custom-control-input" value="2" [(ngModel)]="templateType">
+        <input type="radio" id="customRadioInlineTemplateType2" name="customRadioInlineTemplateType" class="custom-control-input"
+          value="2" [(ngModel)]="templateType">
         <label class="custom-control-label" for="customRadioInlineTemplateType2">Template Angular Materials</label>
       </div>
       <div class="custom-control custom-checkbox">
