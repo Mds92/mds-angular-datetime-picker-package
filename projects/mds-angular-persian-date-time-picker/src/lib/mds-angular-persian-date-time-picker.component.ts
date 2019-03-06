@@ -58,8 +58,10 @@ export class MdsAngularPersianDateTimePickerComponent implements ControlValueAcc
       this.mdsDateTimePickerCore.setDateTimeByDate(!value ? null : new Date(value));
       if (value == null) {
         this._selectedDateTime = null;
+        this.myControl.setValue("");
       } else {
         this._selectedDateTime = new Date(value);
+        this.myControl.setValue(this.mdsDateTimePickerCore.getSelectedDate.formatString);
       }
     } catch (e) {
       this.clear();
